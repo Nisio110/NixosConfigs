@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# Update flake inputs and optionally rebuild the system.
+# Usage: nix-upd [nixos-dir] [input...]
+#   nixos-dir  Path to the NixOS flake directory (default: /home/oisin/NixOS)
+#   input      One or more specific flake inputs to update (default: all)
+
+ansi_reset="\033[0m"
+ansi_green="\033[32m"
+ansi_coral="\033[38;5;211m"
+ansi_mustard="\033[38;5;220m"
+
+NIXOS_DIR="${1:-/home/oisin/NixOS}"
+shift 2>/dev/null || true
+INPUTS=("$@")   # remaining args are specific inputs to update
+
+print() {
+  echo -en "${2:-${ansi_coral}}>> ${1}${ansi_reset}"
+}
+printl() {
+  print "${1}\n" "${2:-}"
+}
+
+# -----------------------------------------------
+# 1. Validate the flake directory
+# -----------------------------------------------
+if [[ ! -f "${NIXOS_DIR}/flake.nix" ]]; then
+  printl "No flake.nix found in ${NIXOS_DIR}" "${ansi_mustard}"
+  exit 1
+fi
+
+printl "=== Nix Flake Update"
+printl "Directory: ${NIXOS_DIR}"
+
+# -----------------------------------------------
+# 2. Run nix flake update
+# -----------------------------------------------
+if (( ${#INPUTS[@]} > 0 )); then
+  printl "Updating inputs: ${INPUTS[*]}"
+  nix flake update --flake "${NIXOS_DIR}" "${INPUTS[@]}"
+else
+  printl "Updating all inputs..."
+  nix flake update --flake "${NIXOS_DIR}"
+fi
+
+# -----------------------------------------------
+# 3. Show what changed in flake.lock
+# -----------------------------------------------
+LOCK_DIFF=$(git -C "${NIXOS_DIR}" diff flake.lock)
+if [[ -z "${LOCK_DIFF}" ]]; then
+  printl "No changes — all inputs are already up to date." "${ansi_green}"
+  exit 0
+fi
+
+printl "Changes to flake.lock:" "${ansi_green}"
+echo
+
+# Pretty-print: show only lines that look like "lastModified" or "narHash"
+# diffs so the output isn't a wall of rev/narHash noise.
+CHANGED_INPUTS=$(
+  echo "${LOCK_DIFF}" \
+    | awk '
+        /^diff --git|^--- |^\+\+\+ /  { next }
+        /^@@/                          { next }
+        /^-[[:space:]]+"narHash":/     { next }
+        /^\+[[:space:]]+"narHash":/    { next }
+        /^-[[:space:]]+"lastModified"/ { next }
+        /^\+[[:space:]]+"lastModified"/{ next }
+        /^-[[:space:]]+"rev":/         {
+          gsub(/^-[[:space:]]+"rev": "|",?$/, ""); old=$0; next
+        }
+        /^\+[[:space:]]+"rev":/        {
+          gsub(/^\+[[:space:]]+"rev": "|",?$/, ""); new=$0
+          if (old != "") printf "  %s -> %s\n", substr(old,1,12), substr(new,1,12)
+          old=""
+          next
+        }
+      '
+)
+
+# Fall back to raw diff summary if the awk parse produced nothing useful
+if [[ -n "${CHANGED_INPUTS}" ]]; then
+  echo -e "${CHANGED_INPUTS}"
+else
+  git -C "${NIXOS_DIR}" diff --stat flake.lock
+fi
+echo
+
+# -----------------------------------------------
+# 4. Optionally rebuild
+# -----------------------------------------------
+print "Rebuild now? [y/ ] " "${ansi_mustard}"; read -r answer
+if [[ "${answer}" == "y" || "${answer}" == "Y" ]]; then
+  REBUILD_SCRIPT="${NIXOS_DIR}/rebuild"
+  if [[ ! -x "${REBUILD_SCRIPT}" ]]; then
+    printl "'${REBUILD_SCRIPT}' not found or not executable." "${ansi_mustard}"
+    exit 1
+  fi
+  exec sudo "${REBUILD_SCRIPT}" "${NIXOS_DIR}"
+fi
+
+printl "Update complete. Run 'sudo rebuild' when ready to apply." "${ansi_green}"

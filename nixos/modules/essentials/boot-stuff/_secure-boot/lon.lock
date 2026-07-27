@@ -1,0 +1,26 @@
+{
+  "version": "1",
+  "sources": {
+    "lanzaboote": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "frozen": true,
+      "owner": "nix-community",
+      "repo": "lanzaboote",
+      "branch": "master",
+      "revision": "001e560fffc8f0235e9db20ebeb4ccde0ade1caf",
+      "url": "https://github.com/nix-community/lanzaboote/archive/001e560fffc8f0235e9db20ebeb4ccde0ade1caf.tar.gz",
+      "hash": "sha256-ycG9a7svaV/zF9G03waY7BqUcNQn2HODMN/lXy3C7Zc="
+    },
+    "nixpkgs": {
+      "type": "GitHub",
+      "fetchType": "tarball",
+      "owner": "nixos",
+      "repo": "nixpkgs",
+      "branch": "nixos-unstable",
+      "revision": "d233902339c02a9c334e7e593de68855ad26c4cb",
+      "url": "https://github.com/nixos/nixpkgs/archive/d233902339c02a9c334e7e593de68855ad26c4cb.tar.gz",
+      "hash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE="
+    }
+  }
+}

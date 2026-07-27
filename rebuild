@@ -1,0 +1,209 @@
+#!/usr/bin/env bash
+#set -euo pipefail
+# Checks if the script was ran as root
+
+ansi_reset="\033[0m"
+ansi_bold="\033[1m"
+ansi_green="\033[32m"
+ansi_pink="\033[38;2;243;192;229m"
+ansi_orange="\033[38;2;248;138;45m"
+ansi_red="\033[31m"
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]
+then
+  echo -e "\033[38;2;243;192;229mUsage:\033[0m rebuild [NIXOS_DIR] [FLAKE] [OPTIONS]"
+  echo
+  echo -e "\033[38;2;243;192;229mArguments:\033[0m"
+  echo -e "  NIXOS_DIR   Path to NixOS flake directory  (default: /home/oisin/NixOS)"
+  echo -e "  FLAKE       Flake configuration name        (default: nixos)"
+  echo
+  echo -e "\033[38;2;243;192;229mOptions:\033[0m"
+  echo -e "  -h, --help        Show this help message"
+  echo -e "  --skip-rebuild    Skip nixos-rebuild for testing the script flow"
+  echo
+  echo -e "\033[38;2;243;192;229mBehaviour:\033[0m"
+  echo -e "  - Shows a git diff if there are uncommitted changes"
+  echo -e "  - Stages all changes and runs nixos-rebuild switch"
+  echo -e "  - Prompts to commit on success or warning (exit 0 or 4)"
+  echo -e "  - Exit 0: success, Exit 4: succeeded with unit warnings, 1-3: failed"
+  exit 0
+fi
+
+SKIP_REBUILD=0
+POSITIONAL=()
+for arg in "$@"
+do
+  if [[ "$arg" == "--skip-rebuild" ]]
+  then
+    SKIP_REBUILD=1
+  else
+    POSITIONAL+=("$arg")
+  fi
+done
+NIXOS_DIR="${POSITIONAL[0]:-/home/oisin/NixOS}"
+FLAKE="${POSITIONAL[1]:-nixos}"
+OLD_GEN=$(nixos-rebuild list-generations 2>/dev/null | head -2 | tail -1 | awk '{print $1}')
+EXEC_REBUILD=1
+
+print(){ 
+  echo -en "${2:-${ansi_pink}}>> ${1} ${ansi_reset}"
+}
+printl(){ 
+  print "${1} <<\n" "${2}"
+}
+# ===============================================
+#
+sudo -v
+
+printl "=== NixOS Generation ${OLD_GEN} ===" "${ansi_bold}${ansi_pink}"
+if ! git -C ${NIXOS_DIR} diff --quiet
+then
+  print "Want to see a diff? [y/ ] " "${ansi_orange}"
+  read answer
+
+  if [[ ${answer} == "y" || ${answer} == "Y" ]]
+  then 
+    printl "Diff:"
+    git -C ${NIXOS_DIR} diff
+    echo
+
+    print "Continue to rebuild? [y/ ] " "${ansi_orange}"
+    read answer
+    if [[ ! (${answer} == "y" || ${answer} == "Y") ]]
+    then 
+      EXEC_REBUILD=0
+      echo
+    fi
+  fi
+fi
+
+if [[ $EXEC_REBUILD -eq 1 ]]
+then
+  # === Portability check ===
+  # Warn if any package in home/common/packages.nix doesn't evaluate on
+  # either Linux or Darwin. Common packages need to work on both — anything
+  # OS-specific belongs in home/{linux,darwin}/packages.nix instead.
+  COMMON_PKGS_FILE="${NIXOS_DIR}/home/common/packages.nix"
+  if [[ -f "${COMMON_PKGS_FILE}" ]]
+  then
+    printl "Checking home/common/packages.nix portability..."
+
+    # Extract the bare package names from `home.packages = with pkgs; [ ... ];`.
+    # Stops at the first `]`. Strips trailing commas / semicolons / whitespace.
+    mapfile -t COMMON_PKGS < <(
+      awk '
+        /home\.packages[[:space:]]*=.*\[/ { in_list = 1; next }
+        in_list && /\]/                  { exit }
+        in_list && NF > 0 && $1 !~ /^#/  { gsub(/[,;]/, "", $1); print $1 }
+      ' "${COMMON_PKGS_FILE}"
+    )
+
+    if (( ${#COMMON_PKGS[@]} > 0 ))
+    then
+      # Single eval pass against the flake's own locked nixpkgs (so unfree
+      # packages don't trip a false positive — the flake sets allowUnfree).
+      # Returns JSON: { "<system>": ["name", ...], ... } of failing packages.
+      NAMES_NIX=$(printf '"%s" ' "${COMMON_PKGS[@]}")
+      CHECK_EXPR="
+        let
+          flake = builtins.getFlake \"${NIXOS_DIR}\";
+          importPkgs = sys: import flake.inputs.nixpkgs {
+            system = sys;
+            config.allowUnfree = true;
+          };
+          names = [ ${NAMES_NIX} ];
+          fails = pkgs: builtins.filter (n:
+            let p = pkgs.\${n} or null;
+            in p == null || !(p.meta.available or false)
+          ) names;
+        in {
+          \"x86_64-linux\"   = fails (importPkgs \"x86_64-linux\");
+          \"aarch64-darwin\" = fails (importPkgs \"aarch64-darwin\");
+        }
+      "
+      CHECK_RESULT=$(nix eval --impure --json --expr "${CHECK_EXPR}" 2>/dev/null)
+
+      if [[ -z "${CHECK_RESULT}" ]]
+      then
+        printl "Portability check failed to evaluate (skipping)." "${ansi_orange}"
+      else
+        # Pull the bare names out of each system's JSON array.
+        parse_fails() {
+          local sys="$1"
+          echo "${CHECK_RESULT}" \
+            | grep -oE "\"${sys}\":\\[[^]]*\\]" \
+            | grep -oE '"[a-zA-Z0-9_-]+"' \
+            | tr -d '"' \
+            | grep -v "^${sys}$" || true
+        }
+        LINUX_FAIL=$(parse_fails "x86_64-linux")
+        DARWIN_FAIL=$(parse_fails "aarch64-darwin")
+
+        if [[ -n "${LINUX_FAIL}" || -n "${DARWIN_FAIL}" ]]
+        then
+          printl "Portability warnings:" "${ansi_orange}"
+          while IFS= read -r p
+          do
+            [[ -n "$p" ]] && printl "  ${p} does not evaluate on x86_64-linux" "${ansi_orange}"
+          done <<< "${LINUX_FAIL}"
+          while IFS= read -r p
+          do
+            [[ -n "$p" ]] && printl "  ${p} does not evaluate on aarch64-darwin" "${ansi_orange}"
+          done <<< "${DARWIN_FAIL}"
+        else
+          printl "All common packages evaluate on Linux and Darwin." "${ansi_green}"
+        fi
+      fi
+    fi
+  fi
+fi
+
+if [[ $EXEC_REBUILD -eq 1 ]]
+then
+  git -C "${NIXOS_DIR}" add "${NIXOS_DIR}/"
+  if [[ $SKIP_REBUILD -eq 1 ]]
+  then
+    printl "Skipping rebuild (--skip-rebuild)" "${ansi_orange}"
+    REBUILD_STATUS=0
+    REBUILD_GEN=$OLD_GEN
+  else
+    sudo nixos-rebuild switch --flake "${NIXOS_DIR}#${FLAKE}"
+    REBUILD_STATUS=$?
+  fi
+
+  if [[ $REBUILD_STATUS -eq 0 ]]
+  then
+    printl "Rebuild succeeded" "${ansi_bold}${ansi_green}"
+  elif [[ $REBUILD_STATUS -eq 4 ]]
+  then
+    printl "Rebuild succeeded with warnings" "${ansi_orange}"
+  else
+    printl "Rebuild failed (exit ${REBUILD_STATUS})" "${ansi_red}"
+  fi
+
+  if [[ $REBUILD_STATUS -eq 0 || $REBUILD_STATUS -eq 4 ]]
+  then
+    [[ $SKIP_REBUILD -eq 0 ]] && REBUILD_GEN=$(nixos-rebuild list-generations 2>/dev/null | head -2 | tail -1 | awk '{print $1}')
+    if [[ "$REBUILD_GEN" == "$OLD_GEN" ]]
+    then
+      printl "=== Generation ${OLD_GEN} - No change" "${ansi_bold}${ansi_pink}"
+    else
+      printl "=== NixOS Generation ${OLD_GEN} -> ${REBUILD_GEN}" "${ansi_bold}${ansi_pink}"
+    fi
+  fi
+
+  # nixos-rebuild evaluates a dirty flake as root, writing root-owned objects
+  # into .git/objects — reclaim them before git commit runs.
+  sudo chown -R "$(id -un):$(id -gn)" "${NIXOS_DIR}/.git"
+  if [[ $REBUILD_STATUS -eq 0 || $REBUILD_STATUS -eq 4 ]] 
+  then
+    print "Commit changes? [y/ ] " "${ansi_orange}"
+    read answer
+    if [[ "${answer}" == "y" || "${answer}" == "Y" ]]
+    then
+      printl "Committing changes..."
+      git -C ${NIXOS_DIR} commit -m "NixOS Rebuild: Generation ${REBUILD_GEN}"
+    fi
+  fi
+
+fi

@@ -1,0 +1,151 @@
+{
+  "version": "2.2.0",
+  "menus": [
+    {
+      "root": {
+        "type": "submenu",
+        "name": "Scripts Menu",
+        "icon": "⌨️",
+        "iconTheme": "emoji",
+        "children": [
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/night-toggle.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Toggle night mode",
+            "icon": "🛌",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/hdr-toggle.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Toggle HDR",
+            "icon": "hdr_on",
+            "iconTheme": "material-symbols-rounded"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/plasmashell-restart.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Restart plasmashell",
+            "icon": "refresh",
+            "iconTheme": "material-symbols-rounded"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/dim.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Dim Toggle",
+            "icon": "🌕",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/xbox-desktop.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Desktop mappings",
+            "icon": "🎮",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "name": "Games mapping",
+            "icon": "👾",
+            "iconTheme": "emoji",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/xbox-games.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            }
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/xbox-stop-remapping.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Kill controller remapping",
+            "icon": "❌",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/media-mode.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Media Mode",
+            "icon": "📺",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/desktop-mode.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Desktop Mode",
+            "icon": "🖥️",
+            "iconTheme": "emoji"
+          },
+          {
+            "type": "command",
+            "data": {
+              "command": "/home/oisin/Projects/Scripts/laptop-mode.sh",
+              "detached": true,
+              "isolated": true,
+              "delayed": false
+            },
+            "name": "Laptop Mode",
+            "icon": "💻",
+            "iconTheme": "emoji"
+          }
+        ]
+      },
+      "shortcut": "Meta + F",
+      "shortcutID": "scripts-menu",
+      "centered": false,
+      "anchored": false,
+      "hoverMode": false,
+      "tags": []
+    }
+  ],
+  "collections": [
+    {
+      "name": "Favorites",
+      "icon": "favorite",
+      "iconTheme": "material-symbols-rounded",
+      "tags": [
+        "favs"
+      ]
+    }
+  ]
+}
