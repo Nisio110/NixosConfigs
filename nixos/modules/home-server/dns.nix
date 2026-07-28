@@ -1,7 +1,7 @@
 {
   services.unbound = {
     enable = true;
-    resolveLocalQueries = true;
+    resolveLocalQueries = false;
 
     settings = {
       server = {
