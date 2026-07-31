@@ -1,7 +1,7 @@
 {
   services.unbound = {
     enable = true;
-    resolveLocalQueries = false;
+    resolveLocalQueries = true;
 
     settings = {
       server = {
@@ -32,6 +32,8 @@
         forward-addr = [
           "1.1.1.1@853#cloudflare-dns.com"
           "1.0.0.1@853#cloudflare-dns.com"
+          "8.8.8.8"
+          "1.1.1.1"
         ];
       }];
     };
