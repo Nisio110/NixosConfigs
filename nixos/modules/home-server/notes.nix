@@ -60,6 +60,7 @@
     requires = [  "docker-network-joplin_default.service" ];
     partOf = [    "docker-compose-joplin-root.target" ];
     wantedBy = [  "docker-compose-joplin-root.target" ];
+    path = [pkgs.docker];
   };
   virtualisation.oci-containers.containers."joplin-db" = {
     image = "postgres:15";
