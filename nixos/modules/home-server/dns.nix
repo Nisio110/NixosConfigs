@@ -7,7 +7,7 @@
       server = {
         ip-freebind  = true; 
         interface    = [ "127.0.0.1" "192.168.0.19"];
-        local-zone = [ ''"tetocorp.ie." static'' ];
+        local-zone = [ ''"tetocorp.ie." redirect'' ];
 
         access-control = [
           "127.0.0.0/8 allow"
@@ -17,7 +17,6 @@
 
         local-data  = [
           ''"tetocorp.ie.         IN A 192.168.0.19"''
-          ''"*.tetocorp.ie.   IN A 192.168.0.19"''
           #''"vpn.tetocorp.ie.     IN A 192.168.0.19"''
           #''"notes.tetocorp.ie.   IN A 192.168.0.19"''
           #''"manga.tetocorp.ie.   IN A 192.168.0.19"''
