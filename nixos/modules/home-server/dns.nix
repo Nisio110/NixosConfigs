@@ -7,7 +7,7 @@
       server = {
         ip-freebind  = true; 
         interface    = [ "127.0.0.1" "192.168.0.19"];
-        local-zone = [ ''"ie.tetocorp." static'' ];
+        local-zone = [ ''"tetocorp.ie." static'' ];
 
         access-control = [
           "127.0.0.0/8 allow"
