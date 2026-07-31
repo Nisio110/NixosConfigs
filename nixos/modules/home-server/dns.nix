@@ -17,11 +17,6 @@
 
         local-data  = [
           ''"tetocorp.ie.         IN A 192.168.0.19"''
-          #''"vpn.tetocorp.ie.     IN A 192.168.0.19"''
-          #''"notes.tetocorp.ie.   IN A 192.168.0.19"''
-          #''"manga.tetocorp.ie.   IN A 192.168.0.19"''
-          #''"cloudflare-bypass.tetocorp.ie IN A 192.168.0.19"''
-          #''"stream.tetocorp.ie.  IN A 192.168.0.19"''
         ];
       };
 
