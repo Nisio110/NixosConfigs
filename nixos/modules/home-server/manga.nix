@@ -16,7 +16,8 @@
         "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
       ];
       flareSolverrEnabled = true;
-      flareSolverrUrl = "http://127.0.0.1:9009";
+      #flareSolverrUrl = "http://127.0.0.1:9009";
+      flareSolverrUrl = "http://cloudflare-bypass.tetocorp.ie";
     };
   };
 
