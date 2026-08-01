@@ -35,13 +35,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri = {
-      url = "github:dwilliam62/niri-nixos";
-    };
-
     niri-config = {
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "niri";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -59,7 +55,6 @@
       modules = [ 
         (inputs.import-tree modulePath) 
         (mkHomeManager homePath)
-        {programs.niri.enable = true;}
       ];
     };
 
