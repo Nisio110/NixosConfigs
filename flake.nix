@@ -34,6 +34,10 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    niri-config = {
+      url = "github:sodiboo/niri-flake";
+    };
   };
 
   outputs = inputs @ { nixpkgs, home-manager, ... }: let
@@ -47,7 +51,10 @@
     mkSystem = { system, modulePath, homePath}: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit inputs user homeDir secretsDir; };
-      modules = [ (inputs.import-tree modulePath) (mkHomeManager homePath) ];
+      modules = [ 
+        (inputs.import-tree modulePath) 
+        (mkHomeManager homePath)
+      ];
     };
 
     mkHomeManager = hmDir: {
