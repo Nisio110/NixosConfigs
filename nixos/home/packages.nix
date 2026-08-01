@@ -64,7 +64,14 @@ let
     joplin-cli
   ];
 
-  homePkgs = dev ++ apps ++ misc;
+  # Spawned by the niri session — see niri.nix.
+  niri = with pkgs; [
+    waybar
+    mako
+    fuzzel
+  ];
+
+  homePkgs = dev ++ apps ++ misc ++ niri;
 
 in { 
   home.packages = homePkgs;
