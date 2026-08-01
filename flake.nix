@@ -54,6 +54,7 @@
       modules = [ 
         (inputs.import-tree modulePath) 
         (mkHomeManager homePath)
+        inputs.niri-config.nixosModules.niri
       ];
     };
 
