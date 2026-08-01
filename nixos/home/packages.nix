@@ -64,11 +64,11 @@ let
     joplin-cli
   ];
 
-  # Spawned by the niri session — see niri.nix.
+  # Spawned by the niri session — see niri/niri.nix.
+  # waybar, mako and fuzzel come from their home-manager modules.
   niri = with pkgs; [
-    waybar
-    mako
-    fuzzel
+    swaybg
+    xwayland-satellite
   ];
 
   homePkgs = dev ++ apps ++ misc ++ niri;
