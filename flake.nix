@@ -36,7 +36,7 @@
     };
 
     niri-config = {
-      url = "github:sodiboo/niri-flake";
+      url = "github:dwilliam62/niri-nixos";
     };
   };
 
@@ -54,8 +54,6 @@
       modules = [ 
         (inputs.import-tree modulePath) 
         (mkHomeManager homePath)
-        inputs.niri-config.nixosModules.niri
-        {programs.niri.enable = true;}
       ];
     };
 
