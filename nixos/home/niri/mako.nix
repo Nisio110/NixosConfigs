@@ -1,9 +1,9 @@
-{ ... }:
+{ config, lib, ... }:
 let
   p = import ./_palette.nix;
 in
 {
-  # Spawned by niri (see niri.nix); this only supplies the config file.
+  # Runs via the systemd unit below; this supplies the config file.
   services.mako = {
     enable = true;
 
@@ -59,5 +59,26 @@ in
         invisible = 1;
       };
     };
+  };
+
+  # The packaged mako.service is WantedBy=graphical-session.target, which
+  # Plasma activates too. This unit shadows it and binds the daemon to
+  # niri.service so it only runs (and dies) with the niri session. D-Bus
+  # activation (SystemdService=mako.service) resolves to this unit as well.
+  systemd.user.services.mako = {
+    Unit = {
+      Description = "Lightweight Wayland notification daemon";
+      Documentation = "man:mako(1)";
+      PartOf = [ "niri.service" ];
+      After = [ "niri.service" ];
+    };
+    Service = {
+      Type = "dbus";
+      BusName = "org.freedesktop.Notifications";
+      ExecStart = lib.getExe config.services.mako.package;
+      ExecReload = "${lib.getExe' config.services.mako.package "makoctl"} reload";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "niri.service" ];
   };
 }

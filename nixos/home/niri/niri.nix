@@ -98,11 +98,10 @@ in
       path = lib.getExe pkgs.xwayland-satellite;
     };
 
-    # waybar runs as a systemd user service (see waybar.nix) so it restarts on
-    # its own; mako and swaybg are one-shot and fine to spawn here.
+    # waybar and mako run as systemd user services bound to niri.service
+    # (see waybar.nix / mako.nix); only swaybg is spawned here.
     spawn-at-startup = [
       { argv = [ (lib.getExe pkgs.swaybg) "--mode" "fill" "--image" wallpaper "--color" p.base ]; }
-      { argv = [ (lib.getExe pkgs.mako) ]; }
     ];
 
     prefer-no-csd = true;

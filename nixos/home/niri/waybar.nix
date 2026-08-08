@@ -11,9 +11,13 @@ in
 {
   programs.waybar = {
     enable = true;
-    # niri-session binds graphical-session.target, so the unit starts and
-    # stops with the compositor and restarts on failure.
-    systemd.enable = true;
+    # Bound to niri.service rather than graphical-session.target: Plasma
+    # activates the generic target too, and the bar must only run under niri.
+    # It starts/stops with the compositor and restarts on failure.
+    systemd = {
+      enable = true;
+      targets = [ "niri.service" ];
+    };
 
     settings.main = {
       layer = "top";
