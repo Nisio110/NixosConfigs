@@ -9,48 +9,6 @@
 # entries only in oh-my-pi.nix, nothing to package here.
 { pkgs, ... }:
 let
-  browser-control-mcp = pkgs.buildNpmPackage rec {
-    pname = "browser-control-mcp";
-    version = "1.5.1";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "eyalzh";
-      repo = "browser-control-mcp";
-      rev = "0b9e449b1ac9662aa60eed8b9a0f61aff076a507"; # v1.5.1
-      hash = "sha256-P0ZYjaHArngobtOf4C3j3LpuwfT4vZdJnoZnzeNoIWo=";
-    };
-
-    # Build only the mcp-server workspace. Its "@browser-control-mcp/common"
-    # dependency is a file: link to ../common (present in the unpacked repo),
-    # imported only via `import type`, so it is needed at build time, not runtime.
-    sourceRoot = "${src.name}/mcp-server";
-
-    npmDepsHash = "sha256-MkCOtHekydKyBkymLFv1nuhrxhwh1Xd8aGLa40Gxa+k=";
-
-    nodejs = pkgs.nodejs_22; # package.json engines: node >=22
-
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-
-    # `npm run build` (tsc) runs automatically (package.json has a "build" script).
-    # Ship dist + runtime node_modules; drop the build-time-only workspace link.
-    installPhase = ''
-      runHook preInstall
-      mkdir -p "$out/lib/browser-control-mcp" "$out/bin"
-      rm -rf node_modules/@browser-control-mcp
-      cp -r dist node_modules "$out/lib/browser-control-mcp/"
-      makeWrapper ${pkgs.nodejs_22}/bin/node "$out/bin/browser-control-mcp" \
-        --add-flags "$out/lib/browser-control-mcp/dist/server.js"
-      runHook postInstall
-    '';
-
-    meta = {
-      description = "MCP server that controls Firefox/Zen via the Browser Control extension";
-      homepage = "https://github.com/eyalzh/browser-control-mcp";
-      license = pkgs.lib.licenses.mit;
-      mainProgram = "browser-control-mcp";
-    };
-  };
-
   zen-mcp = pkgs.buildNpmPackage rec {
     pname = "zen-mcp";
     version = "1.2.3";
@@ -151,49 +109,10 @@ let
   # devDependencies-free package.json + generated lock are vendored in ./mcp.
   # Tarball verified against the registry integrity for 0.2.0
   # (sha512-ERKK37kMCtFJpKZOr0GV75zoacwSlQTSK+eFV8hTK1zERZfoicQfVQfZFk8QqVyf7THb2MtI+zpGL4mbWaTBkg==).
-  proxmox-mcp-server = pkgs.buildNpmPackage rec {
-    pname = "proxmox-mcp-server";
-    version = "0.2.0";
-
-    src = pkgs.fetchurl {
-      url = "https://registry.npmjs.org/proxmox-mcp-server/-/proxmox-mcp-server-${version}.tgz";
-      hash = "sha256-82ZzMuJwAVEN7BjHfo6AQIqZBoutmtX75DdfBAGRhGw=";
-    };
-
-    # Copied in postPatch so fetchNpmDeps and the main build see the same
-    # tree (fetchNpmDeps forwards postPatch but not nativeBuildInputs).
-    postPatch = ''
-      cp ${./mcp/proxmox-mcp-package.json} package.json
-      cp ${./mcp/proxmox-mcp-package-lock.json} package-lock.json
-    '';
-
-    npmDepsHash = "sha256-dYaTAS+2yMPDJDdrAIGNJq5oc+sDO05H/pulMJt/RJ0=";
-
-    # dist/ is prebuilt in the npm tarball; nothing to compile.
-    dontNpmBuild = true;
-
-    # bin: proxmox-mcp-server -> dist/index.js.
-    meta = {
-      description = "MCP server exposing Proxmox VE management as tools over stdio";
-      homepage = "https://www.npmjs.com/package/proxmox-mcp-server";
-      license = pkgs.lib.licenses.mit;
-      mainProgram = "proxmox-mcp-server";
-    };
-  };
 
   # ── Secret wrappers ─────────────────────────────────────────────
   # Declare-then-export (two lines) is required: `export FOO=$(...)` fails
   # writeShellApplication's shellcheck (SC2155).
-  mcp-browser-control = pkgs.writeShellApplication {
-    name = "mcp-browser-control";
-    runtimeInputs = [ browser-control-mcp ];
-    text = ''
-      EXTENSION_SECRET=$(cat "$HOME/.local/secrets/browser_control")
-      export EXTENSION_SECRET
-      export EXTENSION_PORT=8089
-      exec browser-control-mcp
-    '';
-  };
 
   mcp-github = pkgs.writeShellApplication {
     name = "mcp-github";
@@ -214,39 +133,13 @@ let
       exec mcp-server-brave-search
     '';
   };
-
-  # Read-only by default; set PVE_READONLY=false to register write tools.
-  mcp-proxmox = pkgs.writeShellApplication {
-    name = "mcp-proxmox";
-    runtimeInputs = [ proxmox-mcp-server ];
-    text = ''
-      PROXMOX_HOST=$(cat "$HOME/.local/secrets/proxmox_host")
-      PROXMOX_TOKEN_ID=$(cat "$HOME/.local/secrets/proxmox_token_id")
-      PROXMOX_TOKEN_SECRET=$(cat "$HOME/.local/secrets/proxmox_token_secret")
-      export PROXMOX_HOST PROXMOX_TOKEN_ID PROXMOX_TOKEN_SECRET
-      export PVE_READONLY=true
-      exec proxmox-mcp-server
-    '';
-  };
-in
-{
+in {
   home.packages = [
     # standalone bespoke npm build
     zen-mcp
     # secret wrappers (each pulls its pinned server in as a dependency)
-    mcp-browser-control
     mcp-github
     mcp-brave-search
-    mcp-proxmox
-    # nixpkgs-native servers (referenced from ompMcp via the user profile).
-    # filesystem/memory/sequential-thinking all come from the same
-    # modelcontextprotocol/servers monorepo tag and each ship the shared
-    # workspace-root files (README.md, package.json) at an identical path
-    # (nixpkgs-tracked: https://github.com/NixOS/nixpkgs/pull/333759), so
-    # buildEnv errors on the profile merge unless priorities are distinct.
-    # Harmless to arbitrate: each package's makeWrapper bin script execs
-    # node against its OWN store path's dist/index.js directly, never
-    # through the merged profile tree, so runtime behavior is unaffected.
     pkgs.mcp-nixos
     (pkgs.lib.setPrio 4 pkgs.mcp-server-filesystem)
     (pkgs.lib.setPrio 5 pkgs.mcp-server-memory)

@@ -1,7 +1,8 @@
 # Home-manager config for input-remapper. Deploys presets and config to
 # ~/.config/input-remapper-2/.  The system-level service is enabled in
 # hosts/o-nixos/input-remapper.nix.
-{...}: {
+
+{
   # input-remapper GUI is installed at system level (needs uinput access).
   # Config files are pure user data, so they live here.
 

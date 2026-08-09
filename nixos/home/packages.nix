@@ -1,14 +1,14 @@
 { pkgs, inputs, ... }:
 let
-  # nixpkgs ships an older bun than oh-my-pi wants. Track the latest upstream
-  # release via the `bun-bin` flake input instead of pinning version+hash here;
-  # bump it with `nix flake update bun-bin`. `bun --version` is authoritative —
-  # the `version` label below is cosmetic since the binary self-reports.
+ 
   bun = pkgs.bun.overrideAttrs (prev: {
     version = "latest";
     # The input is the raw .zip (type = "file"); rename it to a *.zip store path
     # so bun's generic unpackPhase recognises and unzips it.
-    src = pkgs.runCommandLocal "bun-linux-x64.zip" { } "cp ${inputs.bun-bin} $out";
+    src = pkgs.runCommandLocal 
+      "bun-linux-x64.zip" 
+      { } 
+      "cp ${inputs.bun-bin} $out";
   });
 
   oh-my-pi = pkgs.writeShellApplication {
@@ -74,6 +74,4 @@ let
 
   homePkgs = dev ++ apps ++ misc ++ niri;
 
-in { 
-  home.packages = homePkgs;
-}
+in {home.packages = homePkgs;}
