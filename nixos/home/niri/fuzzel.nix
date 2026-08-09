@@ -1,4 +1,3 @@
-{ ... }:
 let
   p = import ./_palette.nix;
 

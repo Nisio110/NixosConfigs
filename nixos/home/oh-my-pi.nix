@@ -58,10 +58,6 @@ let
         command = "${config.home.profileDirectory}/bin/mcp-nixos";
         args = [ ];
       };
-      "browser-control" = {
-        command = "${config.home.profileDirectory}/bin/mcp-browser-control";
-        args = [ ];
-      };
       "zen-browser" = {
         command = "${config.home.profileDirectory}/bin/zen-mcp";
         args = [ ];
@@ -96,10 +92,6 @@ let
       };
       "context7" = {
         command = "${config.home.profileDirectory}/bin/context7-mcp";
-        args = [ ];
-      };
-      "proxmox" = {
-        command = "${config.home.profileDirectory}/bin/mcp-proxmox";
         args = [ ];
       };
     };

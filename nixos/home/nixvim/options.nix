@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   programs.nixvim = {
     # ---- core editor options ----

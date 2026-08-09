@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   # lazydev.nvim — workspace lua type info for editing nvim config.
   # The blink.cmp side of the integration (the `lazydev` source in

@@ -1,4 +1,3 @@
-{...}:
 {
   # Sound
   services.pipewire = {
