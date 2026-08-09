@@ -36,6 +36,7 @@ let
     avrdudess
     joplin-desktop
     kicad
+    freecad
   ];
 
   dev = with pkgs; [
