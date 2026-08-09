@@ -35,6 +35,7 @@ let
     obsidian
     avrdudess
     joplin-desktop
+    kicad
   ];
 
   dev = with pkgs; [
