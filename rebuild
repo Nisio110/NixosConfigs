@@ -20,25 +20,46 @@ then
   echo -e "\033[38;2;243;192;229mOptions:\033[0m"
   echo -e "  -h, --help        Show this help message"
   echo -e "  --skip-rebuild    Skip nixos-rebuild for testing the script flow"
+  echo -e "  -b, --branch [NAME]"
+  echo -e "                    Switch to (or create) branch NAME before rebuilding."
+  echo -e "                    Bare -b lists the 3 most recently pushed branches"
+  echo -e "                    and prompts for a choice (or any other name)"
   echo
   echo -e "\033[38;2;243;192;229mBehaviour:\033[0m"
   echo -e "  - Shows a git diff if there are uncommitted changes"
   echo -e "  - Stages all changes and runs nixos-rebuild switch"
-  echo -e "  - Prompts to commit on success or warning (exit 0 or 4)"
+  echo -e "  - Prompts to commit and push on success or warning (exit 0 or 4)"
   echo -e "  - Exit 0: success, Exit 4: succeeded with unit warnings, 1-3: failed"
   exit 0
 fi
 
 SKIP_REBUILD=0
+BRANCH_SELECT=0
+BRANCH_NAME=""
 POSITIONAL=()
-for arg in "$@"
+while [[ $# -gt 0 ]]
 do
-  if [[ "$arg" == "--skip-rebuild" ]]
-  then
-    SKIP_REBUILD=1
-  else
-    POSITIONAL+=("$arg")
-  fi
+  case "$1" in
+    --skip-rebuild)
+      SKIP_REBUILD=1
+      ;;
+    -b|--branch)
+      BRANCH_SELECT=1
+      if [[ -n "${2:-}" && "${2}" != -* ]]
+      then
+        BRANCH_NAME="$2"
+        shift
+      fi
+      ;;
+    --branch=*)
+      BRANCH_SELECT=1
+      BRANCH_NAME="${1#*=}"
+      ;;
+    *)
+      POSITIONAL+=("$1")
+      ;;
+  esac
+  shift
 done
 NIXOS_DIR="${POSITIONAL[0]:-/home/oisin/NixOS}"
 FLAKE="${POSITIONAL[1]:-nixos}"
@@ -67,10 +88,64 @@ then
   exit 1
 fi
 
+if [[ $BRANCH_SELECT -eq 1 ]]
+then
+  printl "Fetching remote branches..."
+  git -C "${NIXOS_DIR}" fetch --quiet --prune
+
+  if [[ -z "${BRANCH_NAME}" ]]
+  then
+    mapfile -t RECENT < <(
+      git -C "${NIXOS_DIR}" for-each-ref refs/remotes/origin \
+        --sort=-committerdate --format='%(refname:lstrip=3)' \
+        | grep -vx "HEAD" | head -3
+    )
+    printl "Recently pushed branches:"
+    for i in "${!RECENT[@]}"
+    do
+      printl "  [$((i+1))] ${RECENT[$i]}"
+    done
+    print "Branch? [1-${#RECENT[@]}, any name, or enter to stay] " "${ansi_orange}"
+    read answer
+    if [[ "${answer}" =~ ^[0-9]+$ ]] && (( answer >= 1 && answer <= ${#RECENT[@]} ))
+    then
+      BRANCH_NAME="${RECENT[$((answer-1))]}"
+    else
+      BRANCH_NAME="${answer}"
+    fi
+  fi
+
+  if [[ -n "${BRANCH_NAME}" ]]
+  then
+    if git -C "${NIXOS_DIR}" show-ref --verify --quiet "refs/heads/${BRANCH_NAME}" \
+      || git -C "${NIXOS_DIR}" show-ref --verify --quiet "refs/remotes/origin/${BRANCH_NAME}"
+    then
+      # Existing local branch, or remote branch (switch auto-creates a tracking copy).
+      if ! git -C "${NIXOS_DIR}" switch "${BRANCH_NAME}"
+      then
+        printl "Branch switch failed — aborting." "${ansi_red}"
+        exit 1
+      fi
+    else
+      print "Branch '${BRANCH_NAME}' doesn't exist. Create? [Y/n] " "${ansi_orange}"
+      read answer
+      if [[ ! "${answer}" =~ ^[nN] ]]
+      then
+        if ! git -C "${NIXOS_DIR}" switch -c "${BRANCH_NAME}"
+        then
+          printl "Branch creation failed — aborting." "${ansi_red}"
+          exit 1
+        fi
+      fi
+    fi
+  fi
+  printl "On branch $(git -C "${NIXOS_DIR}" branch --show-current)"
+fi
+
 printl "=== NixOS Generation ${OLD_GEN} ===" "${ansi_bold}${ansi_pink}"
 if ! git -C ${NIXOS_DIR} diff --quiet
 then
-  print "Want to see a diff? [y/ ] " "${ansi_orange}"
+  print "Want to see a diff? [y/N] " "${ansi_orange}"
   read answer
 
   if [[ ${answer} == "y" || ${answer} == "Y" ]]
@@ -209,12 +284,14 @@ then
   sudo chown -R "$(id -un):$(id -gn)" "${NIXOS_DIR}/.git"
   if [[ $REBUILD_STATUS -eq 0 || $REBUILD_STATUS -eq 4 ]] 
   then
-    print "Commit changes? [y/ ] " "${ansi_orange}"
+    print "Commit and push changes? [Y/n] " "${ansi_orange}"
     read answer
-    if [[ "${answer}" == "y" || "${answer}" == "Y" ]]
+    if [[ ! "${answer}" =~ ^[nN] ]]
     then
       printl "Committing changes..."
       git -C ${NIXOS_DIR} commit -m "NixOS Rebuild: Generation ${REBUILD_GEN}"
+      printl "Pushing changes..."
+      git -C ${NIXOS_DIR} push -u origin HEAD
     fi
   fi
 
