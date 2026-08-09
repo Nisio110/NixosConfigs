@@ -58,7 +58,6 @@ let
     oh-my-pi
     netbird
     claude-code
-    fastfetch
     kitty-img
     qbittorrent
     weathr
