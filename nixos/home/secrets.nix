@@ -1,18 +1,9 @@
-# ==========================================
-# SECRETS CONFIGURATION (sops-nix, home-manager)
-# ==========================================
-# Decrypts secrets via the sops-nix user service / HM activation.
-# Secrets land at ~/.local/secrets/<name>.
-#
-# PREREQUISITE:
-#   1. Age private key at ~/.local/secrets/sops/age/keys.txt
-#      (must match the recipient listed in secrets/secrets.yaml)
-#   2. Edit secrets with:  sops secrets/secrets.yaml
+
 { inputs, secretsDir,  ... }:
 {
   imports = [ inputs.sops-nix.homeModules.sops ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.defaultSopsFile = ../../secrets.yaml;
   sops.defaultSopsFormat = "yaml";
 
   sops.age.keyFile = "${secretsDir}/sops/age/keys.txt";

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, secretsDir, ... }:
 {
   environment = {
     pathsToLink = [ "/home/oisin/Scripts" ];
@@ -10,6 +10,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
       LIBVIRT_DEFAULT_URI = "qemu:///system";
+      SOPS_AGE_KEY_FILE="${secretsDir}/sops/age/keys.txt";
     };
 
     extraInit = ''

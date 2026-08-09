@@ -7,8 +7,9 @@
 ansi_reset="\033[0m"
 ansi_bold="\033[1m"
 ansi_green="\033[32m"
-ansi_coral="\033[38;5;211m"
-ansi_mustard="\033[38;5;220m"
+ansi_pink="\033[38;2;243;192;229m"
+ansi_orange="\033[38;2;248;138;45m"
+ansi_red="\033[31m"
 
 NIXOS_DIR="${1:-/home/oisin/NixOS}"
 shift 2>/dev/null || true
@@ -24,7 +25,7 @@ fi
 
 # Same shape as ./rebuild: `>> msg <<`, headers in bold.
 print() {
-  echo -en "${2:-${ansi_coral}}>> ${1} ${ansi_reset}"
+  echo -en "${2:-${ansi_pink}}>> ${1} ${ansi_reset}"
 }
 printl() {
   print "${1} <<\n" "${2:-}"
@@ -34,12 +35,11 @@ printl() {
 # 1. Validate the flake directory
 # -----------------------------------------------
 if [[ ! -f "${NIXOS_DIR}/flake.nix" ]]; then
-  printl "No flake.nix found in ${NIXOS_DIR}" "${ansi_mustard}"
+  printl "No flake.nix found in ${NIXOS_DIR}" "${ansi_red}"
   exit 1
 fi
 
-printl "=== Nix Flake Update ===" "${ansi_bold}${ansi_coral}"
-printl "Directory: ${NIXOS_DIR}"
+printl "=== Nix Flake Update ===" "${ansi_bold}${ansi_pink}"
 
 # -----------------------------------------------
 # 2. Run nix flake update
@@ -47,10 +47,10 @@ printl "Directory: ${NIXOS_DIR}"
 if (( ${#INPUTS[@]} > 0 )); then
   printl "Updating inputs: ${INPUTS[*]}"
 else
-  printl "Updating all inputs..."
+  printl "Updating flake inputs..."
 fi
 if ! nix flake update --flake "${NIXOS_DIR}" "${INPUTS[@]}"; then
-  printl "nix flake update failed — flake.lock left as-is." "${ansi_mustard}"
+  printl "nix flake update failed — flake.lock left as-is." "${ansi_red}"
   exit 1
 fi
 
@@ -59,11 +59,12 @@ fi
 # -----------------------------------------------
 LOCK_DIFF=$(git -C "${NIXOS_DIR}" diff flake.lock)
 if [[ -z "${LOCK_DIFF}" ]]; then
-  printl "No changes — all inputs are already up to date." "${ansi_green}"
+  printl "Up to date!" "${ansi_bold}${ansi_green}"
+  printf '\n'
   exit 0
 fi
 
-printl "Changes to flake.lock:" "${ansi_green}"
+printl "Changes to flake.lock:" "${ansi_bold}${ansi_green}"
 echo
 
 # Pretty-print: show only lines that look like "lastModified" or "narHash"
@@ -100,15 +101,15 @@ echo
 # -----------------------------------------------
 # 4. Optionally rebuild
 # -----------------------------------------------
-print "Rebuild now? [y/ ] " "${ansi_mustard}"; read -r answer
+print "Rebuild now? [y/ ] " "${ansi_orange}"; read -r answer
 if [[ "${answer}" == "y" || "${answer}" == "Y" ]]; then
   REBUILD_SCRIPT="${NIXOS_DIR}/rebuild"
   if [[ ! -x "${REBUILD_SCRIPT}" ]]; then
-    printl "'${REBUILD_SCRIPT}' not found or not executable." "${ansi_mustard}"
+    printl "'${REBUILD_SCRIPT}' not found or not executable." "${ansi_red}"
     exit 1
   fi
   # Not sudo: rebuild escalates internally and must own the git repo.
   exec "${REBUILD_SCRIPT}" "${NIXOS_DIR}"
 fi
 
-printl "Update complete. Run './rebuild' when ready to apply." "${ansi_green}"
+printl "Update complete. Run './rebuild' when ready to apply." "${ansi_bold}${ansi_green}"
