@@ -11,7 +11,7 @@ ansi_pink="\033[38;2;243;192;229m"
 ansi_orange="\033[38;2;248;138;45m"
 ansi_red="\033[31m"
 
-NIXOS_DIR="${1:-/home/oisin/NixOS}"
+NIXOS_DIR="${1:-/home/oisin/Nixos}"
 shift 2>/dev/null || true
 INPUTS=("$@")   # remaining args are specific inputs to update
 

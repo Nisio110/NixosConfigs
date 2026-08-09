@@ -61,7 +61,7 @@ do
   esac
   shift
 done
-NIXOS_DIR="${POSITIONAL[0]:-/home/oisin/NixOS}"
+NIXOS_DIR="${POSITIONAL[0]:-/home/oisin/Nixos}"
 FLAKE="${POSITIONAL[1]:-nixos}"
 OLD_GEN=$(nixos-rebuild list-generations 2>/dev/null | head -2 | tail -1 | awk '{print $1}')
 EXEC_REBUILD=1
