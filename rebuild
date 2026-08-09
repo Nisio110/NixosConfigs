@@ -139,10 +139,9 @@ then
       fi
     fi
   fi
-  printl "On branch $(git -C "${NIXOS_DIR}" branch --show-current)"
 fi
 
-printl "=== NixOS Generation ${OLD_GEN} ===" "${ansi_bold}${ansi_pink}"
+printl "=== NixOS Generation ${OLD_GEN} — branch $(git -C "${NIXOS_DIR}" branch --show-current) ===" "${ansi_bold}${ansi_pink}"
 if ! git -C ${NIXOS_DIR} diff --quiet
 then
   print "Want to see a diff? [y/N] " "${ansi_orange}"
