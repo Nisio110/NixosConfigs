@@ -144,24 +144,38 @@ let
     };
   };
 
+  # Upstream github.com/k-krawczyk/proxmox-mcp-server was deleted (noticed
+  # 2026-08; no fork or archive survives), so the author's npm release is the
+  # only remaining distribution. The tarball ships prebuilt dist/
+  # (prepublishOnly ran tsc) but, like all npm tarballs, no lockfile — so a
+  # devDependencies-free package.json + generated lock are vendored in ./mcp.
+  # Tarball verified against the registry integrity for 0.2.0
+  # (sha512-ERKK37kMCtFJpKZOr0GV75zoacwSlQTSK+eFV8hTK1zERZfoicQfVQfZFk8QqVyf7THb2MtI+zpGL4mbWaTBkg==).
   proxmox-mcp-server = pkgs.buildNpmPackage rec {
     pname = "proxmox-mcp-server";
     version = "0.2.0";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "k-krawczyk";
-      repo = "proxmox-mcp-server";
-      rev = "v${version}";
-      hash = "sha256-1q1Ul3/fgqlt2cprbQron0ktI9DuNiGrQA/K/NcrrT4=";
+    src = pkgs.fetchurl {
+      url = "https://registry.npmjs.org/proxmox-mcp-server/-/proxmox-mcp-server-${version}.tgz";
+      hash = "sha256-82ZzMuJwAVEN7BjHfo6AQIqZBoutmtX75DdfBAGRhGw=";
     };
 
-    npmDepsHash = "sha256-ohBR+AxbsMQK13GGFtQ0IJ+9T6xm7s/4NHPZ7WAt1Yg=";
+    # Copied in postPatch so fetchNpmDeps and the main build see the same
+    # tree (fetchNpmDeps forwards postPatch but not nativeBuildInputs).
+    postPatch = ''
+      cp ${./mcp/proxmox-mcp-package.json} package.json
+      cp ${./mcp/proxmox-mcp-package-lock.json} package-lock.json
+    '';
 
-    # `npm run build` (tsc) runs automatically (package.json has a "build" script);
+    npmDepsHash = "sha256-dYaTAS+2yMPDJDdrAIGNJq5oc+sDO05H/pulMJt/RJ0=";
+
+    # dist/ is prebuilt in the npm tarball; nothing to compile.
+    dontNpmBuild = true;
+
     # bin: proxmox-mcp-server -> dist/index.js.
     meta = {
       description = "MCP server exposing Proxmox VE management as tools over stdio";
-      homepage = "https://github.com/k-krawczyk/proxmox-mcp-server";
+      homepage = "https://www.npmjs.com/package/proxmox-mcp-server";
       license = pkgs.lib.licenses.mit;
       mainProgram = "proxmox-mcp-server";
     };

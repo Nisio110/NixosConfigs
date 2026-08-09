@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nix eval *)",
+      "Bash(nix log *)",
+      "Bash(nix build *)",
+      "Bash(/nix/store/k716s254gqmk7p3m5f33gfw6bkxrcnw1-nixvim/bin/nvim --headless -c \"lua print\\(package.path\\)\" -c \"q\")",
+      "Bash(/nix/store/k716s254gqmk7p3m5f33gfw6bkxrcnw1-nixvim/bin/nvim --headless -c \"lua io.write\\(vim.o.rtp\\)\" -c \"q\")",
+      "Bash(/nix/store/k716s254gqmk7p3m5f33gfw6bkxrcnw1-nixvim/bin/nvim *)",
+      "Bash(nix search *)",
+      "Bash(nixos-rebuild dry-run *)",
+      "Bash(timeout 300 nix --extra-experimental-features 'nix-command flakes' eval '.#nixosConfigurations.nixos.config.home-manager.users.oisin.programs.nixvim.lsp.servers.bashls.package.name' --show-trace)",
+      "Bash(timeout 300 nix --extra-experimental-features 'nix-command flakes' eval '.#nixosConfigurations.nixos.config.home-manager.users.oisin.programs.nixvim.lsp.servers.bashls.package.name')",
+      "Bash(cd /tmp/omp-inspect/package/scripts)",
+      "Bash(sed -n '1,120p' build-binary.ts)"
+    ]
+  }
+}

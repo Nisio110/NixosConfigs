@@ -53,7 +53,19 @@ printl(){
 }
 # ===============================================
 #
-sudo -v
+# Must run as the repo owner: nix refuses a git repo owned by another user,
+# and git add/commit as root litters .git with root-owned objects. sudo is
+# invoked internally where needed.
+if [[ ${EUID} -eq 0 ]]
+then
+  printl "Run as your normal user — this script invokes sudo itself." "${ansi_red}"
+  exit 1
+fi
+if ! sudo -v
+then
+  printl "sudo authentication failed — aborting." "${ansi_red}"
+  exit 1
+fi
 
 printl "=== NixOS Generation ${OLD_GEN} ===" "${ansi_bold}${ansi_pink}"
 if ! git -C ${NIXOS_DIR} diff --quiet

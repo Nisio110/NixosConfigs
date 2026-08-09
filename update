@@ -5,6 +5,7 @@
 #   input      One or more specific flake inputs to update (default: all)
 
 ansi_reset="\033[0m"
+ansi_bold="\033[1m"
 ansi_green="\033[32m"
 ansi_coral="\033[38;5;211m"
 ansi_mustard="\033[38;5;220m"
@@ -13,11 +14,20 @@ NIXOS_DIR="${1:-/home/oisin/NixOS}"
 shift 2>/dev/null || true
 INPUTS=("$@")   # remaining args are specific inputs to update
 
+# rebuild (and nix itself) must run as the repo owner: it escalates via sudo
+# internally, and running the whole thing as root makes libgit2 refuse the
+# user-owned repo and litters .git with root-owned objects.
+if [[ ${EUID} -eq 0 ]]; then
+  echo "Run this as your normal user — the rebuild script invokes sudo itself." >&2
+  exit 1
+fi
+
+# Same shape as ./rebuild: `>> msg <<`, headers in bold.
 print() {
-  echo -en "${2:-${ansi_coral}}>> ${1}${ansi_reset}"
+  echo -en "${2:-${ansi_coral}}>> ${1} ${ansi_reset}"
 }
 printl() {
-  print "${1}\n" "${2:-}"
+  print "${1} <<\n" "${2:-}"
 }
 
 # -----------------------------------------------
@@ -28,7 +38,7 @@ if [[ ! -f "${NIXOS_DIR}/flake.nix" ]]; then
   exit 1
 fi
 
-printl "=== Nix Flake Update"
+printl "=== Nix Flake Update ===" "${ansi_bold}${ansi_coral}"
 printl "Directory: ${NIXOS_DIR}"
 
 # -----------------------------------------------
@@ -36,10 +46,12 @@ printl "Directory: ${NIXOS_DIR}"
 # -----------------------------------------------
 if (( ${#INPUTS[@]} > 0 )); then
   printl "Updating inputs: ${INPUTS[*]}"
-  nix flake update --flake "${NIXOS_DIR}" "${INPUTS[@]}"
 else
   printl "Updating all inputs..."
-  nix flake update --flake "${NIXOS_DIR}"
+fi
+if ! nix flake update --flake "${NIXOS_DIR}" "${INPUTS[@]}"; then
+  printl "nix flake update failed — flake.lock left as-is." "${ansi_mustard}"
+  exit 1
 fi
 
 # -----------------------------------------------
@@ -95,7 +107,8 @@ if [[ "${answer}" == "y" || "${answer}" == "Y" ]]; then
     printl "'${REBUILD_SCRIPT}' not found or not executable." "${ansi_mustard}"
     exit 1
   fi
-  exec sudo "${REBUILD_SCRIPT}" "${NIXOS_DIR}"
+  # Not sudo: rebuild escalates internally and must own the git repo.
+  exec "${REBUILD_SCRIPT}" "${NIXOS_DIR}"
 fi
 
-printl "Update complete. Run 'sudo rebuild' when ready to apply." "${ansi_green}"
+printl "Update complete. Run './rebuild' when ready to apply." "${ansi_green}"
