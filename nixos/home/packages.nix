@@ -37,7 +37,7 @@ let
     joplin-desktop
     kicad
     freecad
-    flashprint
+    orca-slicer
   ];
 
   dev = with pkgs; [
