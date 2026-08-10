@@ -1,3 +1,4 @@
+{user,...}:
 {
   networking = {
     hostName = "nixos";
@@ -10,5 +11,9 @@
     netbird.enable = true;
     tailscale.enable = true;
     openssh.enable = true;
+  };
+
+  services.tailscale = {
+    extraSetFlags = [ "--operator=${user}" ];
   };
 }
