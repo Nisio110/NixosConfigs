@@ -21,7 +21,7 @@
       scrollback_lines = 5000;
 
       # Window
-      remember_window_size = true;
+      remember_window_size = false;
       initial_window_width = 500;
       initial_window_height = 500;
       draw_minimal_borders = false;
