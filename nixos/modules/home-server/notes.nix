@@ -27,18 +27,6 @@
   virtualisation.oci-containers = {
     backend = "docker";
     containers = {
-      "joplin-app" = {
-        image = "joplin/server:latest";
-        ports = [ "7878:22300/tcp" ];
-        dependsOn = [ "joplin-db" ];
-        log-driver = "journald";
-        environmentFiles = [ config.sops.templates.".env.joplin".path ];
-        extraOptions = [
-          "--network-alias=app"
-          "--network=joplin_default"
-        ];
-      };
-
       "joplin-db" = {
         image = "postgres:15";
         log-driver = "journald";
@@ -51,12 +39,24 @@
           "--network=joplin_default"
         ];
       };
+      "joplin-app" = {
+        image = "joplin/server:latest";
+        ports = [ "7878:22300/tcp" ];
+        dependsOn = [ "joplin-db" ];
+        log-driver = "journald";
+        environmentFiles = [ config.sops.templates.".env.joplin".path ];
+        extraOptions = [
+          "--network-alias=app"
+          "--network=joplin_default"
+        ];
+      };
+
     };
   };
 
   systemd.services."docker-joplin-app" = {
-    after =     [ "docker-network-joplin_default.service" ];
-    requires =  [ "docker-network-joplin_default.service" ];
+    after =     [ "docker-network-joplin_db.service" ];
+    requires =  [ "docker-network-joplin_db.service" ];
     partOf =    [ "docker-compose-joplin-root.target" ];
     wantedBy =  [ "docker-compose-joplin-root.target" ];
     path = [ pkgs.docker ];
