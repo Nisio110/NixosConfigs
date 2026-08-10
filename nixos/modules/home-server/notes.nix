@@ -33,8 +33,6 @@
         dependsOn = [ "joplin-db" ];
         log-driver = "journald";
         environmentFiles = [ config.sops.templates.".env.joplin".path ];
-        environment = {
-        };
         extraOptions = [
           "--network-alias=app"
           "--network=joplin_default"
@@ -45,10 +43,6 @@
         image = "postgres:15";
         log-driver = "journald";
         environmentFiles = [ config.sops.templates.".env.joplin".path ];
-        environment = {
-          "POSTGRES_DB" = "joplin";
-          "POSTGRES_USER" = "joplin";
-        };
         volumes = [
           "/home/oisin/.local/share/Joplin/data/postgres:/var/lib/postgresql/data:rw"
         ];
