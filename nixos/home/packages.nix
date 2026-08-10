@@ -37,6 +37,7 @@ let
     joplin-desktop
     kicad
     freecad
+    flashprint
   ];
 
   dev = with pkgs; [
