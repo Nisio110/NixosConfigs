@@ -38,6 +38,7 @@ let
     kicad
     freecad
     orca-slicer
+    slack
   ];
 
   dev = with pkgs; [
