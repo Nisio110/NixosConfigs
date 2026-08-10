@@ -42,6 +42,11 @@
         proxyPass = "http://127.0.0.1:9009";
       };
 
+      "print.tetocorp.ie".locations."/" = {
+        proxyPass = "http://127.0.0.1:3000";
+        proxyWebsockets = true;
+      };
+
       "stream.tetocorp.ie".locations."/" = {
         proxyPass = "https://192.168.0.19:5051";
         proxyWebsockets = true;
