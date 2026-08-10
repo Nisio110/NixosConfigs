@@ -9,17 +9,20 @@
     defaultSopsFormat = "yaml";
 
     age.keyFile = "${secretsDir}/sops/age/keys.txt";
+    secrets.joplin_postgres = { };
+
     templates.".env.joplin" = {
       mode = "0400";
+      restartUnits = [ "docker-joplin-db.service" "docker-joplin-app.service" ];
       content = ''
-        POSTGRES_PASSWORD=${config.sops.secrets.joplin_postgres}
-        APP_BASE_URL=http://notes.tetocorp.ie;
-        DB_CLIENT=pg;
-        NODE_ENV=production;
-        POSTGRES_DATABASE=joplin;
-        POSTGRES_HOST=db;
-        POSTGRES_PORT=5432;
-        POSTGRES_USER=oisin;
+        POSTGRES_PASSWORD=${config.sops.placeholder.joplin_postgres}
+        APP_BASE_URL=http://notes.tetocorp.ie
+        DB_CLIENT=pg
+        NODE_ENV=production
+        POSTGRES_DATABASE=joplin
+        POSTGRES_HOST=db
+        POSTGRES_PORT=5432
+        POSTGRES_USER=oisin
       '';
     };
   };
