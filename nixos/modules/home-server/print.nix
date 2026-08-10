@@ -1,8 +1,3 @@
-# FlashForge WebUI — web dashboard for the FlashForge printer at 192.168.0.20.
-# Upstream ships a dynamically-linked Node binary; it runs inside a nixos/nix
-# container whose entrypoint realises the loader + C++ runtime with nix on
-# first boot (cached in the flashforge-webui-nix named volume thereafter).
-# Reachable via nginx at print.tetocorp.ie (default password: changeme).
 { pkgs, ... }:
 let
   version = "1.1.0";
@@ -39,7 +34,6 @@ in
       autoStart = true;
       entrypoint = "/entrypoint";
 
-      # Localhost only — external access goes through nginx.
       ports = [ "127.0.0.1:3000:3000/tcp" ];
 
       volumes = [

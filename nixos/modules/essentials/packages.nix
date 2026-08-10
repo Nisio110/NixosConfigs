@@ -43,7 +43,6 @@ misc = with pkgs; [
 
 services = {
   qbittorrent.enable = true;
-  netbird.enable = true;
 
   #input-remapper = {
     #enable = true;

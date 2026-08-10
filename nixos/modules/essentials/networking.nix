@@ -6,5 +6,9 @@
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
   };
 
-  services.openssh.enable = true;
+  services = {
+    netbird.enable = true;
+    tailscale.enable = true;
+    openssh.enable = true;
+  };
 }

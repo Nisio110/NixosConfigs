@@ -9,8 +9,6 @@ let
     setupVersion = 1;
     modelRoles = {
       default = "openai/gpt-5.6-terra:high";
-      #plan = "openai/gpt-5.6-sol:high";
-      #advisor = "openai/gpt-5.6-sol:high";
     };
     images = { blockImages = false; };
     display = { shimmer = "classic"; showTokenUsage = true; };
