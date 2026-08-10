@@ -1,7 +1,7 @@
-{user,...}:
+{user, ...}:
 {
   networking = {
-    hostName = "nixos";
+    hostName = "hdesktop";
     networkmanager.enable = true;
     firewall.enable = false;
     nameservers = [ "1.1.1.1" "1.0.0.1" ];
