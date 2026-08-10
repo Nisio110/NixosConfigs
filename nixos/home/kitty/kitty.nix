@@ -22,8 +22,8 @@
 
       # Window
       remember_window_size = true;
-      initial_window_width = 1121;
-      initial_window_height = 656;
+      initial_window_width = 500;
+      initial_window_height = 500;
       draw_minimal_borders = false;
       window_padding_width = "10 15";
       confirm_os_window_close = 0;
