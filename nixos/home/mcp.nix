@@ -3,11 +3,11 @@
 # ==========================================
 # Registered with Oh My Pi in ./oh-my-pi.nix (ompMcp); binaries land in the
 # per-user profile. Secret-reading servers use runtime wrappers so tokens
-# never enter the world-readable nix store: each wrapper cats
-# ~/.local/secrets/<name> (decrypted by sops-nix, see ./secrets.nix) at launch.
+# never enter the world-readable nix store: each wrapper sources a
+# sops-nix rendered env template (see ./secrets.nix) at launch.
 # kwin-mcp and computer-use-linux are bespoke ~/.local/bin tools — registry
 # entries only in oh-my-pi.nix, nothing to package here.
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   zen-mcp = pkgs.buildNpmPackage rec {
     pname = "zen-mcp";
@@ -111,15 +111,18 @@ let
   # (sha512-ERKK37kMCtFJpKZOr0GV75zoacwSlQTSK+eFV8hTK1zERZfoicQfVQfZFk8QqVyf7THb2MtI+zpGL4mbWaTBkg==).
 
   # ── Secret wrappers ─────────────────────────────────────────────
-  # Declare-then-export (two lines) is required: `export FOO=$(...)` fails
-  # writeShellApplication's shellcheck (SC2155).
+  # Each wrapper sources the sops-nix rendered env template (./secrets.nix)
+  # instead of cat-ing a raw decrypted secret file; `set -a` exports every
+  # var the template defines for the duration of the exec'd process.
 
   mcp-github = pkgs.writeShellApplication {
     name = "mcp-github";
     runtimeInputs = [ pkgs.github-mcp-server ];
     text = ''
-      GITHUB_PERSONAL_ACCESS_TOKEN=$(cat "$HOME/.local/secrets/github_token")
-      export GITHUB_PERSONAL_ACCESS_TOKEN
+      set -a
+      # shellcheck source=/dev/null
+      source "${config.sops.templates."github.env".path}"
+      set +a
       exec github-mcp-server stdio
     '';
   };
@@ -128,8 +131,10 @@ let
     name = "mcp-brave-search";
     runtimeInputs = [ mcp-server-brave-search ];
     text = ''
-      BRAVE_API_KEY=$(cat "$HOME/.local/secrets/brave_api_key")
-      export BRAVE_API_KEY
+      set -a
+      # shellcheck source=/dev/null
+      source "${config.sops.templates."brave.env".path}"
+      set +a
       exec mcp-server-brave-search
     '';
   };
