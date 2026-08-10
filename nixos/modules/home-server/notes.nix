@@ -9,112 +9,109 @@
     defaultSopsFormat = "yaml";
 
     age.keyFile = "${secretsDir}/sops/age/keys.txt";
-    secrets.joplin_postgres = { };
     templates.".env.joplin" = {
       mode = "0400";
       content = ''
         POSTGRES_PASSWORD=${config.sops.placeholder.joplin_postgres}
+        APP_BASE_URL=http://notes.tetocorp.ie;
+        DB_CLIENT=pg;
+        NODE_ENV=production;
+        POSTGRES_DATABASE=joplin;
+        POSTGRES_HOST=db;
+        POSTGRES_PORT=5432;
+        POSTGRES_USER=oisin;
       '';
     };
   };
-  # Runtime
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
-  };
 
-  # Containers
-  virtualisation.oci-containers.backend = "docker";
-  virtualisation.oci-containers.containers."joplin-app" = {
-    image = "joplin/server:latest";
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      "joplin-app" = {
+        image = "joplin/server:latest";
+        ports = [ "7878:22300/tcp" ];
+        dependsOn = [ "joplin-db" ];
+        log-driver = "journald";
+        environmentFiles = [ config.sops.templates.".env.joplin".path ];
+        environment = {
+        };
+        extraOptions = [
+          "--network-alias=app"
+          "--network=joplin_default"
+        ];
+      };
 
-    environmentFiles = [
-      config.sops.templates.".env.joplin".path
-    ];
-
-    environment = {
-      "APP_BASE_URL" = "http://notes.tetocorp.ie";
-      "DB_CLIENT" = "pg";
-      "NODE_ENV" = "production";
-      "POSTGRES_DATABASE" = "joplin";
-      "POSTGRES_HOST" = "db";
-      "POSTGRES_PORT" = "5432";
-      "POSTGRES_USER" = "oisin";
+      "joplin-db" = {
+        image = "postgres:15";
+        log-driver = "journald";
+        environmentFiles = [ config.sops.templates.".env.joplin".path ];
+        environment = {
+          "POSTGRES_DB" = "joplin";
+          "POSTGRES_USER" = "joplin";
+        };
+        volumes = [
+          "/home/oisin/.local/share/Joplin/data/postgres:/var/lib/postgresql/data:rw"
+        ];
+        extraOptions = [
+          "--network-alias=db"
+          "--network=joplin_default"
+        ];
+      };
     };
-    ports = [ "7878:22300/tcp" ];
-    dependsOn = [ "joplin-db" ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=app"
-      "--network=joplin_default"
-    ];
   };
+
   systemd.services."docker-joplin-app" = {
+    after =     [ "docker-network-joplin_default.service" ];
+    requires =  [ "docker-network-joplin_default.service" ];
+    partOf =    [ "docker-compose-joplin-root.target" ];
+    wantedBy =  [ "docker-compose-joplin-root.target" ];
+    path = [ pkgs.docker ];
+
     serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-      RestartMaxDelaySec = lib.mkOverride 90 "1m";
-      RestartSec = lib.mkOverride 90 "100ms";
-      RestartSteps = lib.mkOverride 90 9;
+      Restart             = lib.mkOverride 90 "always";
+      RestartMaxDelaySec  = lib.mkOverride 90 "1m";
+      RestartSec          = lib.mkOverride 90 "100ms";
+      RestartSteps        = lib.mkOverride 90 9;
     };
-    after = [     "docker-network-joplin_default.service" ];
-    requires = [  "docker-network-joplin_default.service" ];
-    partOf = [    "docker-compose-joplin-root.target" ];
-    wantedBy = [  "docker-compose-joplin-root.target" ];
-    path = [pkgs.docker];
   };
-  virtualisation.oci-containers.containers."joplin-db" = {
-    image = "postgres:15";
 
-    environmentFiles = [
-      config.sops.templates.".env.joplin".path
-    ];
-
-    environment = {
-      "POSTGRES_DB" = "joplin";
-      "POSTGRES_USER" = "joplin";
-    };
-    volumes = [
-      "/home/oisin/.local/share/Joplin/data/postgres:/var/lib/postgresql/data:rw"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=db"
-      "--network=joplin_default"
-    ];
-  };
   systemd.services."docker-joplin-db" = {
+    after     = [ "docker-network-joplin_default.service" ];
+    requires  = [ "docker-network-joplin_default.service" ];
+    partOf    = [ "docker-compose-joplin-root.target" ];
+    wantedBy  = [ "docker-compose-joplin-root.target" ];
+
     serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-      RestartMaxDelaySec = lib.mkOverride 90 "1m";
-      RestartSec = lib.mkOverride 90 "100ms";
-      RestartSteps = lib.mkOverride 90 9;
+      Restart             = lib.mkOverride 90 "always";
+      RestartMaxDelaySec  = lib.mkOverride 90 "1m";
+      RestartSec          = lib.mkOverride 90 "100ms";
+      RestartSteps        = lib.mkOverride 90 9;
     };
-    after = [ "docker-network-joplin_default.service" ];
-    requires = [ "docker-network-joplin_default.service" ];
-    partOf = [ "docker-compose-joplin-root.target" ];
-    wantedBy = [ "docker-compose-joplin-root.target" ];
   };
 
   # Networks
   systemd.services."docker-network-joplin_default" = {
+    partOf    = [ "docker-compose-joplin-root.target" ];
+    wantedBy  = [ "docker-compose-joplin-root.target" ];
     path = [ pkgs.docker ];
+
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStop = "docker network rm -f joplin_default";
     };
-    script = " docker network inspect joplin_default || docker network create joplin_default";
-    partOf = [ "docker-compose-joplin-root.target" ];
-    wantedBy = [ "docker-compose-joplin-root.target" ];
+
+    script = '' 
+      docker network inspect joplin_default || 
+        docker network create joplin_default
+    '';
   };
 
   # Root service
   # When started, this will automatically create all resources and start
   # the containers. When stopped, this will teardown all resources.
   systemd.targets."docker-compose-joplin-root" = {
-    unitConfig = {
-      Description = "Root target generated by compose2nix.";
-    };
     wantedBy = [ "multi-user.target" ];
+    unitConfig.Description = "Root target generated by compose2nix.";
   };
 }
