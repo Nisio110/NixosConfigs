@@ -58,8 +58,8 @@
   };
 
   systemd.services."docker-joplin-app" = {
-    after =     [ "docker-network-joplin_db.service" ];
-    requires =  [ "docker-network-joplin_db.service" ];
+    after =     [ "docker-network-joplin-db.service" ];
+    requires =  [ "docker-network-joplin-db.service" ];
     partOf =    [ "docker-compose-joplin-root.target" ];
     wantedBy =  [ "docker-compose-joplin-root.target" ];
     path = [ pkgs.docker ];
