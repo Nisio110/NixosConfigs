@@ -32,4 +32,6 @@
       }];
     };
   };
+
+  systemd.services.unbound.serviceConfig.Slice = "homeserver-infra.slice";
 }
