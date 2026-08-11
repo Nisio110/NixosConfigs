@@ -16,10 +16,6 @@ let
     url = "https://raw.githubusercontent.com/Suwayomi/Suwayomi-Server/master/server/src/main/resources/icon/faviconlogo.png";
     sha256 = "sha256-dnn1yS3hD9ilgrkq2zNZ3XYG+tPBjWlW0DbReEQwATc=";
   };
-  netdataLogo = pkgs.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/netdata.png";
-    sha256 = "sha256-sljlfdq2BE+85QDICLSA6EDtliUUCbe91U5c6uFA+bk=";
-  };
   sunshineLogo = pkgs.fetchurl {
     url = "https://docs.lizardbyte.dev/projects/sunshine/latest/sunshine.png";
     sha256 = "sha256-kykm+7c7pxwBs7hH0RIJKyCKIPnwZyTxfvzg0h1AtoQ=";
@@ -63,11 +59,6 @@ let
           url = "http://vpn.tetocorp.ie";
           logo = "assets/icons/netbird-logo.png";
         }
-        {
-          name = "Status";
-          url = "http://status.tetocorp.ie";
-          logo = "assets/icons/netdata-logo.png";
-        }
       ];
     }
     ];
@@ -90,7 +81,6 @@ in
         "${netbirdLogo}:/www/assets/icons/netbird-logo.png:ro"
         "${suwayomiLogo}:/www/assets/icons/suwayomi-logo.png:ro"
         "${sunshineLogo}:/www/assets/icons/sunshine-logo.png:ro"
-        "${netdataLogo}:/www/assets/icons/netdata-logo.png:ro"
       ];
 
       # environment = { };

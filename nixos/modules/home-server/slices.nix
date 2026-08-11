@@ -14,7 +14,7 @@
     teto-notes.description = "Joplin server + Postgres";
     teto-dash.description = "Homer dashboard";
     teto-print.description = "FlashForge WebUI";
-    teto-infra.description = "nginx + unbound + netdata";
+    teto-infra.description = "nginx + unbound";
   };
 
   # cgroup v2 accounts CPU/memory by default; IO needs opting in.
