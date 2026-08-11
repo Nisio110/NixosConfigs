@@ -11,19 +11,9 @@
     mouse = true;
     keyMode = "vi";           # setw -g mode-keys vi
     reverseSplit = true;
-
-    # Use a terminfo entry that advertises italics (`sitm`). The default
-    # `screen`/`screen-256color` has no italics capability, so tmux cannot
-    # represent SGR 3 and substitutes *reverse video* (SGR 7) on output —
-    # which swaps fg/bg and makes foreground-coloured italic text (e.g. omp's
-    # welcome "Tip:" line) render as a coloured background bar. `tmux-256color`
-    # carries sitm/ritm and forwards italics unchanged.
     terminal = "tmux-256color";
 
-    # Load tmux-sensible at the very top so the values above
-    # (escapeTime, historyLimit, etc.) are not clobbered by it.
-    # If you'd rather sensible win, remove this and add
-    # `tmuxPlugins.sensible` to the plugins list below.
+    # prevent sensible overriding my config
     sensibleOnTop = true;
 
     plugins = with pkgs.tmuxPlugins; [

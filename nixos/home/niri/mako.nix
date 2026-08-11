@@ -14,7 +14,7 @@ in
       # Clears the floating waybar (34px + 8px margin) plus a gap.
       margin = "12";
       outer-margin = "12,12,12,12";
-      padding = "12,16";
+      padding = "20,16";
       width = 380;
       height = 160;
       border-size = 1;
