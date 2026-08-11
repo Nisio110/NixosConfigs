@@ -97,12 +97,12 @@ in
 
       extraOptions = [
         "--add-host=host.docker.internal:host-gateway"
-        "--cgroup-parent=homeserver-dash.slice"
+        "--cgroup-parent=teto-dash.slice"
       ];
     };
   };
 
-  systemd.services.docker-homer.serviceConfig.Slice = "homeserver-dash.slice";
+  systemd.services.docker-homer.serviceConfig.Slice = "teto-dash.slice";
 
   systemd.tmpfiles.rules = [
     "d /home/oisin/.config/homer 0755 1000 1000 -"

@@ -33,5 +33,5 @@
     };
   };
 
-  systemd.services.unbound.serviceConfig.Slice = "homeserver-infra.slice";
+  systemd.services.unbound.serviceConfig.Slice = "teto-infra.slice";
 }

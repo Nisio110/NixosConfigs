@@ -45,11 +45,11 @@ in
         DATA_DIR = "/data";
         TZ = "Europe/London";
       };
-      extraOptions = [ "--cgroup-parent=homeserver-print.slice" ];
+      extraOptions = [ "--cgroup-parent=teto-print.slice" ];
     };
   };
 
-  systemd.services.docker-flashforge-webui.serviceConfig.Slice = "homeserver-print.slice";
+  systemd.services.docker-flashforge-webui.serviceConfig.Slice = "teto-print.slice";
 
   systemd.tmpfiles.rules = [
     "d /var/lib/flashforge-webui 0755 root root -"

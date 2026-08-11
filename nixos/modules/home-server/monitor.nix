@@ -1,4 +1,4 @@
-# Netdata — historical per-cgroup charts. The homeserver-* slices show up
+# Netdata — historical per-cgroup charts. The teto-* slices show up
 # as named chart families automatically. Proxied at status.tetocorp.ie
 # (vhost lives in nginx.nix with the rest).
 {
@@ -9,5 +9,5 @@
     };
   };
 
-  systemd.services.netdata.serviceConfig.Slice = "homeserver-infra.slice";
+  systemd.services.netdata.serviceConfig.Slice = "teto-infra.slice";
 }

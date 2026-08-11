@@ -40,7 +40,7 @@
         extraOptions = [
           "--network-alias=db"
           "--network=joplin_default"
-          "--cgroup-parent=homeserver-notes.slice"
+          "--cgroup-parent=teto-notes.slice"
         ];
       };
       "joplin-app" = {
@@ -52,7 +52,7 @@
         extraOptions = [
           "--network-alias=app"
           "--network=joplin_default"
-          "--cgroup-parent=homeserver-notes.slice"
+          "--cgroup-parent=teto-notes.slice"
         ];
       };
 
@@ -67,7 +67,7 @@
     path = [ pkgs.docker ];
 
     serviceConfig = {
-      Slice               = "homeserver-notes.slice";
+      Slice               = "teto-notes.slice";
       Restart             = lib.mkOverride 90 "always";
       RestartMaxDelaySec  = lib.mkOverride 90 "1m";
       RestartSec          = lib.mkOverride 90 "100ms";
@@ -82,7 +82,7 @@
     wantedBy  = [ "docker-compose-joplin-root.target" ];
 
     serviceConfig = {
-      Slice               = "homeserver-notes.slice";
+      Slice               = "teto-notes.slice";
       Restart             = lib.mkOverride 90 "always";
       RestartMaxDelaySec  = lib.mkOverride 90 "1m";
       RestartSec          = lib.mkOverride 90 "100ms";

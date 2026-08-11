@@ -25,8 +25,8 @@
     "d /home/oisin/Documents/Manga 0755 ${user} users -"
     "d /home/oisin/Documents/Manga/Sources 0755 ${user} users -"
   ];
-  systemd.services.suwayomi-server.serviceConfig.Slice = "homeserver-manga.slice";
-  systemd.services.docker-flaresolverr.serviceConfig.Slice = "homeserver-manga.slice";
+  systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
+  systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
 
   virtualisation.oci-containers = {
     backend = "docker";
@@ -40,7 +40,7 @@
       environment = {
         TZ = "Europe/London";
       };
-      extraOptions = [ "--cgroup-parent=homeserver-manga.slice" ];
+      extraOptions = [ "--cgroup-parent=teto-manga.slice" ];
     };
   };
 

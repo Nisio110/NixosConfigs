@@ -28,12 +28,12 @@
       extraOptions = [
         "--add-host=host.docker.internal:host-gateway"
         "--device=nvidia.com/gpu=all"
-        "--cgroup-parent=homeserver-media.slice"
+        "--cgroup-parent=teto-media.slice"
       ];
     };
   };
 
-  systemd.services.docker-jellyfin.serviceConfig.Slice = "homeserver-media.slice";
+  systemd.services.docker-jellyfin.serviceConfig.Slice = "teto-media.slice";
 
   systemd.tmpfiles.rules = [
     "d /var/cache/jellyfin 0755 1000 1000 -"

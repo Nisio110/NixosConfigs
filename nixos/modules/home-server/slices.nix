@@ -1,20 +1,20 @@
 # Per-service cgroup slices for resource accounting (no limits — visibility only).
 #
-#   systemd-cgtop homeserver.slice        → whole-stack rollup
-#   systemd-cgtop homeserver-media.slice  → one service, containers included
+#   systemd-cgtop teto.slice        → whole-stack rollup
+#   systemd-cgtop teto-media.slice  → one service, containers included
 #
-# Docker containers join via `--cgroup-parent=homeserver-<x>.slice`; the
+# Docker containers join via `--cgroup-parent=teto-<x>.slice`; the
 # docker-<name>.service wrapper (the attached CLI client) is moved into the
 # same slice so its few MB count in the same bucket.
 {
   systemd.slices = {
-    homeserver.description = "Home server stack";
-    homeserver-media.description = "Jellyfin";
-    homeserver-manga.description = "Suwayomi + FlareSolverr";
-    homeserver-notes.description = "Joplin server + Postgres";
-    homeserver-dash.description = "Homer dashboard";
-    homeserver-print.description = "FlashForge WebUI";
-    homeserver-infra.description = "nginx + unbound + netdata";
+    teto.description = "Home server stack";
+    teto-media.description = "Jellyfin";
+    teto-manga.description = "Suwayomi + FlareSolverr";
+    teto-notes.description = "Joplin server + Postgres";
+    teto-dash.description = "Homer dashboard";
+    teto-print.description = "FlashForge WebUI";
+    teto-infra.description = "nginx + unbound + netdata";
   };
 
   # cgroup v2 accounts CPU/memory by default; IO needs opting in.

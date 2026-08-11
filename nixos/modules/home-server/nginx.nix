@@ -88,5 +88,5 @@
     }
   '';
 
-  systemd.services.nginx.serviceConfig.Slice = "homeserver-infra.slice";
+  systemd.services.nginx.serviceConfig.Slice = "teto-infra.slice";
 }
