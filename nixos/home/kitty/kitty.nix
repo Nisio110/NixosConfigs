@@ -22,7 +22,7 @@
 
       # Window
       remember_window_size = false;
-      initial_window_width = 500;
+      initial_window_width = 550;
       initial_window_height = 500;
       draw_minimal_borders = false;
       window_padding_width = "10 15";
