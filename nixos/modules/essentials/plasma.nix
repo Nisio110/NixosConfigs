@@ -28,25 +28,23 @@ let
   plasmaPkgs = miscPackages ++ kdePackages;
 in {
   environment.systemPackages = plasmaPkgs;
-  services.desktopManager.plasma6.enable = true;
-
-  services.displayManager = {
-    sddm = {
-      enable = true;
-      wayland = {
-        enable = true;
-        compositor = "kwin";
-      };
-    };
-    autoLogin = {
-      enable = true;
-      user = "oisin";
-    };
+  services = {
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm.enable = true;
+    displayManager.autoLogin.enable = true;
+  };
+  programs = {
+    kdeconnect.enable = true;
   };
 
-  programs.kdeconnect.enable = true;
+  services.displayManager = {
+    autoLogin.user = "oisin";
+    sddm.wayland.enable = true;
+    sddm.wayland.compositor = "kwin";
+  };
 
-  # Copies Plasma display config to the SDDM one.
+  # Copies Plasma display config to SDDM
+  # This fixes issues with display rotation
   system.activationScripts.sddmDisplayConfig.text =
   ''
     if [ -f /home/oisin/.config/kwinoutputconfig.json ]; then

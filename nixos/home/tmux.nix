@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   programs.tmux = {
     enable = true;
@@ -11,6 +10,7 @@
     baseIndex = 1;            # sets both base-index and pane-base-index
     mouse = true;
     keyMode = "vi";           # setw -g mode-keys vi
+    reverseSplit = true;
 
     # Use a terminfo entry that advertises italics (`sitm`). The default
     # `screen`/`screen-256color` has no italics capability, so tmux cannot
@@ -42,6 +42,9 @@
     # Note: home-manager appends extraConfig at the END of tmux.conf,
     # after the options block but before plugins are loaded.
     extraConfig = ''
+      # Extra Plugins
+      set -g @plugin 'graemedavidson/tmux-pane-focus
+
       # -- Basic Settings (no dedicated HM option) ----------------
       set -g set-clipboard on
       set -g mode-style "fg=default,bg=default,reverse"
@@ -65,9 +68,9 @@
       bind '%' split-window -h -c "#{pane_current_path}"
 
       # -- Vi mode ------------------------------------------------
-      # 'v' to begin selection, just like Vim
+      # 'v' to begin selection
       bind-key -T copy-mode-vi v send-keys -X begin-selection
-      # 'y' to yank, just like Vim
+      # 'y' to yank
       bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
       # Make Enter behave like 'y'
       unbind-key -T copy-mode-vi Enter
@@ -90,6 +93,7 @@
       # panes
       set -g pane-border-style 'fg=blue dim'
       set -g pane-active-border-style 'fg=red'
+      set -g @pane-focus-enabled on
 
       # statusbar
       set -g status-position bottom

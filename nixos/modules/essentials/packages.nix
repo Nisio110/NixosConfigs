@@ -27,6 +27,7 @@ tools = with pkgs; [
   docker
   docker-compose
   localsend
+  inputs.compose2nix.packages.x86_64-linux.default
 ];
 
 libraries = with pkgs; [
@@ -37,46 +38,47 @@ libraries = with pkgs; [
 misc = with pkgs; [
   cmatrix
   mpv
-  inputs.compose2nix.packages.x86_64-linux.default
 ];
 
 
 services = {
   qbittorrent.enable = true;
-
-  #input-remapper = {
-    #enable = true;
-    #enableUdevRules = false;
-  #};
+  input-remapper.enable = true;
 };
 
 programs = {
   zsh.enable = true;
-  mtr.enable = true; # if traceroute & ping had a baby
+  # if traceroute & ping had a baby
+  mtr.enable = true;
   chromium.enable = true;
+  steam.enable = true;
+  # nix unified cli tool
+  nh.enable = true;
+  thunar.enable = true;
+  # gpg encryption agent, can be used instead of ssh-agent
+  gnupg.agent.enable = true;
+};
+
+services = {
+  input-remapper.enableUdevRules = false;
+};
+
+programs = {
+  thunar.plugins = with pkgs; [thunar-archive-plugin thunar-volman];
+  gnupg.agent.enableSSHSupport = true; 
 
   steam = {
-    enable = true;
     extraCompatPackages = with pkgs; [proton-ge-bin];
     protontricks.enable = true;
     extest.enable = true;
   };
+
   nh = {
-    enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/oisin/NixOS";
+    flake = "/home/oisin/Nixos";
   };
 
-  thunar = {
-    enable = true;
-    plugins = with pkgs; [thunar-archive-plugin thunar-volman];
-  };
-
-  gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  }; # gpg encryption agent, can be used instead of ssh-agent
 };
 
 in {
