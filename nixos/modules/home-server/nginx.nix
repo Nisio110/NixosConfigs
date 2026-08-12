@@ -52,9 +52,20 @@ in
         inherit sslCertificate;
         inherit sslCertificateKey;
         listen = [
-          { addr = "192.168.0.19"; port = 80; }
-          { addr = "192.168.0.19"; port = 443; ssl = true; }
-          { addr = "192.168.0.19"; port = 8920; ssl = true; }
+          {
+            addr = "192.168.0.19";
+            port = 8920;
+            ssl = true;
+          }
+          {
+            addr = "0.0.0.0";
+            port = 443;
+            ssl = true;
+          }
+          { 
+            addr = "0.0.0.0";
+            port = 80;
+          }
         ];
         locations."/" = {
           proxyPass       = "http://127.0.0.1:8096";
