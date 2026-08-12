@@ -25,8 +25,8 @@ let
     sha256 = "sha256-yFpnoVqMfUQ8zK4M9C5Oepqk0Mwe7EkaWPF9hinRzBw=";
   };
   flashforgeLogo = pkgs.fetchurl {
-    url = "https://cdn.brandfetch.io/idqvEdgp9J/w/400/h/400/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B";
-    sha256 = "sha256-FlS6M/J5X7ElCoxu9n6/V43Hk0v26T6PuWlQ5Av3Zw4=";
+    url = "https://vectorseek.com/wp-content/uploads/2023/12/FlashForge-Icon-Logo-Vector.svg-.png";
+    sha256 = "sha256-6oMmzsfA720RhgPQKG0auFFnZB7QamDsSVfnhvnBRt4=";
   };
 
   homerConfig = (pkgs.formats.yaml {}).generate "config.yml" {
