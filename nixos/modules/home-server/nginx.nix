@@ -1,4 +1,9 @@
 {config,...}:
+let
+  cfg = config;
+  sslCertificate = "/var/lib/ssl/tetocorp.crt";
+  sslCertificateKey = "/var/lib/ssl/tetocorp.key";
+in
 {
   services.nginx = {
     enable = true;
@@ -9,51 +14,87 @@
 
     virtualHosts = {
       "tetocorp.ie" = {
-        addSSL = true;
-        useACMEHost = "tetocorp.ie";
-        locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
-
-        locations."/".proxyPass = "http://127.0.0.1:8888";
         default = true;
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8888";
+        };
       };
       
-      "watch.tetocorp.ie".locations."/" = {
-        proxyPass       = "http://127.0.0.1:8096";
-        proxyWebsockets = true;
+      "watch.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass       = "http://127.0.0.1:8096";
+          proxyWebsockets = true;
+        };
       };
       
-      "vpn.tetocorp.ie".locations."/" = {
-        return = "301 https://app.netbird.io$request_uri";
+      "vpn.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          return = "301 https://app.netbird.io$request_uri";
+        };
       };
 
-      "notes.tetocorp.ie".locations."/" = {
-        proxyPass = "http://127.0.0.1:7878";
-        extraConfig = ''
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-        '';
+      "notes.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:7878";
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+          '';
+        };
       };
 
-      "manga.tetocorp.ie".locations."/" = {
-        proxyPass = "http://127.0.0.1:9090";
-        proxyWebsockets = true;
+      "manga.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:9090";
+          proxyWebsockets = true;
+        };
       };
 
-      "cloudflare-bypass.tetocorp.ie".locations."/" = {
-        proxyPass = "http://127.0.0.1:9009";
+      "cloudflare-bypass.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:9009";
+        };
       };
 
-      "print.tetocorp.ie".locations."/" = {
-        proxyPass = "http://127.0.0.1:3000";
-        proxyWebsockets = true;
+      "print.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:3000";
+          proxyWebsockets = true;
+        };
       };
 
-      "stream.tetocorp.ie".locations."/" = {
-        proxyPass = "https://192.168.0.19:5051";
-        proxyWebsockets = true;
-        extraConfig = "proxy_set_header Origin $sunshine_ui_origin;";
+      "stream.tetocorp.ie" = {
+        addSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "https://192.168.0.19:5051";
+          proxyWebsockets = true;
+          extraConfig = "proxy_set_header Origin $sunshine_ui_origin;";
+        };
       };
 
     };
@@ -86,9 +127,4 @@
   };
 
   systemd.services.nginx.serviceConfig.Slice = "teto-infra.slice";
-  security.acme = {
-    defaults.webroot = "/var/lib/acme/acme-challenge/";
-    certs."tetocorp.ie".group = config.services.nginx.group;
-  };
-  networking.firewall.allowedTCPPorts = [80];
 }
