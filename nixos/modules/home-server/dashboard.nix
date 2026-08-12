@@ -104,7 +104,7 @@ in
       user = "400:400";
       ports = [ "8888:8080/tcp" ];
       volumes = [ 
-        "/home/oisin/.config/homer:/www/assets"
+        "/var/lib/homer:/www/assets"
         "${homerConfig}:/www/assets/config.yml:ro"
         "${jellyfinLogo}:/www/assets/icons/jellyfin-logo.png:ro"
         "${tetoPlush}:/www/assets/icons/teto-plush.png:ro"
@@ -128,7 +128,7 @@ in
   systemd.services.docker-homer.serviceConfig.Slice = "teto-dash.slice";
 
   systemd.tmpfiles.rules = [
-    "d /home/oisin/.config/homer 0755 homer homer -"
+    "d /var/lib/homer 0755 homer homer -"
   ];
 
 }
