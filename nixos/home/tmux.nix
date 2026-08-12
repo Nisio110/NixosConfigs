@@ -33,7 +33,7 @@
     # after the options block but before plugins are loaded.
     extraConfig = ''
       # Extra Plugins
-      set -g @plugin 'graemedavidson/tmux-pane-focus
+      set -g @plugin 'graemedavidson/tmux-pane-focus'
 
       # -- Basic Settings (no dedicated HM option) ----------------
       set -g set-clipboard on
