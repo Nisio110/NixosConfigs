@@ -3,9 +3,7 @@
   networking = {
     hostName = "hdesktop";
     nameservers = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" ];
-    defaultGateway = {
-      address = "192.168.0.1";
-    };
+    defaultGateway.address = "192.168.0.1";
     networkmanager.enable = true;
 
     firewall.enable = false;
