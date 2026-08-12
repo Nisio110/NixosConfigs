@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, config, ...}:
 let 
   jellyfinLogo = pkgs.fetchurl {
     url = "https://static0.xdaimages.com/wordpress/wp-content/uploads/2024/02/jellyfin-logo.png?q=70&fit=contain&w=320&dpr=1";
@@ -39,7 +39,7 @@ let
     connectivityCheck = true;
     theme = "neon";
     defaults = {
-      layout = "list";
+      layout = "columns";
       colorTheme = "dark";
     };
 
@@ -88,12 +88,20 @@ let
   };
 in 
 {
+  users.groups.homer.gid = 400;
+  users.users.homer = {
+    isSystemUser = true;
+    group        = "homer";
+    uid          = 400;
+    description  = "homer dashboard container";
+  };
+
   virtualisation.oci-containers = {
     backend = "docker";
     containers.homer = {
       image = "b4bz/homer:v26.4.2";
       autoStart = true;
-      user = "1000:1000";
+      user = "400:400";
       ports = [ "8888:8080/tcp" ];
       volumes = [ 
         "/home/oisin/.config/homer:/www/assets"
@@ -120,7 +128,7 @@ in
   systemd.services.docker-homer.serviceConfig.Slice = "teto-dash.slice";
 
   systemd.tmpfiles.rules = [
-    "d /home/oisin/.config/homer 0755 1000 1000 -"
+    "d /home/oisin/.config/homer 0755 homer homer -"
   ];
 
 }
