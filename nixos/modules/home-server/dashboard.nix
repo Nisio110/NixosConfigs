@@ -20,6 +20,14 @@ let
     url = "https://docs.lizardbyte.dev/projects/sunshine/latest/sunshine.png";
     sha256 = "sha256-kykm+7c7pxwBs7hH0RIJKyCKIPnwZyTxfvzg0h1AtoQ=";
   };
+  joplinLogo = pkgs.fetchurl {
+    url = "https://github.com/laurent22/joplin/blob/dev/Assets/SquareIcon512.png?raw=true";
+    sha256 = "sha256-yFpnoVqMfUQ8zK4M9C5Oepqk0Mwe7EkaWPF9hinRzBw=";
+  };
+  flashforgeLogo = pkgs.fetchurl {
+    url = "https://cdn.brandfetch.io/idqvEdgp9J/w/400/h/400/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B";
+    sha256 = "sha256-FlS6M/J5X7ElCoxu9n6/V43Hk0v26T6PuWlQ5Av3Zw4=";
+  };
 
   homerConfig = (pkgs.formats.yaml {}).generate "config.yml" {
     title = "TetoCorp Services :3";
@@ -40,7 +48,7 @@ let
       name = "My shtuff";
       items = [
         {
-          name = "Media";
+          name = "Jellyfin";
           url = "https://watch.tetocorp.ie/";
           logo = "assets/icons/jellyfin-logo.png";
         }
@@ -50,15 +58,30 @@ let
           logo = "assets/icons/suwayomi-logo.png";
         }
         {
-          name = "Sunshine";
-          url = "https://stream.tetocorp.ie";
-          logo = "assets/icons/sunshine-logo.png";
+          name = "3D Printer";
+          url = "https://print.tetocorp.ie";
+          logo = "assets/icons/flashforge-logo.png";
         }
-        {
-          name = "VPN";
-          url = "https://vpn.tetocorp.ie";
-          logo = "assets/icons/netbird-logo.png";
-        }
+      ];
+    }
+    {
+      name = "Admin Shtuff";
+      items = [
+      {
+        name = "Netbird";
+        url = "https://vpn.tetocorp.ie";
+        logo = "assets/icons/netbird-logo.png";
+      }
+      {
+        name = "Sunshine";
+        url = "https://stream.tetocorp.ie";
+        logo = "assets/icons/sunshine-logo.png";
+      }
+      {
+        name = "Joplin";
+        url = "https://notes.tetocorp.ie";
+        logo = "assets/icons/joplin-logo.png";
+      }
       ];
     }
     ];
@@ -81,6 +104,8 @@ in
         "${netbirdLogo}:/www/assets/icons/netbird-logo.png:ro"
         "${suwayomiLogo}:/www/assets/icons/suwayomi-logo.png:ro"
         "${sunshineLogo}:/www/assets/icons/sunshine-logo.png:ro"
+        "${joplinLogo}:/www/assets/icons/joplin-logo.png:ro"
+        "${flashforgeLogo}:/www/assets/icons/flashforge-logo.png:ro"
       ];
 
       # environment = { };
