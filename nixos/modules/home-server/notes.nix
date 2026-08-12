@@ -16,7 +16,7 @@
       restartUnits = [ "docker-joplin-db.service" "docker-joplin-app.service" ];
       content = ''
         POSTGRES_PASSWORD=${config.sops.placeholder.joplin_postgres}
-        APP_BASE_URL=http://notes.tetocorp.ie
+        APP_BASE_URL=https://notes.tetocorp.ie
         DB_CLIENT=pg
         NODE_ENV=production
         POSTGRES_DATABASE=joplin

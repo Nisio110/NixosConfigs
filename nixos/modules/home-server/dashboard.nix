@@ -41,22 +41,22 @@ let
       items = [
         {
           name = "Media";
-          url = "http://watch.tetocorp.ie/";
+          url = "https://watch.tetocorp.ie/";
           logo = "assets/icons/jellyfin-logo.png";
         }
         {
           name = "Manga";
-          url = "http://manga.tetocorp.ie";
+          url = "https://manga.tetocorp.ie";
           logo = "assets/icons/suwayomi-logo.png";
         }
         {
           name = "Sunshine";
-          url = "http://stream.tetocorp.ie";
+          url = "https://stream.tetocorp.ie";
           logo = "assets/icons/sunshine-logo.png";
         }
         {
           name = "VPN";
-          url = "http://vpn.tetocorp.ie";
+          url = "https://vpn.tetocorp.ie";
           logo = "assets/icons/netbird-logo.png";
         }
       ];
