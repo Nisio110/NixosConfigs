@@ -26,9 +26,9 @@ in
     capSysAdmin = true;
     settings = {
       # == general ==
-      locale = "en";
+      locale = "en_GB";
       sunshine_name = "Tetocorp HQ";
-      min_log_level = "info";
+      min_log_level = "debug";
       system_tray = "disabled";
       global_prep_cmd =
         ''
@@ -51,7 +51,7 @@ in
       address_family = "ipv4";
       port = 5050;
       origin_web_ui_allowed = "wan";
-      csrf_allowed_origins = "http://stream.tetocorp.ie";
+      csrf_allowed_origins = "http://stream.tetocorp.ie, http://192.168.0.19";
       wan_encryption_mode = "0";
       ping_timeout = "30000";
 
