@@ -9,7 +9,7 @@
 
   services = {
     netbird.enable = true;
-    tailscale.enable = true;
+    tailscale.enable = false;
     openssh.enable = true;
   };
 

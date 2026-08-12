@@ -1,5 +1,5 @@
+{config,...}:
 {
-
   services.nginx = {
     enable = true;
 
@@ -8,8 +8,10 @@
     recommendedGzipSettings  = true;
 
     virtualHosts = {
-      
       "tetocorp.ie" = {
+        forceSSL = true;
+        useACMEHost = "tetocorp.ie";
+        locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
         locations."/".proxyPass = "http://127.0.0.1:8888";
         default = true;
       };
@@ -67,21 +69,25 @@
         "http://stream.tetocorp.ie"  "https://stream.tetocorp.ie";
       }
     '';
+    streamConfig = ''
+      # DNS needs both UDP (standard queries) and TCP (large/truncated responses).
+      server {
+        listen 1053 udp;
+        proxy_pass 127.0.0.1:53;
+        proxy_responses 1;
+        proxy_timeout 1s;
+      }
+      server {
+        listen 1053;
+        proxy_pass 127.0.0.1:53;
+      }
+    '';
   };
 
-  services.nginx.streamConfig = ''
-    # DNS needs both UDP (standard queries) and TCP (large/truncated responses).
-    server {
-      listen 1053 udp;
-      proxy_pass 127.0.0.1:53;
-      proxy_responses 1;
-      proxy_timeout 1s;
-    }
-    server {
-      listen 1053;
-      proxy_pass 127.0.0.1:53;
-    }
-  '';
-
   systemd.services.nginx.serviceConfig.Slice = "teto-infra.slice";
+  security.acme = {
+    defaults.webroot = "/var/lib/acme/acme-challenge/";
+    certs."tetocorp.ie".group = config.services.nginx.group;
+  };
+  networking.firewall.allowedTCPPorts = [80];
 }

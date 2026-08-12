@@ -4,7 +4,7 @@
 
 {pkgs, homeDir, user, ...}:
 let 
-  dataDir = "${homeDir}/.local/share/sunshine";
+  dataDir = "/var/lib/sunshine";
   configDir = "${homeDir}/.config/sunshine";
 in
 {
