@@ -12,11 +12,6 @@
   # the CA itself is ever rotated.
   security.pki.certificateFiles = [ ./tetocorp-ca.crt ];
 
-  # Zen is Firefox-based: it ignores the system trust store entirely and
-  # ImportEnterpriseRoots (the usual OS-trust bridge) is macOS/Windows-only
-  # per Mozilla's docs. Install (a fully-qualified cert path) is the
-  # Linux-supported mechanism, so the trust wiring lives here next to the
-  # CA file itself rather than in home.nix reaching across modules.
   home-manager.users.${user}.programs.zen-browser.policies.Certificates.Install =
     [ ./tetocorp-ca.crt ];
 
@@ -88,6 +83,7 @@
       "/CN=tetocorp.ie"\
         \
         -addext "subjectAltName="\
+      "DNS:www.tetocorp.ie,"\
       "DNS:tetocorp.ie,"\
       "DNS:watch.tetocorp.ie,"\
       "DNS:vpn.tetocorp.ie,"\
