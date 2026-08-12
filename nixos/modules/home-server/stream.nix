@@ -28,7 +28,7 @@ in
       # == general ==
       locale = "en_GB";
       sunshine_name = "Tetocorp HQ";
-      min_log_level = "debug";
+      min_log_level = "warning";
       system_tray = "disabled";
       global_prep_cmd =
         ''
