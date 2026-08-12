@@ -9,9 +9,10 @@
 
     virtualHosts = {
       "tetocorp.ie" = {
-        forceSSL = true;
+        addSSL = true;
         useACMEHost = "tetocorp.ie";
         locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
+
         locations."/".proxyPass = "http://127.0.0.1:8888";
         default = true;
       };
