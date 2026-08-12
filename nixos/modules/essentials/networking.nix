@@ -3,8 +3,15 @@
   networking = {
     hostName = "hdesktop";
     networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" "1.0.0.1" "8.8.8.8" ];
+
     firewall.enable = false;
-    nameservers = [ "1.1.1.1" "1.0.0.1" ];
+    interfaces."eno1".ipv4.addresses = [
+      {
+        address = "192.168.0.19";
+        prefixLength = 24;
+      }
+    ];
   };
 
   services = {

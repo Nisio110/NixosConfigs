@@ -43,10 +43,19 @@ in
         };
       };
 
-      "192.168.0.19:8096" = {
+      # LAN access by IP. server_name never includes a port (nginx strips
+      # it from Host before matching); the extra 8920 listener provides a
+      # port-qualified HTTPS URL on Jellyfin's conventional TLS port.
+      # Plain HTTP on :8096 still goes straight to the container.
+      "192.168.0.19" = {
         forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
+        listen = [
+          { addr = "192.168.0.19"; port = 80; }
+          { addr = "192.168.0.19"; port = 443; ssl = true; }
+          { addr = "192.168.0.19"; port = 8920; ssl = true; }
+        ];
         locations."/" = {
           proxyPass       = "http://127.0.0.1:8096";
           proxyWebsockets = true;
