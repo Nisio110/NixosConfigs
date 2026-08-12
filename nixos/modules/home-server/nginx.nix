@@ -16,7 +16,7 @@ in
     virtualHosts = {
       "tetocorp.ie" = {
         default = true;
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -25,7 +25,7 @@ in
       };
       
       "watch.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -35,7 +35,7 @@ in
       };
       
       "vpn.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -44,7 +44,7 @@ in
       };
 
       "notes.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -59,7 +59,7 @@ in
       };
 
       "manga.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -69,7 +69,7 @@ in
       };
 
       "cloudflare-bypass.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -78,7 +78,7 @@ in
       };
 
       "print.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
@@ -88,7 +88,7 @@ in
       };
 
       "stream.tetocorp.ie" = {
-        addSSL = true;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
