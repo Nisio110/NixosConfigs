@@ -60,7 +60,7 @@ let
         {
           name = "3D Printer";
           url = "https://print.tetocorp.ie";
-          logo = "assets/icons/flashforge-logo.png";
+          logo = "assets/icons/flashforge-logo.jpeg";
         }
       ];
     }
@@ -105,7 +105,7 @@ in
         "${suwayomiLogo}:/www/assets/icons/suwayomi-logo.png:ro"
         "${sunshineLogo}:/www/assets/icons/sunshine-logo.png:ro"
         "${joplinLogo}:/www/assets/icons/joplin-logo.png:ro"
-        "${flashforgeLogo}:/www/assets/icons/flashforge-logo.png:ro"
+        "${flashforgeLogo}:/www/assets/icons/flashforge-logo.jpeg:ro"
       ];
 
       # environment = { };
