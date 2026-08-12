@@ -91,7 +91,8 @@
       "DNS:manga.tetocorp.ie,"\
       "DNS:cloudflare-bypass.tetocorp.ie,"\
       "DNS:print.tetocorp.ie,"\
-      "DNS:stream.tetocorp.ie"
+      "DNS:stream.tetocorp.ie,"\
+      "IP:192.168.0.19"
 
       # SSL Cert — signed by our own CA, not self-signed
       # -req             : treat input as csr instead of a crt

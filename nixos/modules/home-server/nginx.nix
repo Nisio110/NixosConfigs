@@ -44,6 +44,9 @@ in
       };
 
       "192.168.0.19:8096" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
         locations."/" = {
           proxyPass       = "http://127.0.0.1:8096";
           proxyWebsockets = true;
