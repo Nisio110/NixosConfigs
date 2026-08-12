@@ -1,4 +1,4 @@
-{pkgs, ...}:{
+{pkgs, user, ...}:{
   environment.systemPackages = [pkgs.openssl];
 
   systemd.tmpfiles.rules = [
@@ -11,6 +11,14 @@
   # Stable for the CA's 10-year lifetime, so this only needs updating if
   # the CA itself is ever rotated.
   security.pki.certificateFiles = [ ./tetocorp-ca.crt ];
+
+  # Zen is Firefox-based: it ignores the system trust store entirely and
+  # ImportEnterpriseRoots (the usual OS-trust bridge) is macOS/Windows-only
+  # per Mozilla's docs. Install (a fully-qualified cert path) is the
+  # Linux-supported mechanism, so the trust wiring lives here next to the
+  # CA file itself rather than in home.nix reaching across modules.
+  home-manager.users.${user}.programs.zen-browser.policies.Certificates.Install =
+    [ ./tetocorp-ca.crt ];
 
   # Runs exactly once, ever: the CA must stay stable so client trust
   # doesn't break every time the leaf cert rotates.
