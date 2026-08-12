@@ -6,9 +6,11 @@
     "d /var/lib/ssl/ca/ 0711 root  root  -"
   ];
 
-  # NOTE: system-wide trust for the CA is wired up in a follow-up commit,
-  # once /var/lib/ssl/ca/ca.crt exists and has been copied into the repo
-  # (security.pki.certificateFiles needs a store path, not a runtime path).
+  # Root CA cert (public, committed to the repo) — copied from
+  # /var/lib/ssl/ca/ca.crt after tetocorp-ca-init first generated it.
+  # Stable for the CA's 10-year lifetime, so this only needs updating if
+  # the CA itself is ever rotated.
+  security.pki.certificateFiles = [ ./tetocorp-ca.crt ];
 
   # Runs exactly once, ever: the CA must stay stable so client trust
   # doesn't break every time the leaf cert rotates.
