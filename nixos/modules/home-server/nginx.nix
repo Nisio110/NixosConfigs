@@ -11,6 +11,7 @@ in
     recommendedProxySettings = true;
     recommendedOptimisation  = true;
     recommendedGzipSettings  = true;
+    recommendedTlsSettings = true;
 
     virtualHosts = {
       "tetocorp.ie" = {
