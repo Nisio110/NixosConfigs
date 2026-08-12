@@ -14,13 +14,22 @@ in
     recommendedTlsSettings = true;
 
     virtualHosts = {
-      "tetocorp.ie" = {
+      "www.tetocorp.ie" = {
         default = true;
         forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8888";
+        };
+      };
+
+      "tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          return = "301 https://www.tetocorp.ie$request_uri";
         };
       };
       
