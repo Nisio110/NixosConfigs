@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  version = "1.1.0";
+  version = "latest";
 
   webuiBin = pkgs.fetchurl {
     url = "https://github.com/Parallel-7/FlashForgeWebUI/releases/download/v${version}/flashforge-webui-linux-x64.bin";
