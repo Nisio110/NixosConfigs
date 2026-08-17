@@ -75,7 +75,7 @@ in
       };
 
       "radarr.tetocorp.ie" = {
-        forceSSL = false;
+        forceSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
