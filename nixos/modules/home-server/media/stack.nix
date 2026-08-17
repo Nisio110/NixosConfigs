@@ -27,5 +27,6 @@
 
   systemd.services.seerr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.radarr.serviceConfig.Slice = "teto-media.slice";
+  systemd.services.sonarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.prowlarr.serviceConfig.Slice = "teto-media.slice";
 }
