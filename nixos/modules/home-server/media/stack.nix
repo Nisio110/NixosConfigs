@@ -22,6 +22,17 @@
     };
     qbittorrent = {
       webuiPort = 3434;
+      serverConfig = {
+        LegalNotice.Accepted = true;
+        Preferences = {
+          General.Locale = "en";
+          WebUI = {
+            Username = "oisin";
+            Password_PBKDF2 = "y40DZYeMOtFc7AUYFjJ1VA==:1+yXpCOrGLjzFuzZJ7NgoUQEoszQyW8s59n8OBbWyx1yP+q5620wKI6yMFhvYABmd1+UJu6Dla0rWhFtpjE18g==";
+          };
+        };
+      };
+
     };
   };
 
