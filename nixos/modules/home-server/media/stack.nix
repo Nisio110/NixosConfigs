@@ -41,4 +41,8 @@
   systemd.services.sonarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.prowlarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.qbittorrent.serviceConfig.Slice = "teto-media.slice";
+
+    systemd.tmpfiles.rules = [
+    "d /var/lib/qBittorrent/qBittorrent/downloads 0775 qbittorrent users -"
+  ];
 }
