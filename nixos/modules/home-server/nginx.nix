@@ -65,7 +65,7 @@ in
       };
 
       "sonarr.tetocorp.ie" = {
-        forceSSL = false;
+        addSSL = true;
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
