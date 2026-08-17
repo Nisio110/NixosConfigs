@@ -25,9 +25,8 @@ let
   '';
 in
 {
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers.flashforge-webui = {
+  virtualisation.oci-containers.containers = {
+    flashforge-webui = {
       image = "nixos/nix:2.35.1";
       autoStart = true;
       entrypoint = "/entrypoint";

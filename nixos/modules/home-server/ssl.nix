@@ -87,6 +87,9 @@
       "DNS:tetocorp.ie,"\
       "DNS:watch.tetocorp.ie,"\
       "DNS:browse.tetocorp.ie,"\
+      "DNS:sonarr.tetocorp.ie,"\
+      "DNS:radarr.tetocorp.ie,"\
+      "DNS:prowlarr.tetocorp.ie,"\
       "DNS:vpn.tetocorp.ie,"\
       "DNS:notes.tetocorp.ie,"\
       "DNS:manga.tetocorp.ie,"\

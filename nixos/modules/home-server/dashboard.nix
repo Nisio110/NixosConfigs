@@ -105,9 +105,8 @@ in
     description  = "homer dashboard container";
   };
 
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers.homer = {
+  virtualisation.oci-containers.containers = {
+    homer = {
       image = "b4bz/homer:v26.4.2";
       autoStart = true;
       user = "400:400";
@@ -126,8 +125,6 @@ in
         "${seerrLogo}:/www/assets/icons/seerr-logo.png:ro"
       ];
 
-      # environment = { };
-
       extraOptions = [
         "--add-host=host.docker.internal:host-gateway"
         "--cgroup-parent=teto-dash.slice"
@@ -140,5 +137,4 @@ in
   systemd.tmpfiles.rules = [
     "d /var/lib/homer 0755 homer homer -"
   ];
-
 }

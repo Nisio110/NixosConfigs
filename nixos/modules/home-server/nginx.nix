@@ -52,6 +52,36 @@ in
         };
       };
 
+      "sonarr.tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:6767";
+          proxyWebsockets = true;
+        };
+      };
+
+      "radarr.tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:5656";
+          proxyWebsockets = true;
+        };
+      };
+
+      "prowlarr.tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:4545";
+          proxyWebsockets = true;
+        };
+      };
+
       "vpn.tetocorp.ie" = {
         forceSSL = true;
         inherit sslCertificate;
