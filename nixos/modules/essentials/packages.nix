@@ -28,6 +28,7 @@ tools = with pkgs; [
   docker-compose
   localsend
   inputs.compose2nix.packages.x86_64-linux.default
+  speedtest-cli
 ];
 
 libraries = with pkgs; [
