@@ -30,7 +30,7 @@ let
   };
   seerrLogo = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/android-chrome-192x192.png";
-    sha256 = "";
+    sha256 = "sha256-1vGggbUcTgpXM8hrlVspZaqpZxt5LT+8Zr9LRFXefjI=";
   };
 
   homerConfig = (pkgs.formats.yaml {}).generate "config.yml" {
@@ -123,6 +123,7 @@ in
         "${sunshineLogo}:/www/assets/icons/sunshine-logo.png:ro"
         "${joplinLogo}:/www/assets/icons/joplin-logo.png:ro"
         "${flashforgeLogo}:/www/assets/icons/flashforge-logo.jpeg:ro"
+        "${seerrLogo}:/www/assets/icons/seerr-logo.png:ro"
       ];
 
       # environment = { };
