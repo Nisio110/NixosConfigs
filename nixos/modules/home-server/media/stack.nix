@@ -40,4 +40,5 @@
   systemd.services.radarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.sonarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.prowlarr.serviceConfig.Slice = "teto-media.slice";
+  systemd.services.qbittorrent.serviceConfig.Slice = "teto-media.slice";
 }
