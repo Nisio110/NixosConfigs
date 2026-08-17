@@ -90,6 +90,7 @@
       "DNS:sonarr.tetocorp.ie,"\
       "DNS:radarr.tetocorp.ie,"\
       "DNS:prowlarr.tetocorp.ie,"\
+      "DNS:torrent.tetocorp.ie,"\
       "DNS:vpn.tetocorp.ie,"\
       "DNS:notes.tetocorp.ie,"\
       "DNS:manga.tetocorp.ie,"\

@@ -1,27 +1,27 @@
 {
   services = {
+    seerr.enable = true;
+    radarr.enable = true;
+    sonarr.enable = true;
+    prowlarr.enable = true;
+    qbittorrent.enable = true;
+};
+  services = {
     seerr = {
-      enable = true;
-      # intended to mismatch with other arr config schemas
       port = 5055;
+      # intended to mismatch with other arr config schemas
     };
     radarr = {
-      enable = true;
-      settings = {
-        server.port = 6767;
-      };
+      settings = { server.port = 6767; };
     };
     sonarr = {
-      enable = true;
-      settings = {
-        server.port = 5656;
-      };
+      settings = { server.port = 5656; };
     };
     prowlarr = {
-      enable = true;
-      settings = {
-        server.port = 4545;
-      };
+      settings = { server.port = 4545; };
+    };
+    qbittorrent = {
+      webuiPort = 3434;
     };
   };
 
