@@ -28,6 +28,10 @@ let
     url = "https://vectorseek.com/wp-content/uploads/2023/12/FlashForge-Icon-Logo-Vector.svg-.png";
     sha256 = "sha256-6oMmzsfA720RhgPQKG0auFFnZB7QamDsSVfnhvnBRt4=";
   };
+  seerrLogo = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/android-chrome-192x192.png";
+    sha256 = "";
+  };
 
   homerConfig = (pkgs.formats.yaml {}).generate "config.yml" {
     title = "TetoCorp Services :3";
