@@ -57,7 +57,7 @@ in
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:6767";
+          proxyPass = "http://127.0.0.1:5656";
           proxyWebsockets = true;
         };
       };
@@ -67,7 +67,7 @@ in
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:5656";
+          proxyPass = "http://127.0.0.1:6767";
           proxyWebsockets = true;
         };
       };
