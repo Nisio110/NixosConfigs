@@ -28,20 +28,16 @@
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
 
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers.flaresolverr = {
-      # DockerHub mirror flaresolverr/flaresolverr:latest
-      image = "ghcr.io/flaresolverr/flaresolverr:latest";
-      autoStart = true;
-      user = "1000:1000";
-      ports = [ "9009:8191" ];
-      volumes = [ "/var/lib/flaresolver:/config" ];
-      environment = {
-        TZ = "Europe/London";
-      };
-      extraOptions = [ "--cgroup-parent=teto-manga.slice" ];
+  virtualisation.oci-containers.containers.flaresolverr = {
+    image = "ghcr.io/flaresolverr/flaresolverr:latest";
+    autoStart = true;
+    user = "1000:1000";
+    ports = [ "9009:8191" ];
+    volumes = [ "/var/lib/flaresolver:/config" ];
+    environment = {
+      TZ = "Europe/London";
     };
+    extraOptions = [ "--cgroup-parent=teto-manga.slice" ];
   };
 
 }

@@ -53,6 +53,11 @@ let
           logo = "assets/icons/jellyfin-logo.png";
         }
         {
+          name = "Seerr";
+          url = "https://browse.tetocorp.ie/";
+          logo = "assets/icons/seerr-logo.png";
+        }
+        {
           name = "Manga";
           url = "https://manga.tetocorp.ie";
           logo = "assets/icons/suwayomi-logo.png";

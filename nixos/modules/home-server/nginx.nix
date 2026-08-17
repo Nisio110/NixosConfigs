@@ -42,6 +42,15 @@ in
           proxyWebsockets = true;
         };
       };
+      "browse.tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate;
+        inherit sslCertificateKey;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:5055";
+          proxyWebsockets = true;
+        };
+      };
 
       "vpn.tetocorp.ie" = {
         forceSSL = true;
