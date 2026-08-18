@@ -22,7 +22,7 @@
 
       forward-zone = [{
         name = ".";
-        forward-tls-upstream = true;
+        forward-tls-upstream = false;
         forward-addr = [
           "1.1.1.1@853#cloudflare-dns.com"
           "1.0.0.1@853#cloudflare-dns.com"
