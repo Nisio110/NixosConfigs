@@ -162,7 +162,7 @@ in
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
-          proxyPass = "https://192.168.0.19:5051";
+          proxyPass = "https://127.0.0.1:5051";
           proxyWebsockets = true;
           extraConfig = "proxy_set_header Origin $sunshine_ui_origin;";
         };
