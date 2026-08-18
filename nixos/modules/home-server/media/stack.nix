@@ -6,6 +6,31 @@
     prowlarr.enable = true;
     qbittorrent.enable = true;
 };
+
+  users.groups.teto-media = {};
+  users.users = {
+    qbittorrent = {
+      enable = true;
+      isSystemUser = true;
+      extraGroups = ["teto-media"];
+    };
+    sonarr = {
+      enable = true;
+      isSystemUser = true;
+      extraGroups = ["teto-media"];
+    };
+    prowlarr = {
+      enable = true;
+      isSystemUser = true;
+      group = "teto-media";
+    };
+    radarr = {
+      enable = true;
+      isSystemUser = true;
+      extraGroups = ["teto-media"];
+    };
+  };
+
   services = {
     seerr = {
       port = 5055;
@@ -42,7 +67,7 @@
   systemd.services.prowlarr.serviceConfig.Slice = "teto-media.slice";
   systemd.services.qbittorrent.serviceConfig.Slice = "teto-media.slice";
 
-    systemd.tmpfiles.rules = [
-    "d /var/lib/qBittorrent/qBittorrent/downloads 0775 qbittorrent users -"
+  systemd.tmpfiles.rules = [
+    "d /var/lib/qBittorrent/qBittorrent/downloads 0775 qbittorrent teto-media -"
   ];
 }
