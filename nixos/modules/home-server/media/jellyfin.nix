@@ -24,6 +24,7 @@
         "/media/fedora/home/oisin/Videos:/media"  # Fedora Videos
         "/media/ssd-aon/Videos:/media2"           # ssd-aon
         "/home/oisin/Videos:/media3"              # NixOS videos
+        "/var/lib/qBittorrent/qBittorrent/downloads:seerr"
       ];
 
       extraOptions = [
