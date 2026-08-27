@@ -12,8 +12,7 @@
       port = 9090;
       localSourcePath = "${homeDir}/Documents/Manga/Sources";
       extensionRepos = [
-        "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.pb"
-        "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
+        "https://github.com/keiyoushi/extensions/raw/repo/index.pb"
       ];
       flareSolverrEnabled = true;
       #flareSolverrUrl = "http://127.0.0.1:9009";
