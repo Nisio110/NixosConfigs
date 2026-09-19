@@ -3,6 +3,9 @@
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     warn-dirty = false;
+    auto-optimise-store = true;
+    cores = 2;
+    max-jobs = 3;
   };
 
   nixpkgs.config = {

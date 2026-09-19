@@ -80,10 +80,6 @@ let
         command = "${config.home.profileDirectory}/bin/mcp-server-fetch";
         args = [ ];
       };
-      "brave-search" = {
-        command = "${config.home.profileDirectory}/bin/mcp-brave-search";
-        args = [ ];
-      };
       "sequential-thinking" = {
         command = "${config.home.profileDirectory}/bin/mcp-server-sequential-thinking";
         args = [ ];

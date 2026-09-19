@@ -23,6 +23,10 @@ let
       exec "$omp_bin" "$@"
     '';
   };
+
+  # NOTE
+  # might be better to structure these as one list and
+  # categorise with comments instead
   apps = with pkgs; [
     kando
     libreoffice
@@ -65,6 +69,8 @@ let
     weathr
     qbittorrent-cli
     joplin-cli
+    bottles
+    ethtool
   ];
 
   # Spawned by the niri session — see niri/niri.nix.

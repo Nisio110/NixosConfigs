@@ -17,7 +17,7 @@
 
   # Runs exactly once, ever: the CA must stay stable so client trust
   # doesn't break every time the leaf cert rotates.
-  systemd.services."tetocorp-ca-init" = {
+  systemd.services."create-ca" = {
     description = "One-time root CA for tetocorp.ie";
     wantedBy    = [ "multi-user.target" ];
     before      = [ "tetocorp-ssl.service" ];

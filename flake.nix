@@ -29,6 +29,7 @@
 
     system = "x86_64-linux";
     user = "oisin";
+    hostname = "hdesktop";
 
     homeDir = "/home/${user}";
     secretsDir = "${homeDir}/.local/secrets";
@@ -36,7 +37,7 @@
     mkSystem = { system, modulePath, homePath }:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs user homeDir secretsDir; };
+        specialArgs = { inherit inputs user homeDir secretsDir hostname; };
         modules = [ 
           (inputs.import-tree modulePath) 
           (mkHomeManager homePath)
@@ -49,12 +50,12 @@
         users.oisin.imports = [ (inputs.import-tree hmDir) ];
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = { inherit inputs user homeDir secretsDir; };
+        extraSpecialArgs = { inherit inputs user homeDir secretsDir hostname; };
       };
     };
 
   in {
-    nixosConfigurations.nixos = mkSystem {
+    nixosConfigurations.${hostname} = mkSystem {
       inherit system;
       modulePath = ./nixos/modules;
       homePath = ./nixos/home;

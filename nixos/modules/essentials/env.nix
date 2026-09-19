@@ -1,7 +1,7 @@
 { pkgs, secretsDir, ... }:
 {
   environment = {
-    pathsToLink = [ "/home/oisin/Scripts" ];
+    pathsToLink = [ "/home/oisin/Projects/Scripts" ];
 
     localBinInPath = true;
     shells = [pkgs.zsh pkgs.bash];

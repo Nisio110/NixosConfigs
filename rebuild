@@ -62,7 +62,7 @@ do
   shift
 done
 NIXOS_DIR="${POSITIONAL[0]:-/home/oisin/Nixos}"
-FLAKE="${POSITIONAL[1]:-nixos}"
+FLAKE="${POSITIONAL[1]:-}"
 OLD_GEN=$(nixos-rebuild list-generations 2>/dev/null | head -2 | tail -1 | awk '{print $1}')
 EXEC_REBUILD=1
 

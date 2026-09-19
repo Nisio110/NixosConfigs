@@ -49,59 +49,6 @@ let
     };
   };
 
-  # @modelcontextprotocol/server-brave-search — npm-deprecated; source frozen in
-  # the archived monorepo (repo archived 2025-05-28, immutable pin). Built from
-  # the workspace exactly like nixpkgs' own mcp-server-filesystem
-  # (pkgs/by-name/mc/mcp-server-filesystem/package.nix): npmWorkspace +
-  # dontNpmPrune + sibling-symlink cleanup.
-  mcp-server-brave-search = pkgs.buildNpmPackage {
-    pname = "mcp-server-brave-search";
-    version = "0.6.2";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "modelcontextprotocol";
-      repo = "servers-archived";
-      rev = "9be4674d1ddf8c469e6461a27a337eeb65f76c2e"; # HEAD of main; repo is archived
-      hash = "sha256-GD0MIgh+vxI65vUb8UKWn5eD970ICbi2Mnr26O3+fRk=";
-    };
-
-    npmDepsHash = "sha256-tUc8O2KmoGhSA9gVS2YMUPWvpJxEM6iD8gf/oIoTqk4=";
-    npmDepsFetcherVersion = 2; # workspace support: enables packument caching so
-      # @modelcontextprotocol/sdk (a shared workspace dep) is resolvable offline.
-    npmWorkspace = "src/brave-search";
-    dontNpmPrune = true;
-
-    # dontNpmPrune keeps devDependencies of sibling workspaces around too;
-    # one sibling server (puppeteer) tries to download Chrome on install,
-    # which fails offline in the build sandbox. brave-search never uses it.
-    env.PUPPETEER_SKIP_DOWNLOAD = true;
-
-    nativeBuildInputs = [ pkgs.typescript ];
-
-    # npm workspaces symlink every monorepo member into node_modules —
-    # servers-archived has 14 (aws-kb-retrieval-server, brave-search,
-    # everart, gdrive, git, github, gitlab, google-maps, postgres,
-    # puppeteer, redis, sentry, slack, sqlite), both under the
-    # @modelcontextprotocol/ scope and, for deps like `redis`, unscoped.
-    # $out only ships the servers-archived workspace root, not every
-    # sibling's src/ dir, so those symlinks resolve during the build (full
-    # monorepo present) but are left dangling in $out. Same class of
-    # workaround as nixpkgs' mcp-server-filesystem, generalized to a sweep
-    # since servers-archived has far more siblings than the pruned `servers`
-    # repo that package hand-enumerates.
-    postInstall = ''
-      find $out/lib/node_modules/@modelcontextprotocol/servers/node_modules -maxdepth 2 -xtype l -delete
-      rm -rf $out/lib/node_modules/@modelcontextprotocol/servers/node_modules/.bin
-    '';
-
-    meta = {
-      description = "MCP server for Brave Search API integration";
-      homepage = "https://github.com/modelcontextprotocol/servers-archived";
-      license = pkgs.lib.licenses.mit;
-      mainProgram = "mcp-server-brave-search";
-    };
-  };
-
   # Upstream github.com/k-krawczyk/proxmox-mcp-server was deleted (noticed
   # 2026-08; no fork or archive survives), so the author's npm release is the
   # only remaining distribution. The tarball ships prebuilt dist/
@@ -127,24 +74,12 @@ let
     '';
   };
 
-  mcp-brave-search = pkgs.writeShellApplication {
-    name = "mcp-brave-search";
-    runtimeInputs = [ mcp-server-brave-search ];
-    text = ''
-      set -a
-      # shellcheck source=/dev/null
-      source "${config.sops.templates."brave.env".path}"
-      set +a
-      exec mcp-server-brave-search
-    '';
-  };
 in {
   home.packages = [
     # standalone bespoke npm build
     zen-mcp
     # secret wrappers (each pulls its pinned server in as a dependency)
     mcp-github
-    mcp-brave-search
     pkgs.mcp-nixos
     (pkgs.lib.setPrio 4 pkgs.mcp-server-filesystem)
     (pkgs.lib.setPrio 5 pkgs.mcp-server-memory)
