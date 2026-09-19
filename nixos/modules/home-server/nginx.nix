@@ -168,6 +168,13 @@ in
         };
       };
 
+      "craft.tetocorp.ie" = {
+        locations."/" = {
+          proxyPass = "https://127.0.0.1:6464";
+          proxyWebsockets = true;
+        };
+      };
+
     };
     appendHttpConfig =
     ''
