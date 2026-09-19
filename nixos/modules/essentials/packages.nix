@@ -34,6 +34,7 @@ tools = with pkgs; [
 libraries = with pkgs; [
   linuxPackages.nvidia_x11
   vkd3d-proton vkd3d
+  temurin-bin-25
 ];
 
 misc = with pkgs; [
@@ -58,6 +59,9 @@ programs = {
   thunar.enable = true;
   # gpg encryption agent, can be used instead of ssh-agent
   gnupg.agent.enable = false;
+
+  # allows fucky dynamic shit like modrinth to run
+  #nix-ld.enable = true;
 };
 
 services = {
