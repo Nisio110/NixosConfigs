@@ -29,6 +29,7 @@ tools = with pkgs; [
   localsend
   inputs.compose2nix.packages.x86_64-linux.default
   speedtest-cli
+  steam-run
 ];
 
 libraries = with pkgs; [
@@ -68,12 +69,6 @@ services = {
 };
 
 programs = {
-  nix-ld.libraries = with pkgs; [
-    libGL
-    vulkan-loader
-    libglvnd
-    egl-wayland
-  ];
   thunar.plugins = with pkgs; [thunar-archive-plugin thunar-volman];
   gnupg.agent.enableSSHSupport = true; 
 
