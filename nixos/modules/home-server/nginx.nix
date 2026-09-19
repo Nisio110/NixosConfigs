@@ -167,14 +167,6 @@ in
           extraConfig = "proxy_set_header Origin $sunshine_ui_origin;";
         };
       };
-
-      "craft.tetocorp.ie" = {
-        locations."/" = {
-          proxyPass = "https://127.0.0.1";
-          proxyWebsockets = true;
-        };
-      };
-
     };
     appendHttpConfig =
     ''
