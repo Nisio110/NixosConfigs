@@ -4,11 +4,16 @@ let
     url = "https://tetoplush.com/wp-content/uploads/2025/03/Teto-Plush-2-768x768.png";
     sha256 = "sha256-Cb3MVvjm1EJgs/yADvKiy9mh5VAtCFqsP30+LsOyjMU=";
   };
+  tetoIcon = pkgs.runCommand "teto-plush-64x64.png" {
+    nativeBuildInputs = [ pkgs.ffmpeg ];
+  } ''
+    ffmpeg -i ${tetoPlush} -vf scale=64:64 -y $out
+  '';
 in
 {
   services.minecraft-server.enable = true;
   systemd.tmpfiles.rules = [
-    "C+ /var/lib/minecraft/server-icon.png - - - - ${tetoPlush}"
+    "L+ /var/lib/minecraft/server-icon.png - - - - ${tetoIcon}"
   ];
 
   sops.secrets.mc-rcon-password = {};
