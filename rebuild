@@ -89,7 +89,7 @@ then
   exit 1
 fi
 
-if systemctl is-active minecraft-server &> /dev/null
+if ! systemctl is-active minecraft-server &> /dev/null
 then
   printl "killing minecraft server"
   sudo systemctl stop minecraft-server
