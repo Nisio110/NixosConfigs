@@ -8,7 +8,7 @@ in
 {
   services.minecraft-server.enable = true;
   systemd.tmpfiles.rules = [
-    "L+ /var/lib/minecraft/teto.png - - - - ${tetoPlush}"
+    "L+ /var/lib/minecraft/server-icon.png - - - - ${tetoPlush}"
   ];
 
   sops.secrets.mc-rcon-password = {};
