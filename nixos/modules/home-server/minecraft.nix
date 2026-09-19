@@ -42,7 +42,7 @@ in
       gamemode = "survival";
       hardcore = false;
       max-players = 5;
-      view-distance = 10;
+      view-distance = 16;
 
       accepts-transfers = false;
       allow-flight = false;
@@ -99,7 +99,7 @@ in
       resource-pack-prompt = "";
       resource-pack-sha1 = "";
 
-      simulation-distance = 10;
+      simulation-distance = 12;
       spawn-protection = 16;
 
       status-heartbeat-interval = 0;
