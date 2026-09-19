@@ -1,7 +1,17 @@
-{config, ...}:
+{config, pkgs, ...}:
+let
+  tetoPlush = pkgs.fetchurl {
+    url = "https://tetoplush.com/wp-content/uploads/2025/03/Teto-Plush-2-768x768.png";
+    sha256 = "sha256-Cb3MVvjm1EJgs/yADvKiy9mh5VAtCFqsP30+LsOyjMU=";
+  };
+in
 {
-  sops.secrets.mc-rcon-password = {};
   services.minecraft-server.enable = true;
+  systemd.tmpfiles.rules = [
+    "L+ /var/lib/minecraft/teto.png - - - - ${tetoPlush}"
+  ];
+
+  sops.secrets.mc-rcon-password = {};
 
   services.minecraft-server = {
     eula = true;

@@ -66,6 +66,7 @@ FLAKE="${POSITIONAL[1]:-}"
 OLD_GEN=$(nixos-rebuild list-generations 2>/dev/null | head -2 | tail -1 | awk '{print $1}')
 EXEC_REBUILD=1
 
+
 print(){ 
   echo -en "${2:-${ansi_pink}}>> ${1} ${ansi_reset}"
 }
@@ -86,6 +87,12 @@ if ! sudo -v
 then
   printl "sudo authentication failed — aborting." "${ansi_red}"
   exit 1
+fi
+
+if systemctl is-active minecraft-server &> /dev/null
+then
+  printl "killing minecraft server"
+  sudo systemctl stop minecraft-server
 fi
 
 if [[ $BRANCH_SELECT -eq 1 ]]
