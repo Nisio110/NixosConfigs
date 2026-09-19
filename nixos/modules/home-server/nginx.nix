@@ -170,7 +170,7 @@ in
 
       "craft.tetocorp.ie" = {
         locations."/" = {
-          proxyPass = "https://127.0.0.1:6464";
+          proxyPass = "https://127.0.0.1";
           proxyWebsockets = true;
         };
       };

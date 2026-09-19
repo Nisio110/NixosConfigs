@@ -59,7 +59,7 @@ in
       enable-query = false;
       enable-status = true;
 
-      enforce-secure-profile = true;
+      enforce-secure-profile = false;
       enforce-whitelist = false;
 
       entity-broadcast-range-percentage = 100;
@@ -79,15 +79,6 @@ in
       level-type = "minecraft:normal";
 
       log-ips = true;
-
-      management-server-allowed-origins = "craft.tetocorp.ie 127.0.0.1 192.168.0.19";
-      management-server-enabled = true;
-      management-server-host = "localhost";
-      management-server-port = 4646;
-      management-server-secret = "[Random text]";
-      management-server-tls-enabled = false;
-      management-server-tls-keystore = "";
-      management-server-tls-keystore-password = "";
 
       max-chained-neighbor-updates = 1000000;
       max-tick-time = 60000;
