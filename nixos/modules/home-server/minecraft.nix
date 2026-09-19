@@ -29,7 +29,7 @@ in
     declarative = true; 
     serverProperties = {
       server-ip = "192.168.0.19";
-      server-port = 6464;
+      server-port = 25565;
       enable-rcon = true;
       "rcon.password" = config.sops.placeholder.mc-rcon-password;
       prevent-proxy-connections = false;
