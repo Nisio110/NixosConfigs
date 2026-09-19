@@ -92,9 +92,10 @@ fi
 if systemctl is-active minecraft-server &> /dev/null
 then
   printl "killing minecraft server"
-  sudo systemctl stop minecraft-server
   while [[ $(ps -U minecraft | awk 'NR==2 {print $1}') -ge 1 ]]
-    do sleep 2
+  do 
+    sudo systemctl stop minecraft-server
+    sleep 2
   done
 fi
 
