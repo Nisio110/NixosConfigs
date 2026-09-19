@@ -19,6 +19,7 @@ in
   sops.secrets.mc-rcon-password = {};
 
   services.minecraft-server = {
+    package = pkgs.papermc;
     eula = true;
     dataDir = "/var/lib/minecraft";
     jvmOpts = "-Xmx4096M -Xms1024M";
