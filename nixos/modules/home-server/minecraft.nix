@@ -6,7 +6,7 @@
   services.minecraft-server = {
     eula = true;
     dataDir = "/var/lib/minecraft";
-    jvmOpts = "-Xmx8192M -Xms8192M";
+    jvmOpts = "-Xmx4096M -Xms1024M";
     whitelist = {
       Flameman110 = "a31c5b36-209e-43af-b8e6-1f3c27d0cc4e";
     };
