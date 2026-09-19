@@ -95,6 +95,12 @@ then
   sudo systemctl stop minecraft-server
 fi
 
+min_mem=1000;
+if [[ $(free --mebi | awk 'NR==2 {print $7}') -le ${min_mem} ]]
+then
+  printl "you do not have enough memory for this ( < ${min_mem} )"
+fi
+
 if [[ $BRANCH_SELECT -eq 1 ]]
 then
   printl "Fetching remote branches..."
