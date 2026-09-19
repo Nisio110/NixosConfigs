@@ -95,10 +95,11 @@ then
   sudo systemctl stop minecraft-server
 fi
 
-min_mem=1000;
+min_mem=2500;
 if [[ $(free --mebi | awk 'NR==2 {print $7}') -le ${min_mem} ]]
 then
-  printl "you do not have enough memory for this ( < ${min_mem} )"
+  printl "you don't have enough available mem to rebuild (<${min_mem})"
+  exit 1
 fi
 
 if [[ $BRANCH_SELECT -eq 1 ]]
