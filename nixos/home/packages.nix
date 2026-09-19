@@ -29,7 +29,7 @@ let
   # categorise with comments instead
   apps = with pkgs; [
     prismlauncher
-    modrinth-app
+    modrinth
     kando
     libreoffice
     vesktop

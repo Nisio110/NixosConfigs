@@ -39,6 +39,7 @@
         inherit system;
         specialArgs = { inherit inputs user homeDir secretsDir hostname; };
         modules = [ 
+          {nixpkgs.overlays = [(import ./overlays/modrinth.nix)];}
           (inputs.import-tree modulePath) 
           (mkHomeManager homePath)
         ];
