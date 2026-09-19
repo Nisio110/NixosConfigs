@@ -25,6 +25,8 @@ in
     whitelist = {
       Flameman110 = "a31c5b36-209e-43af-b8e6-1f3c27d0cc4e";
     };
+    # required for serverProperties option to function
+    declarative = true; 
     serverProperties = {
       server-ip = "127.0.0.1";
       server-port = 6464;
