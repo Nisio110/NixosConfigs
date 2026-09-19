@@ -34,7 +34,6 @@ tools = with pkgs; [
 libraries = with pkgs; [
   linuxPackages.nvidia_x11
   vkd3d-proton vkd3d
-  temurin-bin-25
 ];
 
 misc = with pkgs; [
@@ -61,7 +60,7 @@ programs = {
   gnupg.agent.enable = false;
 
   # allows fucky dynamic shit like modrinth to run
-  #nix-ld.enable = true;
+  nix-ld.enable = true;
 };
 
 services = {
