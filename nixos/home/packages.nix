@@ -28,6 +28,8 @@ let
   # might be better to structure these as one list and
   # categorise with comments instead
   apps = with pkgs; [
+    prismlauncher
+    modrinth-app
     kando
     libreoffice
     vesktop

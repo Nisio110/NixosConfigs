@@ -57,7 +57,7 @@ programs = {
   nh.enable = true;
   thunar.enable = true;
   # gpg encryption agent, can be used instead of ssh-agent
-  gnupg.agent.enable = true;
+  gnupg.agent.enable = false;
 };
 
 services = {
