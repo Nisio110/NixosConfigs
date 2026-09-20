@@ -30,7 +30,7 @@ in
       locale = "en_GB";
       sunshine_name = "Tetocorp HQ";
       min_log_level = "info";
-      system_tray = "enabled";
+      system_tray = "disabled";
       global_prep_cmd =
         ''
         [
