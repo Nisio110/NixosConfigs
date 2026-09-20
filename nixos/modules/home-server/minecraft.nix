@@ -32,7 +32,7 @@ in
       server-ip = "192.168.0.19";
       server-port = 25565;
       enable-rcon = true;
-      "rcon.password" = "${config.sops.placeholder.mc-rcon-password}";
+      "rcon.password" = "minecraft";
       prevent-proxy-connections = false;
       "query.port" = 25565;
       rate-limit = 0;
