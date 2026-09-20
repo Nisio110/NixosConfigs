@@ -44,7 +44,7 @@ let
     kicad
     freecad
     orca-slicer
-    slack
+    moonlight
   ];
 
   dev = with pkgs; [
