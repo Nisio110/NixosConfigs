@@ -12,7 +12,7 @@
       "Switch to Next Keyboard Layout" = "Meta+Alt+K";
     };
     kaccess."Toggle Screen Reader On and Off" = [ ];
-    kando.scripts-menu = [ ];
+    
     kmix = {
       decrease_microphone_volume = "Microphone Volume Down";
       decrease_volume = "Volume Down";

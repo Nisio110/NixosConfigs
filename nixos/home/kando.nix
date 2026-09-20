@@ -15,4 +15,5 @@ in
       run install -m644 ${./kando/menus.json} ${lib.escapeShellArg "${kandoDir}/menus.json"}
     fi
   '';
+  programs.plasma.shortcuts.kando.scripts-menu = [ "Meta+F" ];
 }
