@@ -21,6 +21,7 @@
         local-data  = [
           ''"tetocorp.ie.           IN A 192.168.0.19"''
           ''"*.tetocorp.ie.         IN A 192.168.0.19"''
+          ''"www.tetocorp.ie.       IN A 192.168.0.19"''
         ];
       };
 
