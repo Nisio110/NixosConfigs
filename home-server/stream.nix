@@ -52,7 +52,7 @@ in
       # == network ==
       bind_address = "192.168.0.20";
       address_family = "ipv4";
-      port = 5050;
+      port = 47989;
       origin_web_ui_allowed = "wan";
       csrf_allowed_origins = "https://stream.tetocorp.ie http://stream.tetocorp.ie http://127.0.0.1";
       wan_encryption_mode = "0";
