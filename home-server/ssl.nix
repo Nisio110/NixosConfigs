@@ -68,8 +68,7 @@
     script = ''
       # Private key
       openssl genrsa \
-        -out /var/lib/ssl/tetocorp.key 2048
-      chmod 644 /var/lib/ssl/tetocorp.key
+        -out /var/lib/ssl/tetocorp.key 4096
 
       # CSR file
       # Provides info embedded into the key
