@@ -89,21 +89,25 @@ then
   exit 1
 fi
 
-if systemctl is-active minecraft-server &> /dev/null
-then
-  printl "killing minecraft server"
-  while [[ $(ps -U minecraft | awk 'NR==2 {print $1}') -ge 1 ]]
-  do 
-    sudo systemctl stop minecraft-server
-    sleep 2
-  done
-fi
 
 min_mem=2500;
 if [[ $(free --mebi | awk 'NR==2 {print $7}') -le ${min_mem} ]]
 then
-  printl "you don't have enough available mem to rebuild (<${min_mem})"
-  exit 1
+  if systemctl is-active minecraft-server &> /dev/null
+  then
+    printl "killing minecraft server"
+    while [[ $(ps -U minecraft | awk 'NR==2 {print $1}') -ge 1 ]]
+    do 
+      sudo systemctl stop minecraft-server
+      sleep 2
+    done
+  fi
+
+  if [[ $(free --mebi | awk 'NR==2 {print $7}') -le ${min_mem} ]]
+  then 
+    printl "you don't have enough available mem to rebuild (<${min_mem})"
+    exit 1
+  fi
 fi
 
 if [[ $BRANCH_SELECT -eq 1 ]]
@@ -160,26 +164,6 @@ then
 fi
 
 printl "=== NixOS Generation ${OLD_GEN} — branch $(git -C "${NIXOS_DIR}" branch --show-current) ===" "${ansi_bold}${ansi_pink}"
-if ! git -C ${NIXOS_DIR} diff --quiet
-then
-  print "Want to see a diff? [y/N] " "${ansi_orange}"
-  read answer
-
-  if [[ ${answer} == "y" || ${answer} == "Y" ]]
-  then 
-    printl "Diff:"
-    git -C ${NIXOS_DIR} diff
-    echo
-
-    print "Continue to rebuild? [y/ ] " "${ansi_orange}"
-    read answer
-    if [[ ! (${answer} == "y" || ${answer} == "Y") ]]
-    then 
-      EXEC_REBUILD=0
-      echo
-    fi
-  fi
-fi
 
 if [[ $EXEC_REBUILD -eq 1 ]]
 then
