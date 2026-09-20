@@ -44,7 +44,7 @@ let
     kicad
     freecad
     orca-slicer
-    moonlight
+    moonlight-qt
   ];
 
   dev = with pkgs; [
