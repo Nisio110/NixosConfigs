@@ -18,6 +18,7 @@
 
         local-data  = [
           ''"tetocorp.ie.         IN A 192.168.0.19"''
+          ''"stream.tetocorp.ie   IN A 192.168.0.20"''
         ];
       };
 
