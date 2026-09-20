@@ -13,7 +13,7 @@
   security.pki.certificateFiles = [ ./tetocorp-ca.crt ];
 
   home-manager.users.${user}.programs.zen-browser.policies.Certificates.Install =
-    [ ./tetocorp-ca.crt ];
+    [ ./ca.crt ];
 
   # Runs exactly once, ever: the CA must stay stable so client trust
   # doesn't break every time the leaf cert rotates.
