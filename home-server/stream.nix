@@ -8,6 +8,8 @@ let
   dataDir = "/var/lib/sunshine";
   configDir = "${homeDir}/.config/sunshine";
 in
+
+
 {
   systemd.tmpfiles.rules = [
     "d ${dataDir} 0755 ${user} users -"
@@ -48,7 +50,7 @@ in
       minimum_fps_target = "60";
 
       # == network ==
-      bind_address = "192.168.0.19";
+      bind_address = "192.168.0.20";
       address_family = "ipv4";
       port = 5050;
       origin_web_ui_allowed = "wan";
