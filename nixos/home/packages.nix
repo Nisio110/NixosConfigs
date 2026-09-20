@@ -73,6 +73,7 @@ let
     joplin-cli
     bottles
     ethtool
+    tree
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
