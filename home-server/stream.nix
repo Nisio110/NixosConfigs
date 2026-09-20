@@ -29,7 +29,7 @@ in
       # == general ==
       locale = "en_GB";
       sunshine_name = "Tetocorp HQ";
-      min_log_level = "warning";
+      min_log_level = "info";
       system_tray = "enabled";
       global_prep_cmd =
         ''
@@ -64,9 +64,10 @@ in
       #file_state = "${configDir}/sunshine_state.json";
 
       # == nvidia ==
-      hevc_mode = "0";
-      capture = "kms";
       encoder = "nvenc";
+      hevc_mode = "0";
+      av1_mode = "1";
+      capture = "kms";
     };
     
   };
