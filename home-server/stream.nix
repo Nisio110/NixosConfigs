@@ -34,7 +34,7 @@ in
       min_log_level = "info";
       system_tray = "disabled";
       # unfortunately this will never be seamless
-      output_name = "0";
+      output_name = "DP-3";
       global_prep_cmd =
         ''
         [
