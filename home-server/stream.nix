@@ -59,6 +59,8 @@ in
       csrf_allowed_origins = "https://stream.tetocorp.ie";
       wan_encryption_mode = "0";
       ping_timeout = "30000";
+      cert = "/var/lib/ssl/tetocorp.crt";
+      pkey = "/var/lib/ssl/tetocorp.key";
 
       # == config files ==
       # only set if you have a file you want to drop in here
