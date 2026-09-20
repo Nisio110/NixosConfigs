@@ -57,7 +57,8 @@ in
       port = 5050;
       origin_web_ui_allowed = "wan";
       csrf_allowed_origins = "https://stream.tetocorp.ie";
-      wan_encryption_mode = "0";
+      wan_encryption_mode = "1";
+      lan_envryption_mode = "1";
       ping_timeout = "30000";
       cert = "/var/lib/ssl/tetocorp.crt";
       pkey = "/var/lib/ssl/tetocorp.key";
