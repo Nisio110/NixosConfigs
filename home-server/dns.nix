@@ -6,8 +6,11 @@
     settings = {
       server = {
         ip-freebind  = true; 
-        interface    = [ "127.0.0.1" "192.168.0.19" "192.168.0.20" ];
-        local-zone = [ ''"tetocorp.ie." redirect'' ];
+        interface    = [ "127.0.0.1" "192.168.0.19" ];
+        local-zone = [ 
+          ''"tetocorp.ie." redirect'' 
+          ''"stream.tetocorp.ie." redirect''
+        ];
 
         access-control = [
           "127.0.0.0/8 allow"
@@ -17,7 +20,7 @@
         ];
 
         local-data  = [
-          ''"tetocorp.ie.         IN A 192.168.0.19"''
+          ''"*.tetocorp.ie.         IN A 192.168.0.19"''
           ''"stream.tetocorp.ie   IN A 192.168.0.20"''
         ];
       };
