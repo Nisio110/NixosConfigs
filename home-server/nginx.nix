@@ -199,6 +199,10 @@ in
         listen 5050 udp;
         proxy_pass 127.0.0.1:47989;
       }
+      server {
+        listen 5050;
+        proxy_pass 127.0.0.1:47989;
+      }
     '';
   };
 
