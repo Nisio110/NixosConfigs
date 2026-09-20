@@ -196,8 +196,8 @@ in
 
       # Sunshine
       server {
-        listen 5050 udp
-        proxy_pass 127.0.0.1:5050
+        listen 5050 udp;
+        proxy_pass 127.0.0.1:5050;
       }
     '';
   };
