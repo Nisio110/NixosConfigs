@@ -5,12 +5,7 @@
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
-    defaultSopsFile = ../../../secrets.yaml;
-    defaultSopsFormat = "yaml";
-
-    age.keyFile = "${secretsDir}/sops/age/keys.txt";
     secrets.joplin_postgres = { };
-
     templates.".env.joplin" = {
       mode = "0400";
       restartUnits = [ "docker-joplin-db.service" "docker-joplin-app.service" ];

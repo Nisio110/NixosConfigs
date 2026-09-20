@@ -34,13 +34,12 @@
     homeDir = "/home/${user}";
     secretsDir = "${homeDir}/.local/secrets";
 
-    mkSystem = { system, modulePath, homePath }:
+    mkSystem = { system, modulePath, homePath, overlayPath, extraPaths }:
       nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs user homeDir secretsDir hostname; };
         modules = [ 
-          {nixpkgs.overlays = [(import ./overlays/modrinth.nix)];}
-          (inputs.import-tree modulePath) 
+          (inputs.import-tree ([ modulePath overlayPath ] ++ extraPaths)) 
           (mkHomeManager homePath)
         ];
       };
@@ -58,8 +57,12 @@
   in {
     nixosConfigurations.${hostname} = mkSystem {
       inherit system;
-      modulePath = ./nixos/modules;
-      homePath = ./nixos/home;
+      modulePath = ./essentials;
+      homePath = ./home;
+      overlayPath = ./overlays;
+      extraPaths = [
+        ./home-server
+      ];
     };
   };
 }

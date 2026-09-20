@@ -35,8 +35,8 @@ in
         ''
         [
           {
-            "do":"${homeDir}/Projects/Scripts/laptop-mode.sh",
-            "undo":"${homeDir}/Projects/Scripts/desktop-mode.sh"
+            "do":"",
+            "undo":""
           }
         ]
         '';
@@ -52,7 +52,7 @@ in
       address_family = "ipv4";
       port = 5050;
       origin_web_ui_allowed = "wan";
-      csrf_allowed_origins = "https://stream.tetocorp.ie, http://stream.tetocorp.ie, http://127.0.0.1";
+      csrf_allowed_origins = "https://stream.tetocorp.ie http://stream.tetocorp.ie http://127.0.0.1";
       wan_encryption_mode = "0";
       ping_timeout = "30000";
 
@@ -64,9 +64,9 @@ in
       #file_state = "${configDir}/sunshine_state.json";
 
       # == nvidia ==
-      hevc_mode = "2";
+      hevc_mode = "0";
       capture = "kms";
-      encoder = "hevc_vulkan";
+      encoder = "nvenc";
     };
     
   };

@@ -3,9 +3,8 @@
 {
   imports = [ inputs.sops-nix.homeModules.sops ];
 
-  sops.defaultSopsFile = ../../secrets.yaml;
+  sops.defaultSopsFile = ../secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-
   sops.age.keyFile = "${secretsDir}/sops/age/keys.txt";
 
   sops.secrets = {
