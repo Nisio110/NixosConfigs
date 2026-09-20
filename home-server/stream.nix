@@ -54,7 +54,7 @@ in
       address_family = "ipv4";
       port = 5050;
       origin_web_ui_allowed = "wan";
-      csrf_allowed_origins = "https://stream.tetocorp.ie http://stream.tetocorp.ie http://127.0.0.1";
+      csrf_allowed_origins = "https://stream.tetocorp.ie";
       wan_encryption_mode = "0";
       ping_timeout = "30000";
 
