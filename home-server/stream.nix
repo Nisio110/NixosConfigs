@@ -48,7 +48,7 @@ in
       minimum_fps_target = "60";
 
       # == network ==
-      bind_address = "127.0.0.1";
+      bind_address = "192.168.0.19";
       address_family = "ipv4";
       port = 5050;
       origin_web_ui_allowed = "wan";
