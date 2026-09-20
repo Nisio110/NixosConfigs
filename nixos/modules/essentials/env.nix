@@ -16,7 +16,7 @@
     extraInit = ''
       alias xdg-open open
       PATH="$HOME/.bun/bin:$PATH"
-      PATH="$HOME/Projects/Scripts:\$PATH"
+      PATH="$HOME/Projects/Scripts:$PATH"
       export PATH
     '';
   };
