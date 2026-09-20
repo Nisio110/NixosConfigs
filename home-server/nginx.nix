@@ -162,7 +162,7 @@ in
         inherit sslCertificate;
         inherit sslCertificateKey;
         locations."/" = {
-          proxyPass = "https://127.0.0.1:47990";
+          proxyPass = "https://127.0.0.1:5051";
           proxyWebsockets = true;
           extraConfig = "proxy_set_header Origin $sunshine_ui_origin;";
         };
@@ -192,16 +192,6 @@ in
       server {
         listen 1053;
         proxy_pass 127.0.0.1:53;
-      }
-
-      # Sunshine
-      server {
-        listen 5050 udp;
-        proxy_pass 127.0.0.1:47989;
-      }
-      server {
-        listen 5050;
-        proxy_pass 127.0.0.1:47989;
       }
     '';
   };
