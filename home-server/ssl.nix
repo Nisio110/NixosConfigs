@@ -68,7 +68,8 @@
     script = ''
       # Private key
       openssl genrsa \
-        -out /var/lib/ssl/tetocorp.key 4096
+        -out /var/lib/ssl/tetocorp.key 2048
+      chmod 644 /var/lib/ssl/tetocorp.key
 
       # CSR file
       # Provides info embedded into the key
@@ -114,7 +115,7 @@
         -copy_extensions copy \
         -out /var/lib/ssl/tetocorp.crt
 
-      chown nginx:nginx \
+      chown oisin:users \
         /var/lib/ssl/tetocorp.key \
         /var/lib/ssl/tetocorp.csr \
         /var/lib/ssl/tetocorp.crt
