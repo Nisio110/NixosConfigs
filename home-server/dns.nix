@@ -8,8 +8,7 @@
         ip-freebind  = true; 
         interface    = [ "127.0.0.1" "192.168.0.19" ];
         local-zone = [ 
-          ''"tetocorp.ie." redirect''
-          #''"stream.tetocorp.ie." redirect''
+          ''"tetocorp.ie." static''
         ];
 
         access-control = [
@@ -21,8 +20,8 @@
 
         local-data  = [
           ''"tetocorp.ie.           IN A 192.168.0.19"''
-          #''"*.tetocorp.ie.         IN A 192.168.0.19"''
-          #''"stream.tetocorp.ie     IN A 192.168.0.20"''
+          ''"*.tetocorp.ie.         IN A 192.168.0.19"''
+          ''"stream.tetocorp.ie     IN A 192.168.0.20"''
         ];
       };
 
