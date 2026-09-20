@@ -33,6 +33,8 @@ in
       sunshine_name = "Tetocorp HQ";
       min_log_level = "info";
       system_tray = "disabled";
+      # unfortunately this will never be seamless
+      output_name = "1";
       global_prep_cmd =
         ''
         [
