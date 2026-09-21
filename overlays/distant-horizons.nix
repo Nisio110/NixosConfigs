@@ -5,7 +5,7 @@ let
 
   distant-horizons = pkgs.stdenvNoCC.mkDerivation {
     pname = "distant-horizons";
-    version = "3.3.0-26.3";
+    version = "3.3.0-26.2";
 
     src = pkgs.fetchurl {
       url = "https://cdn.modrinth.com/data/uCdwusMi/versions/I4fvXVOw/DistantHorizons-3.3.0-26.3-fabric-neoforge.jar?mr_download_reason=standalone"; # from modrinth.com/mod/distanthorizons/version/3.3.0-26.3
