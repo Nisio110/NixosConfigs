@@ -8,7 +8,8 @@
         postBuild = ''
           wrapProgram $out/bin/ModrinthApp \
             --set GTK_MODULES "" \
-            --set WEBKIT_DISABLE_COMPOSITING_MODE "1"
+            --set WEBKIT_DISABLE_COMPOSITING_MODE "1" \
+            --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib:${prev.vulkan-loader}/lib"
         '';
       };
     })
