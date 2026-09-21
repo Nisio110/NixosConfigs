@@ -35,6 +35,8 @@ tools = with pkgs; [
 libraries = with pkgs; [
   linuxPackages.nvidia_x11
   vkd3d-proton vkd3d
+  vulkan-loader
+  vulkan-tools
 ];
 
 misc = with pkgs; [
