@@ -8,8 +8,8 @@ let
     version = "3.3.0-26.2";
 
     src = pkgs.fetchurl {
-      url = "https://cdn.modrinth.com/data/uCdwusMi/versions/I4fvXVOw/DistantHorizons-3.3.0-26.3-fabric-neoforge.jar?mr_download_reason=standalone"; # from modrinth.com/mod/distanthorizons/version/3.3.0-26.3
-      sha256 = "sha256-+lglJYfw7bJ/92Ehfj36kR+WSPk+qvazseDoYjlmN64=";
+      url = "https://cdn.modrinth.com/data/uCdwusMi/versions/3CtFgbnO/DistantHorizons-3.3.0-26.2-fabric-neoforge.jar?mr_download_reason=standalone";
+      sha256 = "sha256-jNbFkmdmliz4F2CbkeAaYWzltjnvlcxYVsHfy92fP50=";
     };
 
     dontUnpack = true;
