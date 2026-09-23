@@ -118,6 +118,8 @@
         /var/lib/ssl/tetocorp.key \
         /var/lib/ssl/tetocorp.csr \
         /var/lib/ssl/tetocorp.crt
+      
+      systemctl restart nginx
     '';
   };
 
