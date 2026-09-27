@@ -16,6 +16,7 @@
     permittedInsecurePackages = [ "electron-40.10.5" "pnpm-10.29.2"]; 
   };
 
+  home-manager.backupFileExtension = "hmbak";
 
   # Prevent dbus-broker from restarting during nixos-rebuild, which hangs
   # due to duplicate D-Bus service files from old/new store paths.

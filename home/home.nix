@@ -18,5 +18,6 @@
         email = "laneoisin64@gmail.com";
       };
   };
+  
   home.stateVersion = "25.11";
 }
