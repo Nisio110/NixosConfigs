@@ -3,10 +3,9 @@ let
   p = import ./_palette.nix;
 in
 {
+  services.mako.enable = false;
   # Runs via the systemd unit below; this supplies the config file.
   services.mako = {
-    enable = true;
-
     settings = {
       font = "Overpass 11";
       anchor = "top-right";

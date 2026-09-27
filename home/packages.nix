@@ -45,6 +45,7 @@ let
     freecad
     orca-slicer
     moonlight-qt
+    krita
   ];
 
   dev = with pkgs; [
