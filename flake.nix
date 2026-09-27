@@ -29,12 +29,12 @@
 
     system = "x86_64-linux";
     user = "oisin";
-    hostname = "hdesktop";
+    hostname = "olaptop";
 
     homeDir = "/home/${user}";
     secretsDir = "${homeDir}/.local/secrets";
 
-    mkSystem = { system, modulePath, homePath, overlayPath, extraPaths }:
+    mkSystem = { system, modulePath, homePath, overlayPath, extraPaths ? [] }:
       nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs user homeDir secretsDir hostname; };
@@ -60,9 +60,6 @@
       modulePath = ./essentials;
       homePath = ./home;
       overlayPath = ./overlays;
-      extraPaths = [
-        ./home-server
-      ];
     };
   };
 }

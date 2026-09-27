@@ -13,17 +13,15 @@ in {
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
-    "video=DP-2:2560x1440@165,rotate=270"
-    "video=DP-3:2560x1440@200,rotate=0"
     "rhgb"
     "quiet"
   ];
 
   boot.loader = {
-    systemd-boot.enable = lib.mkForce false;
+    systemd-boot.enable = lib.mkForce true;
     efi = {
       canTouchEfiVariables = false;
-      efiSysMountPoint = "/boot/efi";
+      #efiSysMountPoint = "/boot/efi";
     };
   };
 
@@ -36,7 +34,7 @@ in {
   # generated at installation time. So we force it to false
   # for now.
   boot.lanzaboote = {
-    enable = true;
+    enable = false;
     pkiBundle = "/var/lib/sbctl";
     autoGenerateKeys.enable = true;
     autoEnrollKeys.enable = true;
