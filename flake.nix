@@ -42,7 +42,6 @@
         modules = [ 
           (inputs.import-tree ([ modulePath overlayPath ] ++ extraPaths)) 
           (mkHomeManager homePath)
-          inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
         ];
       };
 
