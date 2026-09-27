@@ -46,6 +46,8 @@ let
     orca-slicer
     moonlight-qt
     krita
+    ltspice
+    virtualbox
   ];
 
   dev = with pkgs; [
