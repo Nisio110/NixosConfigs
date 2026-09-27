@@ -12,7 +12,7 @@
   };
 
   programs.plasma = let 
-      wallpaper = "/home/oisin/.local/share/wallpapers/macos-space/macos-space-1.jpg";
+      wallpaper = "/home/oisin/Pitcure/dachstein-sunset.jpg";
     in {
     enable = true;
 

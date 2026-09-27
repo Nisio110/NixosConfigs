@@ -16,7 +16,9 @@
   boot.extraModulePackages = [ ];
 
   hardware.sensor.iio.enable = true;
-  environment.systemPackages = with pkgs; [ kdePackages.plasma-keyboard ];
+  environment.systemPackages = with pkgs; [ 
+    kdePackages.plasma-keyboard 
+  ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/1fabf90e-0ebe-448e-a6d7-20c3d2ff544d";
