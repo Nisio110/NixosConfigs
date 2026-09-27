@@ -24,6 +24,14 @@ in {
       #efiSysMountPoint = "/boot";
     };
   };
+  boot.loader.systemd-boot = {
+    edk2-uefi-shell.enable = true;
+    windows."windows" = {
+      title = "Windows 11";
+      efiDeviceHandle = "FS0";
+      sortKey = "y_windows";
+    };
+  };
 
   environment.systemPackages = [
     pkgs.sbctl # For debugging and troubleshooting Secure Boot.
