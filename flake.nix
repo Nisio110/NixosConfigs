@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixvim.url = "github:nix-community/nixvim";
     import-tree.url = "github:vic/import-tree";
     sops-nix.url = "github:mic92/sops-nix";
@@ -41,6 +42,7 @@
         modules = [ 
           (inputs.import-tree ([ modulePath overlayPath ] ++ extraPaths)) 
           (mkHomeManager homePath)
+          inputs.nixos-hardware.nixosModules.framework-12-13th-gen-intel
         ];
       };
 
