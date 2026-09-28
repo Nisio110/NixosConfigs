@@ -44,7 +44,7 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  #fileSystems."/media/windows" = { device = "/dev/disk/by-uuid/e3e6e93e-9c2e-4e23-aec4-bc0019dd628"; fsType = "ntfs"; };
+  #fileSystems."/media/windows" = { device = "/dev/disk/by-uuid/e3e6e93e-9c2e-4e23-aec4-bc0019dd628"; fsType = "ntfs-3g"; };
 
   swapDevices = [{
     device = "/swap/swapfile";
