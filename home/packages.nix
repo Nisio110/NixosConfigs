@@ -48,6 +48,7 @@ let
     krita
     ltspice
     virtualbox
+    cisco-packet-tracer_9
   ];
 
   dev = with pkgs; [
