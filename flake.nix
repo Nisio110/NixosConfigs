@@ -17,6 +17,7 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     compose2nix.url = "github:aksiksi/compose2nix";
     niri-config.url = "github:sodiboo/niri-flake";
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     bun-bin = {
       url = "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip";

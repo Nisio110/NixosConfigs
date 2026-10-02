@@ -1,29 +1,6 @@
 { pkgs, inputs, ... }:
 let
  
-  bun = pkgs.bun.overrideAttrs (prev: {
-    version = "latest";
-    # The input is the raw .zip (type = "file"); rename it to a *.zip store path
-    # so bun's generic unpackPhase recognises and unzips it.
-    src = pkgs.runCommandLocal 
-      "bun-linux-x64.zip" 
-      { } 
-      "cp ${inputs.bun-bin} $out";
-  });
-
-  oh-my-pi = pkgs.writeShellApplication {
-    name = "omp";
-    runtimeInputs = [ bun ];
-    text = ''
-      bun_bin="$(bun pm bin -g)"
-      omp_bin="$bun_bin/omp"
-      if [ ! -x "$omp_bin" ]; then
-        bun install -g @oh-my-pi/pi-coding-agent
-      fi
-      exec "$omp_bin" "$@"
-    '';
-  };
-
   # NOTE
   # might be better to structure these as one list and
   # categorise with comments instead
@@ -66,8 +43,8 @@ let
   ];
 
   misc = with pkgs; [
+    omp
     libnotify
-    oh-my-pi
     netbird
     claude-code
     kitty-img
