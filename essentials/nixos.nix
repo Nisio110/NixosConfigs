@@ -4,8 +4,8 @@
     experimental-features = ["nix-command" "flakes"];
     warn-dirty = false;
     auto-optimise-store = true;
-    cores = 2;
-    max-jobs = 3;
+    cores = 4;
+    max-jobs = 2;
   };
 
   nixpkgs.config = {

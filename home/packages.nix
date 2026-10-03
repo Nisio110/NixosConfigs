@@ -55,6 +55,8 @@ let
     bottles
     ethtool
     tree
+    tio
+    sendme
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
