@@ -49,19 +49,6 @@ let
     };
   };
 
-  # Upstream github.com/k-krawczyk/proxmox-mcp-server was deleted (noticed
-  # 2026-08; no fork or archive survives), so the author's npm release is the
-  # only remaining distribution. The tarball ships prebuilt dist/
-  # (prepublishOnly ran tsc) but, like all npm tarballs, no lockfile — so a
-  # devDependencies-free package.json + generated lock are vendored in ./mcp.
-  # Tarball verified against the registry integrity for 0.2.0
-  # (sha512-ERKK37kMCtFJpKZOr0GV75zoacwSlQTSK+eFV8hTK1zERZfoicQfVQfZFk8QqVyf7THb2MtI+zpGL4mbWaTBkg==).
-
-  # ── Secret wrappers ─────────────────────────────────────────────
-  # Each wrapper sources the sops-nix rendered env template (./secrets.nix)
-  # instead of cat-ing a raw decrypted secret file; `set -a` exports every
-  # var the template defines for the duration of the exec'd process.
-
   mcp-github = pkgs.writeShellApplication {
     name = "mcp-github";
     runtimeInputs = [ pkgs.github-mcp-server ];

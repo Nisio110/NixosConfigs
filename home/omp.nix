@@ -7,9 +7,6 @@ let
     symbolPreset = "nerd";
     theme = { dark = "dark-reef"; light = "light"; };
     setupVersion = 1;
-    modelRoles = {
-      default = "openai/gpt-5.6-terra:high";
-    };
     images = { blockImages = false; };
     display = { shimmer = "classic"; showTokenUsage = true; };
     tui = { hyperlinks = "auto"; textSizing = false; };
@@ -34,7 +31,6 @@ let
     read = { toolResultPreview = true; summarize = { prose = true; }; };
     renderMermaid = { enabled = true; };
     checkpoint = { enabled = true; };
-    advisor = { enabled = true; };
   };
 
   # Mirrors the current ~/.omp/agent/mcp.json.
@@ -44,14 +40,6 @@ let
   ompMcp = {
     "$schema" = "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/coding-agent/src/config/mcp-schema.json";
     mcpServers = {
-      "kwin-mcp" = {
-        command = "${config.home.homeDirectory}/.local/bin/kwin-mcp";
-        args = [ ];
-      };
-      "computer-use-linux" = {
-        command = "${config.home.homeDirectory}/.local/bin/computer-use-linux";
-        args = [ "mcp" ];
-      };
       "nixos" = {
         command = "${config.home.profileDirectory}/bin/mcp-nixos";
         args = [ ];
@@ -60,10 +48,6 @@ let
         command = "${config.home.profileDirectory}/bin/zen-mcp";
         args = [ ];
       };
-      # ── Ported from the Macbook opencode setup (packages: ./mcp-servers.nix) ──
-      # Secret-dependent servers go through mcp-* wrappers; keys must NOT be
-      # put in this attrset's env (the generated json source lives in the
-      # world-readable nix store).
       "github" = {
         command = "${config.home.profileDirectory}/bin/mcp-github";
         args = [ ];
