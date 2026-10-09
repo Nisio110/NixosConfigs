@@ -64,6 +64,13 @@ programs = {
 
   # allows fucky dynamic shit like modrinth to run
   nix-ld.enable = true;
+
+  # "You can utilize GameMode, a combination of a library 
+  # and daemon for Linux that allows games to request a set
+  # of optimizations to be temporarily applied to the host
+  # operating system and/or a game process"
+  # - https://wiki.nixos.org/wiki/Steam/en
+  gamemode.enable = true;
 };
 
 services = {
