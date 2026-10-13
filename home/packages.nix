@@ -59,6 +59,7 @@ let
     sendme
     arduino-ide
     ripgrep
+    htop
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
