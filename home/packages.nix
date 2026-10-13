@@ -57,6 +57,8 @@ let
     tree
     tio
     sendme
+    arduino-ide
+    ripgrep
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
