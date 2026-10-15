@@ -35,6 +35,7 @@ let
     python3
     codex
     python314Packages.pip
+    python314Packages.dbus-python
     bun
     gh
     avrdude
