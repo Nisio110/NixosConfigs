@@ -32,10 +32,11 @@ let
     gcc
     rustc
     cargo
-    python3
     codex
-    python314Packages.pip
-    python314Packages.dbus-python
+    (python3.withPackages (ps: [
+      ps.pip
+      ps.dbus-python
+    ]))
     bun
     gh
     avrdude
