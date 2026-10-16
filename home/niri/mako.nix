@@ -4,8 +4,8 @@ let
 in
 {
   # Runs via the systemd unit below; this supplies the config file.
+  services.mako.enable = false;
   services.mako = {
-    enable = true;
 
     settings = {
       font = "Overpass 11";
