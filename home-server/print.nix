@@ -21,7 +21,7 @@ let
     ln -sf "$glibc/lib/ld-linux-x86-64.so.2" /lib64/ld-linux-x86-64.so.2
     export LD_LIBRARY_PATH="$gcclib/lib:$glibc/lib"
 
-    exec /flashforge-webui --printers="192.168.0.20:new:24d58190"
+    exec /flashforge-webui --printers="192.168.0.20:new:24d58190" --webui-password="changeme"
   '';
 in
 {
