@@ -45,6 +45,8 @@ let
   ];
 
   misc = with pkgs; [
+    quickemu
+    qemu
     omp
     libnotify
     netbird
