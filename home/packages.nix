@@ -24,7 +24,6 @@ let
     moonlight-qt
     krita
     ltspice
-    virtualbox
     cisco-packet-tracer_9
   ];
 

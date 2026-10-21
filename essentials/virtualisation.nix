@@ -4,6 +4,7 @@
     qemu 
     quickemu
     linuxKernel.packages.linux_7_2.virtualbox
+    virtualbox
   ];
 
   virtualisation.libvirtd.enable = true;
