@@ -5,6 +5,7 @@
     ];
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_7_3;
     initrd.availableKernelModules = [ 
       "xhci_pci" "nvme" 
     ];
@@ -73,5 +74,5 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   
 
-  hardware.framework.enableKmod = false;
+  hardware.framework.enableKmod = true;
 }

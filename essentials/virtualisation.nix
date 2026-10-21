@@ -3,11 +3,11 @@
   environment.systemPackages = with pkgs; [
     qemu 
     quickemu
-    linuxPackages.virtualbox
-    virtualbox
   ];
 
   virtualisation.libvirtd.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+
 
   programs.virt-manager.enable = true;
 
