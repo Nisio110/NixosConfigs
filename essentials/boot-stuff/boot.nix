@@ -1,9 +1,6 @@
 # boot.nix
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{ pkgs, lib, ... }: 
+let
   sources = import ./_secure-boot/lon.nix;
   lanzaboote = import sources.lanzaboote {
     inherit pkgs;
@@ -24,6 +21,7 @@ in {
       #efiSysMountPoint = "/boot";
     };
   };
+
   boot.loader.systemd-boot = {
     edk2-uefi-shell.enable = true;
     windows."windows" = {
