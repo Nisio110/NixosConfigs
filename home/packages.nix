@@ -54,7 +54,6 @@ let
     kitty-img
     qbittorrent
     weathr
-    qbittorrent-cli
     joplin-cli
     bottles
     ethtool

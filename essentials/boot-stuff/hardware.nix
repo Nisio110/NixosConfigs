@@ -5,7 +5,6 @@
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [ 
       "xhci_pci" "nvme" 
     ];
@@ -72,4 +71,7 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  
+
+  hardware.framework.enableKmod = false;
 }

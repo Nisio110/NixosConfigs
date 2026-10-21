@@ -8,7 +8,6 @@ let
 in {
   imports = [lanzaboote.nixosModules.lanzaboote];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     "rhgb"
     "quiet"
