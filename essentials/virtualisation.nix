@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
     qemu 
     quickemu
-    linuxKernel.packages.linux_7_2.virtualbox
+    linuxPackages.virtualbox
     virtualbox
   ];
 
