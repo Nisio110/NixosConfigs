@@ -6,7 +6,7 @@
       "wheel"
       "networkmanager"
       "video"
-      "input"
+      "input" 
       "audio"
       "libvirtd"
       "docker"
