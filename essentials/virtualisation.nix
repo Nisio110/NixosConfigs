@@ -1,20 +1,30 @@
-{pkgs,...}: 
+{pkgs, ...}: 
 {
   environment.systemPackages = with pkgs; [
-    qemu 
-    quickemu
+    qemu quickemu
   ];
 
-  virtualisation.libvirtd.enable = true;
-  virtualisation.virtualbox.host.enable = true;
+  boot = {
+    #initrd.kernelModules = [
+    #  "ip_tables"
+    #];
+    kernelModules = [
+      "ip_tables"
+    ];
+  };
 
+  programs = {
+    virt-manager.enable = true;
+  };
 
-  programs.virt-manager.enable = true;
-
-  services.qemuGuest.enable = true;
-  services.spice-vdagentd.enable = true;
+  services = {
+    qemuGuest.enable = true;
+    spice-vdagentd.enable = true;
+  };
 
   virtualisation.libvirtd = {
+    enable = true;
     qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
   };
+  virtualisation.virtualbox.host.enable = true;
 }
