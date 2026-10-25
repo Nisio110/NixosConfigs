@@ -29,7 +29,7 @@ in
         CPU_CORES = "4";
         DISK_SIZE = "64G";
 
-        USERNAME = "Oisín";
+        USERNAME = "Oisin";
         PASSWORD = "changeme";
 
         HOME = home;

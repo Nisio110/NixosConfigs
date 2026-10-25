@@ -21,6 +21,7 @@ tools = with pkgs; [
   btop
   mangohud
   steamcmd
+  # Change this to your Linux username.
   dua # disk usage analyzer
   sshfs
   cmake
@@ -30,6 +31,8 @@ tools = with pkgs; [
   inputs.compose2nix.packages.x86_64-linux.default
   speedtest-cli
   steam-run
+  bmon
+  iftop
 ];
 
 libraries = with pkgs; [
