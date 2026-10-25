@@ -8,42 +8,37 @@ let
 in {
   imports = [lanzaboote.nixosModules.lanzaboote];
 
-  boot.kernelParams = [
-    "rhgb"
-    "quiet"
-  ];
-
-  boot.loader = {
-    systemd-boot.enable = lib.mkForce true;
-    efi = {
-      canTouchEfiVariables = false;
-      #efiSysMountPoint = "/boot";
-    };
-  };
-
-  boot.loader.systemd-boot = {
-    edk2-uefi-shell.enable = true;
-    windows."windows" = {
-      title = "Windows 11";
-      efiDeviceHandle = "FS0";
-      sortKey = "y_windows";
-    };
-  };
-
   environment.systemPackages = [
     pkgs.sbctl # For debugging and troubleshooting Secure Boot.
   ];
 
-  # Lanzaboote currently replaces the systemd-boot module.
-  # This setting is usually set to true in configuration.nix
-  # generated at installation time. So we force it to false
-  # for now.
-  boot.lanzaboote = {
-    enable = false;
-    pkiBundle = "/var/lib/sbctl";
-    autoGenerateKeys.enable = true;
-    autoEnrollKeys.enable = true;
+  boot = {
+    lanzaboote = {
+      enable = false; 
+      pkiBundle = "/var/lib/sbctl";
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys.enable = true;
+    };
+
+    kernelParams = [
+      "rhgb"
+      "quiet"
+    ];
+
+    loader = {
+      efi.canTouchEfiVariables = false;
+      systemd-boot = {
+        enable = lib.mkForce true;
+        edk2-uefi-shell.enable = true;
+        windows."windows" = {
+          title = "Windows 11";
+          efiDeviceHandle = "FS0";
+          sortKey = "y_windows";
+        };
+      };
+    };
   };
+
 
   # the things i do for this fucking operating system
   system.activationScripts.chainloadSecondBoot = ''
