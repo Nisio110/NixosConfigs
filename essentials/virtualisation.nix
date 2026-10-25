@@ -5,9 +5,7 @@
   ];
 
   boot = {
-    kernelModules = [
-      "ip_tables"
-    ];
+    kernelModules = [ "ip_tables" "ip_table_nat" ];
   };
 
   programs = {
@@ -19,9 +17,11 @@
     spice-vdagentd.enable = true;
   };
 
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+  virtualisation = {
+    virtualbox.host.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+    };
   };
-  virtualisation.virtualbox.host.enable = true;
 }
