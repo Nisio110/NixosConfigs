@@ -11,7 +11,7 @@ in
 
   virtualisation.oci-containers = {
     backend = "docker";
-    containers.WinApps = {
+    containers.winapps = {
       image = "ghcr.io/dockur/windows:latest";
       autoStart = true;
 
