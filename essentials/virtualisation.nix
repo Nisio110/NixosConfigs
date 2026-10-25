@@ -5,9 +5,6 @@
   ];
 
   boot = {
-    #initrd.kernelModules = [
-    #  "ip_tables"
-    #];
     kernelModules = [
       "ip_tables"
     ];
