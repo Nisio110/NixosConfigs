@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   # Change this to your Linux username.
   username = "oisin";
@@ -7,6 +7,10 @@ let
   dataDir = "/var/lib/winapps";
 in
 {
+  environment.systemPackages = with pkgs; [
+    curl dialog freerdp git iproute2 libnotify nmap
+  ];
+
   virtualisation.docker = {
     enable = true;
     daemon.settings = {
@@ -27,7 +31,7 @@ in
         VERSION = "11";
         RAM_SIZE = "10G";
         CPU_CORES = "4";
-        DISK_SIZE = "64G";
+        DISK_SIZE = "100G";
 
         USERNAME = "Oisin";
         PASSWORD = "changeme";

@@ -45,6 +45,8 @@ libraries = with pkgs; [
 misc = with pkgs; [
   cmatrix
   mpv
+  inputs.winapps.packages."${system}".winapps
+  inputs.winapps.packages."${system}".winapps-launcher # optional
 ];
 
 
