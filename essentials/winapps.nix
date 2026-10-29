@@ -23,7 +23,7 @@ in
 
   virtualisation.oci-containers = {
     backend = "docker";
-    containers.winapps = {
+    containers.WinApps = {
       image = "ghcr.io/dockur/windows:latest";
       autoStart = true;
 
