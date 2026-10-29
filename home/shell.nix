@@ -31,6 +31,8 @@
     initContent = ''
       source "${config.sops.templates."github.env".path}"
 
+      PATH=/usr/local/bin:$PATH'
+
       # Auto-start a named tmux session for each new interactive non-tmux shell.
       if command -v tmux &>/dev/null && [[ -z $TMUX ]] && [[ $- == *i* ]]; then
         _n=0
