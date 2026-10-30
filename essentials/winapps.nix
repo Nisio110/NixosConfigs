@@ -30,7 +30,7 @@ in
       environment = {
         VERSION = "11";
         RAM_SIZE = "10G";
-        CPU_CORES = "4";
+        CPU_CORES = "8";
         DISK_SIZE = "100G";
 
         USERNAME = "Oisin";

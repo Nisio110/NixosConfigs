@@ -22,3 +22,16 @@ nix build --no-link --print-out-paths path:.#nixosConfigurations.olaptop.config.
 New overlay files must be tracked by Git before using the usual Git-backed flake
 rebuild. Rebuild and reboot before testing module loading; building the module
 tree alone does not activate it.
+
+## WinApps launcher GTK modules
+
+If `winapps-launcher` reports a failure loading `appmenu-gtk-module`, check
+the user GTK settings for a stale module request. The current system does not
+provide that module. In `~/.config/gtk-3.0/settings.ini`, keep
+`gtk-modules=colorreload-gtk-module` but remove `appmenu-gtk-module`; remove
+the corresponding obsolete request from `~/.gtkrc-2.0` as well.
+These are mutable Plasma-managed settings, not a WinApps package override.
+Restart the launcher after changing them; no NixOS rebuild is needed.
+
+The launcher runs as a tray application and normally stays attached to the
+terminal. Use its tray menu to launch Windows or an application.
