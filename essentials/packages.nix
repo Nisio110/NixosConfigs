@@ -33,6 +33,7 @@ tools = with pkgs; [
   steam-run
   bmon
   iftop
+  busybox
 ];
 
 libraries = with pkgs; [
