@@ -25,6 +25,7 @@ let
     krita
     ltspice
     cisco-packet-tracer_9
+    chromium
   ];
 
   dev = with pkgs; [
