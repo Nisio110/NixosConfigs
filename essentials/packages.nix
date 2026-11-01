@@ -12,6 +12,7 @@ nix = with pkgs; [
 ];
 
 tools = with pkgs; [
+  displaylink
   neovim
   wget curl 
   whois dig nmap traceroute tcpdump
