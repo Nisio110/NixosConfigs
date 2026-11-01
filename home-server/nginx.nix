@@ -113,6 +113,27 @@ in
         };
       };
 
+      "todo.tetocorp.ie" = {
+        forceSSL = true;
+        inherit sslCertificate sslCertificateKey;
+        extraConfig = ''
+          allow 127.0.0.1;
+          allow ::1;
+          allow 192.168.0.0/24;
+          allow 100.90.0.0/16;
+          deny all;
+          client_max_body_size 100m;
+        '';
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8787";
+          proxyWebsockets = true;
+          extraConfig = ''
+            if (!-f /var/lib/baserow/ready) { return 503; }
+            proxy_read_timeout 300s;
+          '';
+        };
+      };
+
       "notes.tetocorp.ie" = {
         forceSSL = true;
         inherit sslCertificate;

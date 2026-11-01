@@ -1,19 +1,9 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 let
  
-  bun = pkgs.bun.overrideAttrs (prev: {
-    version = "latest";
-    # The input is the raw .zip (type = "file"); rename it to a *.zip store path
-    # so bun's generic unpackPhase recognises and unzips it.
-    src = pkgs.runCommandLocal 
-      "bun-linux-x64.zip" 
-      { } 
-      "cp ${inputs.bun-bin} $out";
-  });
-
   oh-my-pi = pkgs.writeShellApplication {
     name = "omp";
-    runtimeInputs = [ bun ];
+    runtimeInputs = [ pkgs.bun ];
     text = ''
       bun_bin="$(bun pm bin -g)"
       omp_bin="$bun_bin/omp"

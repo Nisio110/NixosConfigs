@@ -67,6 +67,11 @@ let
           logo = "assets/icons/suwayomi-logo.png";
         }
         {
+          name = "Tasks";
+          url = "https://todo.tetocorp.ie";
+          icon = "fas fa-tasks";
+        }
+        {
           name = "3D Printer";
           url = "https://print.tetocorp.ie";
           logo = "assets/icons/flashforge-logo.jpeg";

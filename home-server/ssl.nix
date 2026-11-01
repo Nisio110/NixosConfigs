@@ -93,6 +93,7 @@
       "DNS:torrent.tetocorp.ie,"\
       "DNS:vpn.tetocorp.ie,"\
       "DNS:notes.tetocorp.ie,"\
+      "DNS:todo.tetocorp.ie,"\
       "DNS:manga.tetocorp.ie,"\
       "DNS:cloudflare-bypass.tetocorp.ie,"\
       "DNS:print.tetocorp.ie,"\

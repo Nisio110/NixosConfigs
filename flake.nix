@@ -17,12 +17,6 @@
     compose2nix.url = "github:aksiksi/compose2nix";
     niri-config.url = "github:sodiboo/niri-flake";
 
-    bun-bin = {
-      url = "https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip";
-      type = "file";
-      flake = false;
-    };
-
   };
 
   outputs = inputs @ { nixpkgs, home-manager, ... }: let
