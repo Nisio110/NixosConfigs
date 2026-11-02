@@ -34,6 +34,7 @@ tools = with pkgs; [
   bmon
   iftop
   busybox
+  displaylink
 ];
 
 libraries = with pkgs; [
