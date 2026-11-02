@@ -384,17 +384,17 @@
     },
     "nixpkgs-freerdp": {
       "locked": {
-        "lastModified": 1782847189,
-        "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
+        "lastModified": 1771861243,
+        "narHash": "sha256-mz05b1VyLWoTkNg8iJr3yXFJF7HDlwIUKI3ln39RacY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b6018f87da91d19d0ab4cf979885689b469cdd41",
+        "rev": "80d901ec0377e19ac3f7bb8c035201e2e098cc97",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.11",
         "repo": "nixpkgs",
+        "rev": "80d901ec0377e19ac3f7bb8c035201e2e098cc97",
         "type": "github"
       }
     },

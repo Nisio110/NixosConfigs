@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-freerdp.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # FreeRDP 3.22.0 predates the 3.23.0 RemoteApp regression (FreeRDP#12391).
+    nixpkgs-freerdp.url = "github:NixOS/nixpkgs/80d901ec0377e19ac3f7bb8c035201e2e098cc97";
 
     home-manager = {
       url = "github:nix-community/home-manager";
