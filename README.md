@@ -35,3 +35,24 @@ Restart the launcher after changing them; no NixOS rebuild is needed.
 
 The launcher runs as a tray application and normally stays attached to the
 terminal. Use its tray menu to launch Windows or an application.
+
+## WinApps FreeRDP rollback
+
+`overlays/winapps.nix` overrides the WinApps flake package to use FreeRDP
+from the separately locked `nixpkgs-freerdp` input (NixOS 25.11, FreeRDP 3.23.0).
+The launcher also uses this overridden WinApps package. System-wide FreeRDP
+remains on the main nixpkgs input.
+
+This is a rollback candidate for the FreeRDP 3.32.2 RemoteApp window-lock
+assertion encountered with OrCAD Capture, not a confirmed application-level fix.
+Keep `HIDEF="on"` and `FREERDP_COMMAND=""` in the WinApps configuration.
+
+Build both packages without activating the system:
+
+```sh
+nix build --no-link .#nixosConfigurations.olaptop.pkgs.winapps .#nixosConfigurations.olaptop.pkgs.winapps-launcher
+```
+
+Both packages build, their wrappers select the overridden dependencies, and
+the replacement `xfreerdp /version` reports 3.23.0. Capture still needs testing
+after activation with `sudo nixos-rebuild switch --flake .#olaptop`.
