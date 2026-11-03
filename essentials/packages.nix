@@ -35,6 +35,7 @@ tools = with pkgs; [
   iftop
   busybox
   displaylink
+  jdk
 ];
 
 libraries = with pkgs; [
