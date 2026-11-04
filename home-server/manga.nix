@@ -40,11 +40,6 @@ in {
     "d ${dataDir} 0755 ${user} users -"
     "d ${dataDir}/.local/share/Tachidesk 0700 ${user} users -"
   ];
-
-  #systemd.tmpfiles.rules = [
-  #  "d  0755 ${user} users - ${localSourcePath}"
-  #  "d  0755 ${user} users - ${dataDir}"
-  #];
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
 
@@ -53,7 +48,7 @@ in {
     autoStart = true;
     user = "1000:1000";
     ports = [ "9009:8191" ];
-    volumes = [ "/var/lib/flaresolver:/config" ];
+    volumes = [ "/var/lib/flaresolverr:/config" ];
     environment = {
       TZ = "Europe/London";
     };
