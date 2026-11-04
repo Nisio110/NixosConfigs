@@ -1,8 +1,10 @@
 {pkgs, homeDir, user, ...}:
-{
+let 
+  dataDir = "/var/lib/suwayomi-server";
+  localSourcePath = "${dataDir}/sources";
+in {
   nixpkgs.overlays = [
-    (final: prev: 
-    let version = "2.4.2366"; in {
+    (final: prev: let version = "2.4.2366"; in {
         suwayomi-server = prev.suwayomi-server.overrideAttrs {
           inherit version;
           src = final.fetchurl {
@@ -18,12 +20,12 @@
 
     user = "oisin";
     group = "users";
-    dataDir = "${homeDir}";
+    inherit dataDir;
 
     settings.server = {
       ip = "127.0.0.1";
       port = 9090;
-      #localSourcePath = "${homeDir}/Documents/Manga/Sources";
+      inherit localSourcePath;
       extensionRepos = [
        "https://github.com/keiyoushi/extensions"
        "https://raw.githubusercontent.com/FelipeGFA/extensoes"
@@ -34,8 +36,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /home/oisin/Documents/Manga 0755 ${user} users -"
-    "d /home/oisin/Documents/Manga/Sources 0755 ${user} users -"
+    "d  0755 ${user} users - ${localSourcePath}"
   ];
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
