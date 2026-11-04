@@ -23,7 +23,6 @@ in {
       port = 9090;
       extensionStores = [
         "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.pb"
-        "https://github.com/FelipeGFA/extensoes/blob/repo/index.pb"
       ];
       flareSolverrEnabled = true;
       flareSolverrUrl = "https://cloudflare-bypass.tetocorp.ie";
