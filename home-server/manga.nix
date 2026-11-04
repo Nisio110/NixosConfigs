@@ -15,6 +15,7 @@
   services.suwayomi-server = {
     enable = true;
     
+    user = "root";
     settings.server = {
       ip = "127.0.0.1";
       port = 9090;
