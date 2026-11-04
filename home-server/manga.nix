@@ -34,10 +34,10 @@ in {
   systemd.services = {
     suwayomi-server = {
       serviceConfig.Slice = "teto-manga.slice";
-      environment = {
-        JAVA_TOOL_OPTIONS = 
-          "-Dsuwayomi.tachidesk.config.server.rootDir=${dataDir}";
-        };
+      #environment = {
+      #  JAVA_TOOL_OPTIONS = 
+      #    "-Dsuwayomi.tachidesk.config.server.rootDir=${dataDir}";
+      #  };
     };
 
     docker-flaresolverr = {
