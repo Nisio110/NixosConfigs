@@ -13,12 +13,10 @@
       #localSourcePath = "${homeDir}/Documents/Manga/Sources";
       extensionRepos = [
        "https://github.com/keiyoushi/extensions"
-       # "https://github.com/keiyoushi/extensions/raw/repo"
-       # "https://github.com/keiyoushi/extensions/raw/repo/index.pb"
+       "https://raw.githubusercontent.com/FelipeGFA/extensoes"
       ];
       flareSolverrEnabled = true;
-      #flareSolverrUrl = "http://127.0.0.1:9009";
-      flareSolverrUrl = "http://cloudflare-bypass.tetocorp.ie";
+      flareSolverrUrl = "https://cloudflare-bypass.tetocorp.ie";
     };
   };
 
