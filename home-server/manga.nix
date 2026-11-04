@@ -21,7 +21,7 @@ in {
     settings.server = {
       ip = "127.0.0.1";
       port = 9090;
-      extensionRepos = [
+      extensionStores = [
        "https://github.com/keiyoushi/extensions"
        "https://raw.githubusercontent.com/FelipeGFA/extensoes"
       ];
