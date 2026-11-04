@@ -22,7 +22,8 @@ in {
       ip = "127.0.0.1";
       port = 9090;
       extensionStores = [
-       "https://github.com/keiyoushi/extensions"
+       "https://github.com/keiyoushi/extensions/"
+       "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.pb"
        "https://raw.githubusercontent.com/FelipeGFA/extensoes"
       ];
       flareSolverrEnabled = true;
