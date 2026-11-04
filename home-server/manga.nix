@@ -17,6 +17,7 @@ in {
   services.suwayomi-server = {
     enable = true;
     inherit dataDir;
+    user = "suwayomi";
     
     settings.server = {
       ip = "127.0.0.1";
