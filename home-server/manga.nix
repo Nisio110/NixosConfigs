@@ -1,7 +1,7 @@
 {pkgs, homeDir, user, ...}:
 let 
-  dataDir = "/var/lib/suwayomi-server";
-  localSourcePath = "${dataDir}/sources";
+  dataDir = "${homeDir}/.local/state/suwayomi-server";
+  localSourcePath = "${homeDir}/.local/share/manga/sources";
 in {
   nixpkgs.overlays = [
     (final: prev: let version = "2.4.2366"; in {
