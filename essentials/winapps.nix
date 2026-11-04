@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ inputs, system, pkgs, ... }:
 let
   # Change this to your Linux username.
   username = "oisin";
@@ -7,9 +7,12 @@ let
   dataDir = "/var/lib/winapps";
 in
 {
-  environment.systemPackages = with pkgs; [
-    curl dialog freerdp git iproute2 libnotify nmap
-  ];
+  environment.systemPackages = [
+    pkgs.curl pkgs.dialog pkgs.freerdp pkgs.git pkgs.iproute2 pkgs.libnotify pkgs.nmap
+    ] ++ [
+      inputs.winapps.packages.${system}.winapps-launcher
+      inputs.winapps.packages.${system}.winapps 
+    ];
 
   virtualisation.docker = {
     enable = true;

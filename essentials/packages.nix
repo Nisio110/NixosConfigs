@@ -48,8 +48,6 @@ libraries = with pkgs; [
 misc = with pkgs; [
   cmatrix
   mpv
-  winapps
-  winapps-launcher # optional
 ];
 
 
