@@ -1,5 +1,7 @@
-{pkgs, homeDir, user, ...}:
-{
+{pkgs, homeDir, user, ...}: 
+let 
+  dataDir = "/var/lib/suwayomi-server";
+in {
   nixpkgs.overlays = [
     (final: prev: let version = "2.4.2366"; in {
         suwayomi-server = prev.suwayomi-server.overrideAttrs {
@@ -14,8 +16,8 @@
 
   services.suwayomi-server = {
     enable = true;
+    inherit dataDir;
     
-    user = "root";
     settings.server = {
       ip = "127.0.0.1";
       port = 9090;
@@ -28,6 +30,9 @@
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "d ${dataDir} 0711 suwayomi users -"
+  ];
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
 
