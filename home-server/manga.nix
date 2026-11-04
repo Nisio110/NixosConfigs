@@ -14,7 +14,7 @@
       extensionRepos = [
        # "https://github.com/keiyoushi/extensions"
        # "https://github.com/keiyoushi/extensions/raw/repo"
-       # "https://github.com/keiyoushi/extensions/raw/repo/index.pb"
+       "https://github.com/keiyoushi/extensions/raw/repo/index.pb"
       ];
       flareSolverrEnabled = true;
       #flareSolverrUrl = "http://127.0.0.1:9009";
