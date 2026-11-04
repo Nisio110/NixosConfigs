@@ -17,7 +17,7 @@ in {
   services.suwayomi-server = {
     enable = true;
     inherit dataDir;
-    user = "suwayomi";
+    user = "root";
     
     settings.server = {
       ip = "127.0.0.1";
@@ -31,9 +31,6 @@ in {
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "d ${dataDir} 0711 suwayomi users -"
-  ];
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
 
