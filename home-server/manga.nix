@@ -17,7 +17,7 @@ in {
   services.suwayomi-server = {
     enable = true;
     inherit dataDir;
-    user = "root";
+    #user = "root";
     
     settings.server = {
       ip = "127.0.0.1";
@@ -31,9 +31,19 @@ in {
     };
   };
 
-  systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
-  systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
+  systemd.services = {
+    suwayomi-server = {
+      serviceConfig.Slice = "teto-manga.slice";
+      environment = {
+        JAVA_TOOL_OPTIONS = 
+          "-Dsuwayomi.tachidesk.config.server.rootDir=${dataDir}";
+        };
+    };
 
+    docker-flaresolverr = {
+      serviceConfig.Slice = "teto-manga.slice";
+    };
+  };
   virtualisation.oci-containers.containers.flaresolverr = {
     image = "ghcr.io/flaresolverr/flaresolverr:latest";
     autoStart = true;
