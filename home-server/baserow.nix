@@ -105,30 +105,4 @@ in
     serviceConfig.Slice = "teto-tasks.slice";
   };
 
-  # nginx fails closed until the administrator, signup policy and tracker exist.
-  systemd.services.baserow-bootstrap = {
-    wantedBy = [ "multi-user.target" ];
-    requires = [ "docker-baserow.service" ];
-    after = [ "docker-baserow.service" ];
-    path = [ pkgs.docker pkgs.coreutils ];
-    unitConfig.ConditionPathExists = "!${state}/ready";
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      TimeoutStartSec = "20min";
-      Slice = "teto-tasks.slice";
-    };
-    script = ''
-      for attempt in $(seq 1 180); do
-        if [ "$(docker inspect --format '{{.State.Health.Status}}' baserow)" = healthy ]; then
-          docker exec -i baserow /baserow.sh backend-cmd manage shell < ${./baserow-bootstrap.py}
-          touch ${state}/ready
-          exit 0
-        fi
-        sleep 5
-      done
-      echo 'Baserow did not become healthy within 15 minutes' >&2
-      exit 1
-    '';
-  };
 }

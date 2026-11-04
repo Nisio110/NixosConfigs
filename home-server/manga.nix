@@ -37,6 +37,7 @@ in {
 
   systemd.tmpfiles.rules = [
     "d  0755 ${user} users - ${localSourcePath}"
+    "d  0755 ${user} users - ${dataDir}"
   ];
   systemd.services.suwayomi-server.serviceConfig.Slice = "teto-manga.slice";
   systemd.services.docker-flaresolverr.serviceConfig.Slice = "teto-manga.slice";
