@@ -1,4 +1,4 @@
-{ inputs, system, pkgs, ... }:
+{ pkgs, ... }:
 let
   # Change this to your Linux username.
   username = "oisin";
@@ -10,8 +10,8 @@ in
   environment.systemPackages = [
     pkgs.curl pkgs.dialog pkgs.freerdp pkgs.git pkgs.iproute2 pkgs.libnotify pkgs.nmap
     ] ++ [
-      inputs.winapps.packages.${system}.winapps-launcher
-      inputs.winapps.packages.${system}.winapps 
+      pkgs.winapps-launcher
+      pkgs.winapps
     ];
 
   virtualisation.docker = {
