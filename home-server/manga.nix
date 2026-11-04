@@ -1,5 +1,18 @@
-{homeDir, user, ...}:
+{pkgs, homeDir, user, ...}:
 {
+  nixpkgs.overlays = [
+    (final: prev: 
+    let version = "2.4.2366"; in {
+        suwayomi-server = prev.suwayomi-server.overrideAttrs {
+          inherit version;
+          src = final.fetchurl {
+            url = "https://github.com/Suwayomi/Suwayomi-Server/releases/download/v${version}/Suwayomi-Server-v${version}.jar";
+            hash = "sha256-r5/rIK+dfr6eMHaebG68f8erHERziNQuAoCx2l/ge/0=";
+          };
+        };
+      })
+  ];
+
   services.suwayomi-server = {
     enable = true;
 
