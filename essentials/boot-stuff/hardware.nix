@@ -41,6 +41,11 @@
     "/media/windows" = {
       device = "/dev/disk/by-uuid/F49A11179A10D846";
       fsType = "ntfs";
+      options = [
+        "uid=1000"
+        "gid=100"
+        "umask=022"
+      ];
     };
   };
 
