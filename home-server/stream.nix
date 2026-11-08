@@ -19,6 +19,7 @@ in
   environment.systemPackages = with pkgs; [ 
     linuxPackages.evdi # virt display kmod
     kdePackages.krfb # kde headless display cli
+    kdePackages.kscreen
     coreutils # provides /bin/sleep
   ];
 
