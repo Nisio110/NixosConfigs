@@ -50,7 +50,7 @@ in
       min_log_level = "info";
       system_tray = "enabled";
 
-      output_name = "virtual-sunshine";
+      output_name = "Virtual-sunshine";
 
       global_prep_cmd = builtins.toJSON [
         {
