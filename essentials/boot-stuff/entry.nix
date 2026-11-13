@@ -15,7 +15,7 @@
     serviceConfig.Type = "oneshot";
 
     script = ''
-      if ! efibootmgr -v || [[ $REGENERATE_EFI -eq 1 ]] \
+      if ! efibootmgr -v \
         | grep -Fq '\EFI\systemd\systemd-bootx64.efi'
       then
         efibootmgr \
