@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   systemd.services.ensure-nixos-efi-entry = {
-    description = "Ensure NixOS Lanzaboote EFI entry exists";
+    description = "Ensure NixOS Lanzaboote-signed systemd-boot EFI entry exists";
     wantedBy = [ "multi-user.target" ];
     after = [ "local-fs.target" ];
 
@@ -22,7 +22,7 @@
           --create \
           --disk /dev/nvme0n1 \
           --part 5 \
-          --label "NixOS" \
+          --label "SystemD-Boot" \
           --loader '\EFI\systemd\systemd-bootx64.efi'
       fi
     '';
