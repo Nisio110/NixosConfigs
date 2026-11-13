@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.2.0";
     nixvim.url = "github:nix-community/nixvim";
     import-tree.url = "github:vic/import-tree";
     sops-nix.url = "github:mic92/sops-nix";
