@@ -24,12 +24,12 @@
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/aa47fa61-a391-4aea-b182-c119f1c720dc";
+      device = "/dev/disk/by-partlabel/Boot";
       fsType = "ext4";
     };
 
     "/media/fedora" = {
-      device = "/dev/disk/by-uuid/94c81553-db14-4adf-9c28-f0b4948487e6";
+      device = "/dev/disk/by-partlabel/Fedora";
       fsType = "btrfs";
     };
 
@@ -50,7 +50,7 @@
   };
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/2601a03e-d86d-490f-8838-0cf1da96f8c3";}
+    {device = "/dev/disk/by-partlabel/NixOS-Swap";}
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

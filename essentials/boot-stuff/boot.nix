@@ -23,7 +23,7 @@ in {
     systemd-boot.enable = lib.mkForce false;
     efi = {
       canTouchEfiVariables = false;
-      efiSysMountPoint = "/boot/efi";
+      efiSysMountPoint = "/boot/";
     };
   };
 
