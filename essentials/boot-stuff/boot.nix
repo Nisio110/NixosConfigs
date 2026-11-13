@@ -19,7 +19,7 @@
     systemd-boot.enable = lib.mkForce false; # Lanzaboote creates & signs its own systemd-boot install
     efi = {
       canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/";
+      efiSysMountPoint = "/boot/efi";
     };
   };
 
