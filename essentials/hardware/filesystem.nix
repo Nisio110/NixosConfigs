@@ -2,15 +2,6 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot = {
-    initrd = { 
-      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-      kernelModules = [];
-    };
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
-  };
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/e4278887-3c03-469f-9243-9bb6502f595f";
@@ -53,30 +44,5 @@
     {device = "/dev/disk/by-partlabel/NixOS-Swap";}
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # === NVIDIA Kernel Drivers
-  hardware = {
-    graphics.enable = true;
-    graphics.enable32Bit = true;
-    nvidia = {
-      open = false;
-      nvidiaSettings = true;
-      modesetting.enable = true;
-    };
-  };
-  services.xserver.videoDrivers = ["nvidia"];
-  # ---
-
-  # === Disable Sleep
-  # Sleep is broken on my motherboard
-  systemd.sleep.settings.Sleep = {
-    AllowSuspend = "no";
-    AllowHibernation = "no";
-    AllowSuspendThenHibernate = "no";
-    AllowHybridSleep = "no";
-  };
-  # ---
 }
 
