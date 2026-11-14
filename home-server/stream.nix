@@ -32,7 +32,7 @@ in {
       min_log_level = "info";
       system_tray = "enabled";
 
-      output_name = "DP-3";
+      output_name = "DP-2";
 
       global_prep_cmd = builtins.toJSON [
         {
