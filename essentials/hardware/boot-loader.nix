@@ -40,14 +40,4 @@
     };
   };
 
-
-  # the things i do for this fucking operating system
-  system.activationScripts.chainloadSecondBoot = ''
-    if ! ${pkgs.efibootmgr}/bin/efibootmgr | grep -q "NixOS (p5)"; then
-      ${pkgs.efibootmgr}/bin/efibootmgr --create \
-        --disk /dev/nvme0n1 --part 5 \
-        --loader '\EFI\systemd\systemd-bootx64.efi' \
-        --label "SystemD-Boot"
-    fi
-  '';
 }

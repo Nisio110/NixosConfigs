@@ -7,25 +7,7 @@
 let 
   dataDir = "/var/lib/sunshine";
   configDir = "${homeDir}/.config/sunshine";
-  startDisplay = pkgs.writeShellScript "sunshine-display-start" ''
-    ${pkgs.kdePackages.krfb}/bin/krfb-virtualmonitor \
-      --resolution "''${SUNSHINE_CLIENT_WIDTH:-1920}x''${SUNSHINE_CLIENT_HEIGHT:-1080}" \
-      --name sunshine \
-      --password "$(${pkgs.openssl}/bin/openssl rand -hex 16)" \
-      --port 5905 &
-
-    echo $! > /tmp/sunshine-display.pid
-    sleep 2
-  '';
-
-  stopDisplay = pkgs.writeShellScript "sunshine-display-stop" ''
-    kill "$(cat /tmp/sunshine-display.pid)"
-    rm -f /tmp/sunshine-display.pid
-  '';
-in
-
-
-{
+in {
   systemd.tmpfiles.rules = [
     "d ${dataDir} 0755 ${user} users -"
     "d ${configDir} 0755 ${user} users -"
@@ -42,7 +24,7 @@ in
     enable = true;
     package = pkgs.sunshine;
     autoStart = true;
-    capSysAdmin = false;
+    capSysAdmin = true;
     settings = {
       # == general ==
       locale = "en_GB";
@@ -50,12 +32,12 @@ in
       min_log_level = "info";
       system_tray = "enabled";
 
-      output_name = "Virtual-sunshine";
+      output_name = "DP-3";
 
       global_prep_cmd = builtins.toJSON [
         {
-          do = "${startDisplay}";
-          undo = "${stopDisplay}";
+          do = "";
+          undo = "";
         }
       ];
 
@@ -88,7 +70,7 @@ in
       encoder = "nvenc";
       hevc_mode = "0";
       av1_mode = "1";
-      capture = "kwin";
+      capture = "kms";
     };
     
   };
