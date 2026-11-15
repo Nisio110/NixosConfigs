@@ -163,6 +163,7 @@ then
     fi
   fi
 fi
+
 if git -C "${NIXOS_DIR}" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' &> /dev/null
 then
   printl "Pulling changes..."
