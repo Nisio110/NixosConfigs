@@ -27,6 +27,7 @@ then
   echo
   echo -e "\033[38;2;243;192;229mBehaviour:\033[0m"
   echo -e "  - Shows a git diff if there are uncommitted changes"
+  echo -e "  - Pulls upstream changes before rebuilding"
   echo -e "  - Stages all changes and runs nixos-rebuild switch"
   echo -e "  - Prompts to commit and push on success or warning (exit 0 or 4)"
   echo -e "  - Exit 0: success, Exit 4: succeeded with unit warnings, 1-3: failed"
@@ -162,6 +163,16 @@ then
     fi
   fi
 fi
+if git -C "${NIXOS_DIR}" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' &> /dev/null
+then
+  printl "Pulling changes..."
+  if ! git -C "${NIXOS_DIR}" pull --quiet --autostash
+  then
+    printl "Pull failed — aborting." "${ansi_red}"
+    exit 1
+  fi
+fi
+
 
 printl "=== NixOS Generation ${OLD_GEN} — branch $(git -C "${NIXOS_DIR}" branch --show-current) ===" "${ansi_bold}${ansi_pink}"
 
