@@ -46,6 +46,7 @@ in {
   };
 
   security.pam.services.spotify.kwallet.enable = true;
+  security.pam.services.joplin.kwallet.enable = true;
 
   # Copies Plasma display config to SDDM
   # This fixes issues with display rotation
