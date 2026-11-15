@@ -38,6 +38,7 @@ tools = with pkgs; [
   efibootmgr
   gdb
   jdk
+  wine
 ];
 
 libraries = with pkgs; [
