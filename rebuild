@@ -164,6 +164,11 @@ then
   fi
 fi
 
+<<<<<<< Updated upstream
+=======
+printl "=== NixOS Generation ${OLD_GEN} — branch $(git -C "${NIXOS_DIR}" branch --show-current) ===" "${ansi_bold}${ansi_pink}"
+
+>>>>>>> Stashed changes
 if git -C "${NIXOS_DIR}" rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' &> /dev/null
 then
   printl "Pulling changes..."
@@ -175,7 +180,6 @@ then
 fi
 
 
-printl "=== NixOS Generation ${OLD_GEN} — branch $(git -C "${NIXOS_DIR}" branch --show-current) ===" "${ansi_bold}${ansi_pink}"
 
 
 if [[ $EXEC_REBUILD -eq 1 ]]
