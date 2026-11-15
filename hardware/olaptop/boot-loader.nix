@@ -11,19 +11,17 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_7_3;
-    initrd.availableKernelModules = [
-      "xhci_pci"
-      "nvme"
-    ];
-    initrd.kernelModules = [
-      "pinctrl_tigerlake"
-    ];
-    kernelModules = [
-      "kvm-intel"
-    ];
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "nvme" ];
+      kernelModules = [ "pinctrl_tigerlake" ];
+    };
+
+    kernelModules = [ "kvm-intel" ];
+
     extraModprobeConfig = ''
       softdep soc_button_array pre: pinctrl_intel_platform
     '';
+
     extraModulePackages = [ ];
 
     zswap = {

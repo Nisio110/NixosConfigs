@@ -11,5 +11,8 @@
     };
   };
   services.xserver.videoDrivers = ["nvidia"];
-  environment.systemPackages = [ pkgs.nvidia-system-monitor-qt ];
+  environment.systemPackages = with pkgs; [
+    nvidia-system-monitor-qt
+    btop-cuda
+  ];
 }
