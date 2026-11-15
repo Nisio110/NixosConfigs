@@ -17,8 +17,8 @@
     kernelPackages = pkgs.linuxPackages_latest;
 
     kernelParams = [
-      "video=DP-2:2560x1440@165,rotate=270"
-      "video=DP-3:2560x1440@200,rotate=0"
+      "video=DP-1:2560x1440@165,rotate=270"
+      "video=DP-2:2560x1440@200,rotate=0"
       "rhgb"
       "quiet"
     ];

@@ -6,7 +6,8 @@ let
   home = "/home/${username}";
   dataDir = "/var/lib/winapps";
 in
-lib.mkIf (hostname == "olaptop") {
+lib.mkIf (hostname == "olaptop") 
+{
   environment.systemPackages = [
     pkgs.curl pkgs.dialog pkgs.freerdp pkgs.git pkgs.iproute2 pkgs.libnotify pkgs.nmap
   ] ++ [
