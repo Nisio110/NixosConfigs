@@ -27,7 +27,9 @@ let
 
   plasmaPkgs = miscPackages ++ kdePackages;
 in {
+
   environment.systemPackages = plasmaPkgs;
+
   services = {
     desktopManager.plasma6.enable = true;
     displayManager.sddm.enable = true;
@@ -42,6 +44,8 @@ in {
     sddm.wayland.enable = true;
     sddm.wayland.compositor = "kwin";
   };
+
+  security.pam.services.spotify.kwallet.enable = true;
 
   # Copies Plasma display config to SDDM
   # This fixes issues with display rotation
