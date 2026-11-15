@@ -32,7 +32,6 @@ in {
       min_log_level = "info";
       system_tray = "disabled";
 
-      output_name = "DP-2";
 
       global_prep_cmd = builtins.toJSON [
         {
@@ -42,8 +41,8 @@ in {
       ];
 
       # == audio/video ==
+      output_name = "DP-2";
       audio_sink = "alsa_output.pci-0000_08_00.4.analog-stereo";
-      # output_name = ""; # fill in after first launch
       max_bitrate = "0";
       minimum_fps_target = "60";
 
