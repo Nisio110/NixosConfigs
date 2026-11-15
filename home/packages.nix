@@ -61,7 +61,7 @@ let
     sendme
     arduino-ide
     ripgrep
-    htop
+    htop-vim
     nix-tree
     nh
     nix-output-monitor
