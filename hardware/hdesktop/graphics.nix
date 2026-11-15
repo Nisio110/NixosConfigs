@@ -10,7 +10,7 @@
       modesetting.enable = true;
     };
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   environment.systemPackages = with pkgs; [
     nvidia-system-monitor-qt
     btop-cuda

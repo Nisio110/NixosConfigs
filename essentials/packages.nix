@@ -19,7 +19,6 @@ tools = with pkgs; [
   ntfs3g parted
   pulseaudio
   zip unzip
-  btop
   mangohud
   steamcmd
   dua # disk usage analyzer
