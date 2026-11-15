@@ -15,7 +15,6 @@ let
     ente-auth
     spotify
     obsidian
-    avrdudess
     joplin-desktop
     kicad
     freecad
@@ -63,6 +62,9 @@ let
     arduino-ide
     ripgrep
     htop
+    nix-tree
+    nh
+    nix-output-monitor
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
