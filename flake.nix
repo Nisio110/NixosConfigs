@@ -1,5 +1,5 @@
 {
-  description = "My home desktop system flake";
+  description = "Declarative NixOS config for my devices";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -9,6 +9,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    winapps = {
+      url = "github:winapps-org/winapps";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     lanzaboote.url = "github:nix-community/lanzaboote/v1.2.0";
     nixvim.url = "github:nix-community/nixvim";
     import-tree.url = "github:vic/import-tree";
@@ -17,30 +23,28 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     compose2nix.url = "github:aksiksi/compose2nix";
     niri-config.url = "github:sodiboo/niri-flake";
-
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs = inputs @ { nixpkgs, home-manager, ... }: let
-
     system = "x86_64-linux";
     user = "oisin";
-    hostname = "hdesktop";
 
     homeDir = "/home/${user}";
     secretsDir = "${homeDir}/.local/secrets";
 
-    mkSystem = { system, modulePath, homePath, overlayPath, extraPaths }:
+    mkSystem = { system, hostname, modulePath, hardwarePath, homePath, overlayPath, extraPaths ? [] }:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs user homeDir secretsDir hostname; };
-        modules = [ 
-          (inputs.import-tree ([ modulePath overlayPath ] ++ extraPaths)) 
-          (mkHomeManager homePath)
+        specialArgs = { inherit inputs user homeDir secretsDir hostname system; };
+        modules = [
+          (inputs.import-tree ([ modulePath hardwarePath overlayPath ] ++ extraPaths))
+          (mkHomeManager { hmDir = homePath; inherit hostname; })
         ];
       };
 
-    mkHomeManager = hmDir: {
-      imports = [home-manager.nixosModules.home-manager];
+    mkHomeManager = { hmDir, hostname }: {
+      imports = [ home-manager.nixosModules.home-manager ];
       home-manager = {
         users.oisin.imports = [ (inputs.import-tree hmDir) ];
         useGlobalPkgs = true;
@@ -48,16 +52,24 @@
         extraSpecialArgs = { inherit inputs user homeDir secretsDir hostname; };
       };
     };
-
   in {
-    nixosConfigurations.${hostname} = mkSystem {
+    nixosConfigurations.hdesktop = mkSystem {
       inherit system;
+      hostname = "hdesktop";
       modulePath = ./essentials;
+      hardwarePath = ./hardware/hdesktop;
       homePath = ./home;
       overlayPath = ./overlays;
-      extraPaths = [
-        ./home-server
-      ];
+      extraPaths = [ ./home-server ];
+    };
+
+    nixosConfigurations.olaptop = mkSystem {
+      inherit system;
+      hostname = "olaptop";
+      modulePath = ./essentials;
+      hardwarePath = ./hardware/olaptop;
+      homePath = ./home;
+      overlayPath = ./overlays;
     };
   };
 }

@@ -1,0 +1,88 @@
+{ lib, pkgs, hostname, ... }:
+let
+  # Change this to your Linux username.
+  username = "oisin";
+
+  home = "/home/${username}";
+  dataDir = "/var/lib/winapps";
+in
+lib.mkIf (hostname == "olaptop") {
+  environment.systemPackages = [
+    pkgs.curl pkgs.dialog pkgs.freerdp pkgs.git pkgs.iproute2 pkgs.libnotify pkgs.nmap
+  ] ++ [
+    pkgs.winapps-launcher
+    pkgs.winapps
+  ];
+
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+    };
+  };
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers.WinApps = {
+      image = "ghcr.io/dockur/windows:latest";
+      autoStart = true;
+
+      environment = {
+        VERSION = "11";
+        RAM_SIZE = "10G";
+        CPU_CORES = "8";
+        DISK_SIZE = "100G";
+
+        USERNAME = "Oisin";
+        PASSWORD = "changeme";
+
+        HOME = home;
+      };
+
+      ports = [
+        # Web-based VNC interface
+        "127.0.0.1:8006:8006"
+
+        # RDP over TCP and UDP
+        "127.0.0.1:3389:3389/tcp"
+        "127.0.0.1:3389:3389/udp"
+      ];
+
+      capabilities = {
+        NET_ADMIN = true;
+        NET_RAW = true;
+      };
+
+      devices = [
+        "/dev/kvm:/dev/kvm"
+        "/dev/net/tun:/dev/net/tun"
+      ];
+
+      volumes = [
+        # Persistent Windows C: drive
+        "${dataDir}:/storage"
+
+        # Share Linux home directory with Windows
+        "${home}:/shared"
+
+        # OEM scripts and registry modifications
+        "/etc/winapps/oem:/oem"
+      ];
+    };
+  };
+
+  # Allow the Windows VM to shut down gracefully.
+  systemd.services.docker-WinApps.serviceConfig = {
+    TimeoutStopSec = 120;
+    Restart = "on-failure";
+  };
+
+  # Create persistent directories.
+  systemd.tmpfiles.rules = [
+    "d ${dataDir} 0755 root root -"
+    "d /etc/winapps/oem 0755 root root -"
+  ];
+}

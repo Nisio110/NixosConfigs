@@ -1,11 +1,12 @@
+{ hostname, ... }:
 {
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     warn-dirty = false;
     auto-optimise-store = true;
-    cores = 2;
-    max-jobs = 3;
+    cores = if hostname == "hdesktop" then 2 else 4;
+    max-jobs = if hostname == "hdesktop" then 3 else 2;
   };
 
   nixpkgs.config = {
@@ -15,6 +16,8 @@
     # this version of electron is EOL apparently (nixos won't rebuild unless this is set)
     permittedInsecurePackages = [ "electron-40.10.5" "pnpm-10.29.2"]; 
   };
+
+  home-manager.backupFileExtension = "hmbak";
 
 
   # Prevent dbus-broker from restarting during nixos-rebuild, which hangs

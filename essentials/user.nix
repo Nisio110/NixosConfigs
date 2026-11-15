@@ -4,7 +4,7 @@
     isNormalUser = true;
     extraGroups = [
       "wheel" "networkmanager" "video"
-      "input" "audio" "libvirtd" "docker"
+      "input" "audio" "libvirtd" "docker" "dialout"
     ];
     shell = pkgs.zsh;
   };

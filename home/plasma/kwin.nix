@@ -1,5 +1,6 @@
 # KWin: window-manager shortcuts, compositor settings and per-window rules.
 # Session-dumped tile layouts live in ./tiling.nix.
+{ lib, hostname, ... }:
 {
   programs.plasma = {
     shortcuts.kwin = {
@@ -249,8 +250,10 @@
         Id_1 = "603ac86d-a706-4ef0-bb79-311b58262c86";
         Id_2 = "5894213d-9609-4644-a863-aa02cbf44cc3";
         Id_3 = "8b8d50cd-f89b-4f02-96ab-f91e78df7bf2";
-        Number = 3;
+        Number = if hostname == "hdesktop" then 3 else 4;
         Rows = 2;
+      } // lib.optionalAttrs (hostname == "olaptop") {
+        Id_4 = "";
       };
       EdgeBarrier = {
         CornerBarrier = false;

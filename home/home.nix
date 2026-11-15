@@ -8,6 +8,7 @@
   programs.zen-browser = {
     enable = true;
     setAsDefaultBrowser = true;
+    policies.Certificates.Install = [ ../ca.crt ];
   };
   
   programs.git = {

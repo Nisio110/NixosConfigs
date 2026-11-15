@@ -1,19 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
- 
-  oh-my-pi = pkgs.writeShellApplication {
-    name = "omp";
-    runtimeInputs = [ pkgs.bun ];
-    text = ''
-      bun_bin="$(bun pm bin -g)"
-      omp_bin="$bun_bin/omp"
-      if [ ! -x "$omp_bin" ]; then
-        bun install -g @oh-my-pi/pi-coding-agent
-      fi
-      exec "$omp_bin" "$@"
-    '';
-  };
-
   # NOTE
   # might be better to structure these as one list and
   # categorise with comments instead
@@ -35,15 +21,21 @@ let
     freecad
     orca-slicer
     moonlight-qt
+    krita
+    ltspice
+    cisco-packet-tracer_9
+    chromium
   ];
 
   dev = with pkgs; [
     gcc
     rustc
     cargo
-    python3
     codex
-    python314Packages.pip
+    (python3.withPackages (ps: [
+      ps.pip
+      ps.dbus-python
+    ]))
     bun
     gh
     avrdude
@@ -52,8 +44,10 @@ let
   ];
 
   misc = with pkgs; [
+    quickemu
+    qemu
+    omp
     libnotify
-    oh-my-pi
     netbird
     claude-code
     kitty-img
@@ -64,6 +58,11 @@ let
     bottles
     ethtool
     tree
+    tio
+    sendme
+    arduino-ide
+    ripgrep
+    htop
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
@@ -74,5 +73,6 @@ let
   ];
 
   homePkgs = dev ++ apps ++ misc ++ niri;
-
-in {home.packages = homePkgs;}
+in {
+  home.packages = homePkgs;
+}

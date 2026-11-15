@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, hostname, ... }:
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
 
@@ -12,7 +12,9 @@
   };
 
   programs.plasma = let 
-      wallpaper = "/home/oisin/.local/share/wallpapers/macos-space/macos-space-1.jpg";
+      wallpaper = if hostname == "hdesktop"
+        then "/home/oisin/.local/share/wallpapers/macos-space/macos-space-1.jpg"
+        else "/home/oisin/Pitcure/dachstein-sunset.jpg";
     in {
     enable = true;
 

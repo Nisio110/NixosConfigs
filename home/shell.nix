@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, hostname, ... }:
 {
   home.shellAliases = {
     vim        = "nvim";
@@ -30,6 +30,10 @@
 
     initContent = ''
       source "${config.sops.templates."github.env".path}"
+      ${lib.optionalString (hostname == "olaptop") ''
+        # Required for winapps. Winapps installs its app shortcuts to /usr/local/bin
+        PATH=/usr/local/bin:$PATH
+      ''}
 
       # Auto-start a named tmux session for each new interactive non-tmux shell.
       if command -v tmux &>/dev/null && [[ -z $TMUX ]] && [[ $- == *i* ]]; then
