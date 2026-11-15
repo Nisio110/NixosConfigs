@@ -14,7 +14,7 @@
   programs.plasma = let 
       wallpaper = if hostname == "hdesktop"
         then "/home/oisin/.local/share/wallpapers/macos-space/macos-space-1.jpg"
-        else "/home/oisin/Pitcure/dachstein-sunset.jpg";
+        else "/home/oisin/Pictures/dachstein-sunset.jpg";
     in {
     enable = true;
 
