@@ -1,5 +1,25 @@
 {...}:
 {
+ # Custom registration: launch with `winapps capture` or the application menu.
+ xdg.dataFile."winapps/apps/capture/info".text = ''
+   NAME="OrCAD"
+   FULL_NAME="OrCAD"
+   WIN_EXECUTABLE='C:\Cadence\SPB_17.2\tools\bin\Capture.exe'
+   CATEGORIES="Development;Engineering;X-WinApps;"
+   MIME_TYPES=""
+ '';
+
+ xdg.desktopEntries.winapps-capture = {
+   name = "OrCAD";
+   comment = "Cadence SPB 17.2 schematic capture via WinApps";
+   exec = "winapps capture %f";
+   icon = "applications-engineering";
+   terminal = false;
+   categories = [ "Development" "Engineering" "X-WinApps" ];
+   startupNotify = true;
+   settings.StartupWMClass = "OrCAD";
+ };
+
  xdg.configFile."winapps/winapps.conf".text = ''
     #!/usr/bin/env bash
     ##################################
