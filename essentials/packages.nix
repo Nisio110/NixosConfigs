@@ -31,6 +31,10 @@ tools = with pkgs; [
   inputs.compose2nix.packages.x86_64-linux.default
   speedtest-cli
   steam-run
+  ripgrep
+  busybox
+  efibootmgr
+  gdb
 ];
 
 libraries = with pkgs; [
