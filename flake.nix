@@ -26,49 +26,57 @@
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, ... }: let
-    system = "x86_64-linux";
+  outputs = inputs @ { nixpkgs, home-manager, import-tree, ... }: let
     user = "oisin";
 
     homeDir = "/home/${user}";
     secretsDir = "${homeDir}/.local/secrets";
 
-    mkSystem = { system, hostname, modulePath, hardwarePath, homePath, overlayPath, extraPaths ? [] }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs user homeDir secretsDir hostname system; };
-        modules = [
-          (inputs.import-tree ([ modulePath hardwarePath overlayPath ] ++ extraPaths))
-          (mkHomeManager { hmDir = homePath; inherit hostname; })
-        ];
-      };
+    mkSystem = hostname:
+    { 
+      system ? "x86_64-linux", 
+      modulePath, 
+      hardwarePath, 
+      hmMgrPath, 
+      overlayPath, 
+      extraPaths ? [] 
+    }: 
+    nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs user homeDir secretsDir hostname system; };
+      modules = [
+        (import-tree ([ 
+          modulePath 
+          hardwarePath 
+          overlayPath 
+        ] ++ extraPaths))
 
-    mkHomeManager = { hmDir, hostname }: {
+        (mkHomeManager { inherit hostname hmMgrPath;})
+      ];
+    };
+
+    mkHomeManager = { hmMgrPath, hostname }: {
       imports = [ home-manager.nixosModules.home-manager ];
       home-manager = {
-        users.oisin.imports = [ (inputs.import-tree hmDir) ];
+        users.oisin.imports = [ (inputs.import-tree hmMgrPath) ];
         useGlobalPkgs = true;
         useUserPackages = true;
         extraSpecialArgs = { inherit inputs user homeDir secretsDir hostname; };
       };
     };
   in {
-    nixosConfigurations.hdesktop = mkSystem {
-      inherit system;
-      hostname = "hdesktop";
+    nixosConfigurations.hdesktop = mkSystem "hdesktop" {
       modulePath = ./essentials;
       hardwarePath = ./hardware/hdesktop;
-      homePath = ./home;
+      hmMgrPath = ./home-mgr;
       overlayPath = ./overlays;
       extraPaths = [ ./home-server ];
     };
 
-    nixosConfigurations.olaptop = mkSystem {
-      inherit system;
-      hostname = "olaptop";
+    nixosConfigurations.olaptop = mkSystem "olaptop" {
       modulePath = ./essentials;
       hardwarePath = ./hardware/olaptop;
-      homePath = ./home;
+      hmMgrPath = ./home-mgr;
       overlayPath = ./overlays;
     };
   };
