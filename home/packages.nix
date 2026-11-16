@@ -14,7 +14,6 @@ let
     jellyfin-desktop
     ente-auth
     spotify
-    obsidian
     joplin-desktop
     kicad
     freecad
@@ -65,6 +64,8 @@ let
     nix-tree
     nh
     nix-output-monitor
+    scope-tui
+    supertuxkart
   ];
 
   # Spawned by the niri session — see niri/niri.nix.
