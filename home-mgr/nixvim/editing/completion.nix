@@ -3,7 +3,7 @@
     enable = true;
 
     settings = {
-      keymap.preset = "default";
+      keymap.preset = "enter";
       appearance.nerd_font_variant = "mono";
 
       completion = {
@@ -28,7 +28,7 @@
           score_offset = 100;
         };
       };
-
+      
       snippets.preset = "default";
       signature.enabled = true;
       fuzzy.implementation = "rust";

@@ -59,10 +59,10 @@ in
 
   programs.nixvim.keymaps = [
     # yankbank
-    { mode = "n"; key = "<leader>uy"; action = "<cmd>YankBank<cr>"; options.desc = "Yank history"; }
+    {mode = "n"; key = "<leader>uy"; action = "<cmd>YankBank<cr>"; options.desc = "Yank history";}
 
     # Hypersonic (visual selection regex explainer)
-    { mode = "v"; key = "<leader>uh"; action = ":Hypersonic<cr>"; options.desc = "Explain regex (Hypersonic)"; }
+    {mode = "v"; key = "<leader>uh"; action = ":Hypersonic<cr>"; options.desc = "Explain regex (Hypersonic)";}
 
     # moveline — line / block move. Requires the cargo-built shared lib (see
     # nixvim/pkgs.nix). If the build fails, drop these four bindings and the
