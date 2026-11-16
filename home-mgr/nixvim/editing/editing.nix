@@ -10,11 +10,7 @@ in
       settings = {
         check_ts = true;
         fast_wrap = { };
-        # Stop autopairs from owning <CR> in insert mode so blink.cmp's confirm
-        # binding fires first. The other half of the fix (calling
-        # blink.cmp.on_confirm_done with autopairs.autopairs_cr()) lives in
-        # completion.nix.
-        map_cr = false;
+        map_cr = true;
       };
     };
 

@@ -1,3 +1,4 @@
+# blink-cmp handles code completion
 {
   programs.nixvim.plugins.blink-cmp = {
     enable = true;
@@ -15,13 +16,8 @@
       };
 
       sources = {
-        # The lua config used lazy.nvim's `opts_extend = { "sources.default" }`
-        # in blink-cmp.lua so language-specific specs (like lang-lua.lua) could
-        # APPEND to this list. nixvim has no equivalent additive list merge for
-        # nested plugin settings, so we declare the full list here once.
         default = [ "lsp" "path" "snippets" "buffer" "lazydev" ];
 
-        # lazydev source registration (was lang-lua.lua → blink.cmp.providers).
         providers.lazydev = {
           name = "LazyDev";
           module = "lazydev.integrations.blink";
