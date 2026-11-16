@@ -23,6 +23,7 @@ let
     ltspice
     cisco-packet-tracer_9
     chromium
+    onlyoffice-desktopeditors
   ];
 
   dev = with pkgs; [
