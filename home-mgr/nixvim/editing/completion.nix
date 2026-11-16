@@ -3,7 +3,7 @@
     enable = true;
 
     settings = {
-      keymap.preset = "enter";
+      keymap.preset = "default";
       appearance.nerd_font_variant = "mono";
 
       completion = {
@@ -34,34 +34,48 @@
       fuzzy.implementation = "rust";
     };
   };
-
-  # nvim-autopairs maps <CR> in insert mode by default, which intercepts
-  # blink.cmp's confirm binding before it fires. The fix is two-part:
-  #   1. autopairs opts.map_cr = false (done in editing.nix)
-  #   2. blink.cmp.on_confirm_done(autopairs.autopairs_cr()) (done here)
-  #
-  # Also: inject blink.cmp capabilities globally for ALL LSP servers here
-  # (including rustaceanvim and typescript-tools which set their config tables
-  # at init.lua top-level, too early for a direct require("blink.cmp") call).
-  # VimEnter fires before any FileType/LspAttach, so capabilities land before
-  # the first server starts. vim.lsp.config("*", ...) requires neovim >= 0.11.
-  programs.nixvim.extraConfigLua = ''
-    do
-      local ok_blink, blink = pcall(require, "blink.cmp")
-      local ok_autopairs, autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-      if ok_blink and ok_autopairs and blink.on_confirm_done ~= nil then
-        blink.on_confirm_done(autopairs.autopairs_cr())
-      end
-    end
-
-    vim.api.nvim_create_autocmd("VimEnter", {
-      once = true,
-      callback = function()
-        local ok, blink = pcall(require, "blink.cmp")
-        if ok and vim.lsp.config then
-          vim.lsp.config("*", { capabilities = blink.get_lsp_capabilities() })
-        end
-      end,
-    })
-  '';
 }
+
+# Default preset keymap
+# "<C-space>" = [
+#        "show"
+#        "show_documentation"
+#        "hide_documentation"
+#      ];
+#      "<C-e>" = [ "hide" ];
+#      "<C-y>" = [ "select_and_accept" ];
+#
+#      "<Up>" = [
+#        "select_prev"
+#        "fallback"
+#      ];
+#      "<Down>" = [
+#        "select_next"
+#        "fallback"
+#      ];
+#      "<C-p>" = [
+#        "select_prev"
+#        "fallback"
+#      ];
+#      "<C-n>" = [
+#        "select_next"
+#        "fallback"
+#      ];
+#
+#      "<C-b>" = [
+#        "scroll_documentation_up"
+#        "fallback"
+#      ];
+#      "<C-f>" = [
+#        "scroll_documentation_down"
+#        "fallback"
+#      ];
+#
+#      "<Tab>" = [
+#        "snippet_forward"
+#        "fallback"
+#      ];
+#      "<S-Tab>" = [
+#        "snippet_backward"
+#        "fallback"
+##      ];
