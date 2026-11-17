@@ -38,6 +38,7 @@ tools = with pkgs; [
   gdb
   jdk
   wine
+  inetutils
 ];
 
 libraries = with pkgs; [
