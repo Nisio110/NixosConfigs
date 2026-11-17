@@ -24,6 +24,7 @@ let
     cisco-packet-tracer_9
     chromium
     onlyoffice-desktopeditors
+    wireshark
   ];
 
   dev = with pkgs; [
