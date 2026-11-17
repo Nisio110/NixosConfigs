@@ -1,4 +1,4 @@
-{ user, hostname, ... }:
+{ pkgs, user, hostname, ... }:
 {
   networking = {
     hostName = hostname;
@@ -6,15 +6,19 @@
     wireless.userControlled = true;
     
 
-    # attempt to add eduroam to trusted
-    # networks for a comm3005 lab
-    # firewall.enable = false;
-    nftables.enable = true;
-    firewall.enable = true;
-    firewall.extraInputRules = ''
-      ip saddr 10.74.239.0/24 accept
-    #'';
   };
+
+  # attempt to add eduroam to trusted
+  # networks for a comm3005 lab
+  # firewall.enable = false;
+  networking.nftables.enable = true;
+  networking.firewall.enable = true;
+  networking.firewall.extraInputRules = ''
+    ip saddr 10.74.239.0/24 accept
+  #'';
+  services.firewalld.enable = true;
+  environment.systemPackages = [pkgs.firewalld-gui];
+  # =======
 
   services = {
     netbird.enable = true;
