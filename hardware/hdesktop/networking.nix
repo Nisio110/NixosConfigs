@@ -8,9 +8,9 @@
     networkmanager.enable = true;
     wireless.enable = true;
     firewall.enable = false;
-    resolvconf.extraConfig = ''
-      nameserver 8.8.8.8
-    '';
+    resolvconf.extraOptions = [
+      "nameserver 8.8.8.8"
+    ];
 
     #useDHCP = true;
     
