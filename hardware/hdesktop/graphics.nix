@@ -6,6 +6,7 @@
     graphics.enable32Bit = true;
     nvidia = {
       open = false;
+      branch = "production";
       nvidiaSettings = true;
       modesetting.enable = true;
     };
