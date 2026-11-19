@@ -7,6 +7,9 @@
       "qwen3.5:9b"
     ];
     port = 1144;
+    environmentVariables = {
+      OLLAMA_CONTEXT_LENGTH = "16384";
+    };
   };
 
   # because i am not waiting to compile cuda from source
