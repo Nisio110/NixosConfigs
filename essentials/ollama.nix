@@ -6,6 +6,7 @@
     loadModels = [
       "qwen3.5:9b"
     ];
+    port = 1144;
   };
 
   # because i am not waiting to compile cuda from source
