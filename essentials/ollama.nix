@@ -1,7 +1,7 @@
 {pkgs,...}: {
 
   services.ollama = {
-    enable = false;
+    enable = true;
     package = pkgs.ollama-cuda;
     loadModels = [
       "qwen3.5:9b"
