@@ -9,6 +9,8 @@
       "gemma4:12b"
     ];
     port = 1144;
+    host = "192.168.0.19";
+
     environmentVariables = {
       OLLAMA_CONTEXT_LENGTH = "64000";
     };
