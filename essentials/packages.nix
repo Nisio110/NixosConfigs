@@ -51,6 +51,7 @@ libraries = with pkgs; [
 misc = with pkgs; [
   cmatrix
   mpv
+  chiaki-ng
 ];
 
 

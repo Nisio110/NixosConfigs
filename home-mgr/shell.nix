@@ -5,8 +5,8 @@
     reload     = "source ~/.zshrc";
     freload    = "clear; source ~/.zshrc";
     sreload    = "NO_FASTFETCH=1; source ~/.zshrc";
+    open       = "xdg-open";
   };
-
 
   programs.zsh = {
     enable = true;

@@ -2,7 +2,6 @@
 {
   environment = {
     pathsToLink = [ "/home/oisin/Projects/Scripts" ];
-
     localBinInPath = true;
     shells = [pkgs.zsh pkgs.bash];
 
