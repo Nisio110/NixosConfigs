@@ -10,7 +10,7 @@
   # /var/lib/ssl/ca/ca.crt after tetocorp-ca-init first generated it.
   # Stable for the CA's 10-year lifetime, so this only needs updating if
   # the CA itself is ever rotated.
-  security.pki.certificateFiles = [ ./tetocorp-ca.crt ];
+  security.pki.certificateFiles = [ ../ca.crt ];
 
 
   # Runs exactly once, ever: the CA must stay stable so client trust
