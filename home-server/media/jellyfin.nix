@@ -10,7 +10,7 @@
     containers.jellyfin = {
       image = "jellyfin/jellyfin:10.11.8";
       autoStart = true;
-      environment.JELLYFIN_PublishedServerUrl = "https://watch.tetocorp.ie";
+      environment.JELLYFIN_PublishedServerUrl = "http://127.0.0.1:8096";
 
       ports = [
         "8096:8096/tcp"
@@ -39,7 +39,6 @@
   systemd.services.docker-jellyfin.serviceConfig.Slice = "teto-media.slice";
 
   sops.secrets.jellyfin_api_key = { };
-
   sops.templates."jellyfin-auth-header" = {
     mode = "0400";
     content = ''
