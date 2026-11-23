@@ -40,6 +40,7 @@ in
         locations."/" = {
           proxyPass       = "http://127.0.0.1:8096";
           proxyWebsockets = true;
+<<<<<<< HEAD
           extraConfig = ''
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
@@ -66,6 +67,8 @@ in
             proxy_set_header X-Forwarded-Protocol $scheme;
             proxy_set_header X-Forwarded-Host $http_host;
           '';
+=======
+>>>>>>> parent of ddf2216 (NixOS Rebuild: Generation 567)
         };
       };
       "browse.tetocorp.ie" = {
