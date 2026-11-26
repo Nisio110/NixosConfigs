@@ -15,7 +15,6 @@
             "--background-index"
             "--clang-tidy"
             "--completion-style=detailed"
-            "--query-driver=${pkgs.gcc}/bin/*"
           ];
         };
 
