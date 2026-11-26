@@ -4,8 +4,6 @@
 
     settings = {
       inlay_hints = {
-        # vim.fn.has("nvim-0.10") == 1 — we're on a modern nvim from nixpkgs,
-        # so just hard-code true here.
         inline = true;
       };
 
