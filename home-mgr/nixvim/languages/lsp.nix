@@ -15,7 +15,7 @@
             "--background-index"
             "--clang-tidy"
             "--completion-style=detailed"
-            "--query-driver=/nix/store/*/bin/gcc,/nix/store/*/bin/g++,/nix/store/*/bin/c++"
+            "--query-driver=${pkgs.gcc}/bin/*"
           ];
         };
 
